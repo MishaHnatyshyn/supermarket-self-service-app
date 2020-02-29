@@ -5,6 +5,8 @@ import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import store from './store';
+import { Provider } from 'react-redux';
 
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
@@ -47,6 +49,7 @@ export default function App(props) {
     return null;
   } else {
     return (
+      <Provider store={store}>
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
@@ -55,6 +58,7 @@ export default function App(props) {
           </Stack.Navigator>
         </NavigationContainer>
       </View>
+      </Provider>
     );
   }
 }
