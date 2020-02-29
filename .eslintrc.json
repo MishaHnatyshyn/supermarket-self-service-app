@@ -9,6 +9,7 @@
     ],
     "globals": {
         "Atomics": "readonly",
+        "__DEV__": "readonly",
         "SharedArrayBuffer": "readonly"
     },
     "parser": "babel-eslint",
@@ -23,6 +24,8 @@
         "react"
     ],
     "rules": {
-        "react/jsx-filename-extension": 0
+        "react/jsx-filename-extension": 0,
+        "react/jsx-props-no-spreading": 0,
+        "no-use-before-define": 0
     }
 }

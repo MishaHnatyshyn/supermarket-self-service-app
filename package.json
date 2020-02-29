@@ -7,7 +7,7 @@
     "web": "node_modules/.bin/expo start --web",
     "eject": "node_modules/.bin/expo eject",
     "test": "node_modules/.bin/jest --watchAll",
-    "lint": "eslint *.js"
+    "lint": "eslint src/**/*.js"
   },
   "jest": {
     "preset": "jest-expo"
@@ -47,7 +47,8 @@
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^1.7.0",
     "husky": "^4.2.3",
-    "jest-expo": "~36.0.1"
+    "jest-expo": "~36.0.1",
+    "react-test-renderer": "^16.13.0"
   },
   "private": true,
   "husky": {

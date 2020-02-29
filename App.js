@@ -9,10 +9,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
 import PropTypes from 'prop-types';
-import store from './store';
+import store from './src/store';
 
-import BottomTabNavigator from './navigation/BottomTabNavigator';
-import useLinking from './navigation/useLinking';
+import BottomTabNavigator from './src/navigation/BottomTabNavigator';
+import useLinking from './src/navigation/useLinking';
 
 const Stack = createStackNavigator();
 
@@ -41,7 +41,7 @@ export default function App({ skipLoadingScreen }) {
         // Load fonts
         await Font.loadAsync({
           ...Ionicons.font,
-          'space-mono': import('./assets/fonts/SpaceMono-Regular.ttf'),
+          'space-mono': import('./src/assets/fonts/SpaceMono-Regular.ttf'),
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
