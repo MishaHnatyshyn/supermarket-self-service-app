@@ -4,6 +4,7 @@ import {
 import createSagaMiddleware from 'redux-saga';
 import initialSaga from './initialSaga';
 import storeReducer from './store/reducer';
+import searchReducer from './search/reducer';
 
 const initialState = {};
 
@@ -23,6 +24,7 @@ const enhancer = composeEnhancers(
 
 const rootReducer = combineReducers({
   store: storeReducer,
+  search: searchReducer,
 });
 
 const store = createStore(rootReducer, initialState, enhancer);
