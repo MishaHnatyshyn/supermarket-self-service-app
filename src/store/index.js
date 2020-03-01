@@ -3,6 +3,7 @@ import {
 } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import initialSaga from './initialSaga';
+import storeReducer from './store/reducer';
 
 const initialState = {};
 
@@ -20,7 +21,9 @@ const enhancer = composeEnhancers(
 );
 
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({
+  store: storeReducer,
+});
 
 const store = createStore(rootReducer, initialState, enhancer);
 
