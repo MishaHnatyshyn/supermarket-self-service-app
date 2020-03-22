@@ -8,6 +8,7 @@
         "airbnb"
     ],
     "globals": {
+        "require": "readonly",
         "Atomics": "readonly",
         "__DEV__": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -24,8 +25,10 @@
         "react"
     ],
     "rules": {
+        "global-require": "off",
         "react/jsx-filename-extension": 0,
         "react/jsx-props-no-spreading": 0,
-        "no-use-before-define": 0
+        "no-use-before-define": 0,
+        "react/no-unescaped-entities": "off"
     }
 }
