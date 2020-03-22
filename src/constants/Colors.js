@@ -1,14 +1,17 @@
-const tintColor = '#2f95dc';
+export const $tintColor = '#2f95dc';
+export const $white = 'rgba(246, 237, 239, 0.95)';
+export const $gray = '#bdb9ba';
+export const $green = '#4cb922';
 
 export default {
-  tintColor,
+  tintColor: $tintColor,
   tabIconDefault: '#ccc',
-  tabIconSelected: tintColor,
+  tabIconSelected: $tintColor,
   tabBar: '#fefefe',
   errorBackground: 'red',
   errorText: '#fff',
   warningBackground: '#EAEB5E',
   warningText: '#666804',
-  noticeBackground: tintColor,
+  noticeBackground: $tintColor,
   noticeText: '#fff',
 };

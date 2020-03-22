@@ -13,6 +13,7 @@ import store from './src/store';
 
 import BottomTabNavigator from './src/navigation/BottomTabNavigator';
 import useLinking from './src/navigation/useLinking';
+import LoginScreen from './src/screens/LoginScreen';
 
 const Stack = createStackNavigator();
 
@@ -64,7 +65,14 @@ export default function App({ skipLoadingScreen }) {
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
           <Stack.Navigator>
-            <Stack.Screen name="Root" component={BottomTabNavigator} />
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            {/* <Stack.Screen name="Root" component={BottomTabNavigator} /> */}
           </Stack.Navigator>
         </NavigationContainer>
       </View>
