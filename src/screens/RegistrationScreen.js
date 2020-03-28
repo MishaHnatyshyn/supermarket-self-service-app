@@ -10,10 +10,10 @@ import { $gray } from '../constants/Colors';
 import Input from '../components/Input';
 import AuthLayout from '../components/AuthLayout';
 
-export default function LoginScreen({ navigation }) {
+export default function RegistrationScreen({ navigation }) {
   return (
-    <AuthLayout>
-      <Text style={styles.title}>Sign in to continue</Text>
+    <AuthLayout isRegistration>
+      <Text style={styles.title}>Sign up to continue</Text>
       <View style={styles.info}>
 
         <Input label="Email" keyboardType="email-address" placeholder="Your email">
@@ -24,19 +24,23 @@ export default function LoginScreen({ navigation }) {
           <SimpleLineIcons name="lock" size={25} color={$gray} style={styles.inputIcon} />
         </Input>
 
+        <Input label="Repeat password" placeholder="Repeat your password" secureTextEntry>
+          <SimpleLineIcons name="lock" size={25} color={$gray} style={styles.inputIcon} />
+        </Input>
+
         <View style={styles.signUpBlock}>
-          <TouchableOpacity style={styles.signUpButton} onPress={() => navigation.navigate('Registration')}>
-            <Text style={styles.signUpText}>Don't have an account?</Text>
-            <Text style={[styles.signUpLink, styles.signUpText]}> Sign up</Text>
+          <TouchableOpacity style={styles.signUpButton} onPress={() => navigation.navigate('Login')}>
+            <Text style={styles.signUpText}>Already have an account?</Text>
+            <Text style={[styles.signUpLink, styles.signUpText]}> Sign in</Text>
           </TouchableOpacity>
         </View>
       </View>
-      <FormButton onClick={() => {}}>SIGN IN</FormButton>
+      <FormButton onClick={() => {}}>SIGN UP</FormButton>
     </AuthLayout>
   );
 }
 
-LoginScreen.propTypes = {
+RegistrationScreen.propTypes = {
   navigation: PropTypes.shape.isRequired,
 };
 
@@ -55,14 +59,14 @@ const styles = StyleSheet.create({
   signUpText: {
     fontSize: 16,
   },
-  signUpLink: {
-    color: 'blue',
-    textDecorationLine: 'underline',
-  },
   inputIcon: {
     position: 'absolute',
     right: 13,
     top: 12,
+  },
+  signUpLink: {
+    color: 'blue',
+    textDecorationLine: 'underline',
   },
   signUpButton: {
     flexDirection: 'row',
