@@ -14,6 +14,7 @@ import store from './src/store';
 import BottomTabNavigator from './src/navigation/BottomTabNavigator';
 import useLinking from './src/navigation/useLinking';
 import LoginScreen from './src/screens/LoginScreen';
+import RegistrationScreen from "./src/screens/RegistrationScreen";
 
 const Stack = createStackNavigator();
 
@@ -68,6 +69,13 @@ export default function App({ skipLoadingScreen }) {
             <Stack.Screen
               name="Login"
               component={LoginScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Registration"
+              component={RegistrationScreen}
               options={{
                 headerShown: false,
               }}

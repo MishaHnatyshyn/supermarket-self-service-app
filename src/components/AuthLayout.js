@@ -2,15 +2,16 @@ import React from 'react';
 import {
   Image, StyleSheet, View,
 } from 'react-native';
+import PropTypes from 'prop-types';
 import { $white } from '../constants/Colors';
 import Layout from '../constants/Layout';
 
 const { width } = Layout.window;
 
 
-export default function AuthLayout({ children }) {
+export default function AuthLayout({ children, isRegistration }) {
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, padding: isRegistration ? '10% 3%' : '25% 3%' }}>
       <Image source={{ uri: 'https://i.pinimg.com/564x/f5/d0/51/f5d051306fcdce6da21ece1d903e49a1.jpg' }} style={styles.background} />
       <View style={styles.block}>
         <View style={styles.logo}>
@@ -24,13 +25,21 @@ export default function AuthLayout({ children }) {
   );
 }
 
+AuthLayout.defaultProps = {
+  isRegistration: false,
+};
+
+AuthLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+  isRegistration: PropTypes.bool,
+};
+
 const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
     position: 'relative',
     backgroundColor: '#fff',
-    padding: '25% 3%',
   },
   background: {
     position: 'absolute',
@@ -71,7 +80,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   form: {
-    height: '87%',
     width: width - 30,
     backgroundColor: $white,
     borderRadius: 40,
