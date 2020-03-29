@@ -36,7 +36,6 @@ ReceiptCard.propTypes = {
   date: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   onOpen: PropTypes.func.isRequired,
-  navigation: PropTypes.shape.isRequired,
 };
 
 const styles = StyleSheet.create({
