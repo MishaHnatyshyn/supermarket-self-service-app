@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import PropTypes from 'prop-types';
 import { Image } from 'react-native';
 import BottomNavigationMenu from '../components/BottomNavigationMenu';
-import HistoryScreen from '../screens/HistoryScreen';
+import ReceiptsListScreen from '../screens/ReceiptsListScreen';
 import SearchScreen from '../screens/SearchScreen';
 import BasketScreen from '../screens/BasketScreen';
 import AccountScreen from '../screens/AccountScreen';
@@ -36,7 +36,7 @@ export default function BottomTabNavigator({ navigation }) {
       />
       <BottomTab.Screen
         name="History"
-        component={HistoryScreen}
+        component={ReceiptsListScreen}
         options={{
           title: 'History',
         }}
