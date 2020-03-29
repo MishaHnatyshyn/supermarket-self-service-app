@@ -9,7 +9,7 @@ import Layout from '../constants/Layout';
 const { width } = Layout.window;
 
 export default function Input({
-  children, placeholder, keyboardType, label, secureTextEntry,
+  children, placeholder, keyboardType, label, secureTextEntry, value, onChange,
 }) {
   return (
     <>
@@ -21,6 +21,8 @@ export default function Input({
           placeholderTextColor={$gray}
           keyboardType={keyboardType}
           secureTextEntry={secureTextEntry}
+          onChangeText={onChange}
+          value={value}
         />
         {children}
       </View>
@@ -35,6 +37,7 @@ Input.defaultProps = {
   keyboardType: 'default',
   label: null,
   secureTextEntry: false,
+  value: '',
 };
 
 Input.propTypes = {
@@ -43,6 +46,8 @@ Input.propTypes = {
   keyboardType: PropTypes.string,
   label: PropTypes.string,
   secureTextEntry: PropTypes.bool,
+  value: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-  Platform, StatusBar, StyleSheet, View
+  Platform, StatusBar, StyleSheet, View,
 } from 'react-native';
 import { SplashScreen } from 'expo';
 import * as Font from 'expo-font';
@@ -9,7 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
 import PropTypes from 'prop-types';
-import store from './src/store';
+import store from './src/store/reducer';
 
 import BottomTabNavigator from './src/navigation/BottomTabNavigator';
 import useLinking from './src/navigation/useLinking';
@@ -17,6 +17,7 @@ import LoginScreen from './src/screens/LoginScreen';
 import RegistrationScreen from './src/screens/RegistrationScreen';
 import BarcodeScannerScreen from './src/screens/BarcodeScannerScreen';
 import HeaderBackButton from './src/components/HeaderBackButton';
+import Loader from './src/components/Loader';
 
 const Stack = createStackNavigator();
 
@@ -94,6 +95,7 @@ export default function App({ skipLoadingScreen }) {
             />
           </Stack.Navigator>
         </NavigationContainer>
+        <Loader />
       </View>
     </Provider>
   );
