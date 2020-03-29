@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Tab Navigation Template",
+    "name": "Grocee",
     "slug": "self-service-mobile-app",
     "privacy": "public",
     "sdkVersion": "36.0.0",
@@ -18,12 +18,17 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "ignoreNodeModulesValidation": true,
     "updates": {
+      "enabled": true,
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
       "**/*"
     ],
+    "packagerOpts": {
+      "dev":false
+    },
     "ios": {
       "supportsTablet": true
     }
