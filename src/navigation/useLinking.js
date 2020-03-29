@@ -13,6 +13,7 @@ export default function (containerRef) {
           Basket: 'basket',
           Account: 'account',
           BarcodeScanner: 'scanner',
+          Receipt: 'receipt',
         },
       },
       Auth: {

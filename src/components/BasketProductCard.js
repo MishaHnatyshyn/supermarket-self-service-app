@@ -32,8 +32,7 @@ export default function BasketProductCard({ displayCounter }) {
           </Text>
         </View>
       </View>
-      { displayCounter && <Counter />}
-
+      <Counter displayCounter={displayCounter} />
     </TouchableOpacity>
   );
 }

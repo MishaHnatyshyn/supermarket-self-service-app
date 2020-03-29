@@ -7,6 +7,7 @@ import ReceiptsListScreen from '../screens/ReceiptsListScreen';
 import SearchScreen from '../screens/SearchScreen';
 import BasketScreen from '../screens/BasketScreen';
 import AccountScreen from '../screens/AccountScreen';
+import ReceiptDescription from '../screens/ReceiptDescription';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Search';
@@ -53,6 +54,13 @@ export default function BottomTabNavigator({ navigation }) {
         component={AccountScreen}
         options={{
           title: 'My Account',
+        }}
+      />
+      <BottomTab.Screen
+        name="Receipt"
+        component={ReceiptDescription}
+        options={{
+          title: 'Receipt',
         }}
       />
     </BottomTab.Navigator>
