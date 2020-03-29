@@ -14,7 +14,8 @@ import store from './src/store';
 import BottomTabNavigator from './src/navigation/BottomTabNavigator';
 import useLinking from './src/navigation/useLinking';
 import LoginScreen from './src/screens/LoginScreen';
-import RegistrationScreen from "./src/screens/RegistrationScreen";
+import RegistrationScreen from './src/screens/RegistrationScreen';
+import BarcodeScannerScreen from './src/screens/BarcodeScannerScreen';
 
 const Stack = createStackNavigator();
 
@@ -76,6 +77,13 @@ export default function App({ skipLoadingScreen }) {
             <Stack.Screen
               name="Registration"
               component={RegistrationScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="BarcodeScanner"
+              component={BarcodeScannerScreen}
               options={{
                 headerShown: false,
               }}
