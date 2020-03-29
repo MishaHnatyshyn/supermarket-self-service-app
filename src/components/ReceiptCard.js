@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   View, StyleSheet, Text, TouchableOpacity,
 } from 'react-native';
@@ -11,10 +11,23 @@ import Layout from '../constants/Layout';
 const { width } = Layout.window;
 
 export default function ReceiptCard({
-  storeName, address, time, date, price,
+  storeName, address, time, date, price, navigation,
 }) {
+  const onOpen = useCallback(() => {
+    navigation.navigate('Product', {
+      image: 'https://i5.walmartimages.ca/images/Enlarge/094/514/6000200094514.jpg',
+      price: '18.50',
+      productName: 'Apple, kg',
+      description: 'some description about apples...',
+      displayCounter: true,
+    });
+  }, [navigation]);
+
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={onOpen}
+    >
       <View style={styles.receiptsInfo}>
         <Text style={styles.storeName}>{storeName}</Text>
         <Text style={styles.address}>{address}</Text>
@@ -35,6 +48,7 @@ ReceiptCard.propTypes = {
   time: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  navigation: PropTypes.shape.isRequired,
 };
 
 const styles = StyleSheet.create({
