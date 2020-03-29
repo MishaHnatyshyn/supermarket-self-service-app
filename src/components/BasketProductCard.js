@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   TouchableOpacity, StyleSheet, View, Text, Image,
 } from 'react-native';
@@ -11,9 +11,19 @@ import Counter from './Counter';
 
 const { width } = Layout.window;
 
-export default function BasketProductCard({ displayCounter }) {
+export default function BasketProductCard({ displayCounter, navigation }) {
+  const onOpen = useCallback(() => {
+    navigation.navigate('Product', {
+      image: 'https://i5.walmartimages.ca/images/Enlarge/094/514/6000200094514.jpg',
+      price: '18.50',
+      productName: 'Apple, kg',
+      description: 'some description about apples...',
+      displayCounter,
+    });
+  }, [navigation]);
+
   return (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={onOpen}>
       <View style={styles.infoContainer}>
         <View style={styles.imageContainer}>
           <Image
@@ -43,6 +53,7 @@ BasketProductCard.defaultProps = {
 
 BasketProductCard.propTypes = {
   displayCounter: PropTypes.bool,
+  navigation: PropTypes.shape.isRequired,
 };
 
 const styles = StyleSheet.create({

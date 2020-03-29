@@ -7,7 +7,9 @@ import ReceiptsListScreen from '../screens/ReceiptsListScreen';
 import SearchScreen from '../screens/SearchScreen';
 import BasketScreen from '../screens/BasketScreen';
 import AccountScreen from '../screens/AccountScreen';
-import ReceiptDescription from '../screens/ReceiptDescription';
+import ProductScreen from '../screens/ProductScreen';
+import HeaderBackButton from '../components/HeaderBackButton';
+import ReceiptDescriptionScreen from '../screens/ReceiptDescriptionScreen';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Search';
@@ -21,12 +23,33 @@ function LogoTitle() {
   );
 }
 
-export default function BottomTabNavigator({ navigation }) {
+function getHeaderTitle(route) {
+  const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
+
+  switch (routeName) {
+    case 'Search':
+      return (props) => <LogoTitle {...props} />;
+    case 'History':
+      return 'Receipts';
+    case 'Basket':
+      return 'Basket';
+    case 'Account':
+      return 'My Account';
+    case 'Product':
+      return (props) => <LogoTitle {...props} />;
+    default:
+      return (props) => <LogoTitle {...props} />;
+  }
+}
+
+export default function BottomTabNavigator({ navigation, route }) {
   // Set the header title on the parent stack navigator depending on the
   // currently active tab. Learn more in the documentation:
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
 
-  navigation.setOptions({ headerTitle: (props) => <LogoTitle {...props} /> });
+
+  navigation.setOptions({ headerTitle: getHeaderTitle(route) });
+  // navigation.setOptions({ headerTitle: (props) => <LogoTitle {...props} /> });
 
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME} tabBar={BottomNavigationMenu}>
@@ -58,9 +81,18 @@ export default function BottomTabNavigator({ navigation }) {
       />
       <BottomTab.Screen
         name="Receipt"
-        component={ReceiptDescription}
+        component={ReceiptDescriptionScreen}
         options={{
           title: 'Receipt',
+        }}
+      />
+      <BottomTab.Screen
+        name="Product"
+        component={ProductScreen}
+        options={{
+          title: 'Product',
+          headerTitleStyle: { fontSize: 20 },
+          headerLeft: (props) => <HeaderBackButton {...props} />,
         }}
       />
     </BottomTab.Navigator>
@@ -69,4 +101,5 @@ export default function BottomTabNavigator({ navigation }) {
 
 BottomTabNavigator.propTypes = {
   navigation: PropTypes.shape.isRequired,
+  route: PropTypes.shape.isRequired,
 };

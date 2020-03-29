@@ -2,17 +2,18 @@ import React from 'react';
 import {
   View, ScrollView, StyleSheet,
 } from 'react-native';
+import PropTypes from 'prop-types';
 import BasketProductCard from '../components/BasketProductCard';
 import FormButton from '../components/LoginButton';
 
-export default function BasketScreen() {
+export default function BasketScreen({ navigation }) {
   return (
     <>
       <ScrollView>
-        <BasketProductCard />
-        <BasketProductCard />
-        <BasketProductCard />
-        <BasketProductCard />
+        <BasketProductCard navigation={navigation} />
+        <BasketProductCard navigation={navigation} />
+        <BasketProductCard navigation={navigation} />
+        <BasketProductCard navigation={navigation} />
         <View style={styles.confirmButtonPlaceholder} />
       </ScrollView>
       <View style={styles.confirmButtonContainer}>
@@ -23,6 +24,10 @@ export default function BasketScreen() {
     </>
   );
 }
+
+BasketScreen.propTypes = {
+  navigation: PropTypes.shape.isRequired,
+};
 
 const styles = StyleSheet.create({
   confirmButtonContainer: {

@@ -12,7 +12,7 @@ export default function Counter({ displayCounter }) {
 
   return (
     <View style={styles.amountContainer}>
-      <Text style={styles.priceText}>123.00</Text>
+      <Text style={styles.priceText}>18.50</Text>
       { !displayCounter
         ? (<Text style={styles.priceText}>1</Text>)
         : (
@@ -28,7 +28,7 @@ export default function Counter({ displayCounter }) {
           </View>
         )}
 
-      <Text style={styles.priceText}>123.00</Text>
+      <Text style={styles.priceText}>18.50</Text>
     </View>
   );
 }
