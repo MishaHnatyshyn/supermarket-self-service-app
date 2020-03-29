@@ -11,10 +11,10 @@ import Layout from '../constants/Layout';
 const { width } = Layout.window;
 
 export default function ReceiptCard({
-  storeName, address, time, date, price,
+  storeName, address, time, date, price, onOpen,
 }) {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onOpen}>
       <View style={styles.receiptsInfo}>
         <Text style={styles.storeName}>{storeName}</Text>
         <Text style={styles.address}>{address}</Text>
@@ -35,6 +35,7 @@ ReceiptCard.propTypes = {
   time: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  onOpen: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({
