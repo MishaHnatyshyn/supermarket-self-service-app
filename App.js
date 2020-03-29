@@ -68,15 +68,8 @@ export default function App({ skipLoadingScreen }) {
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
           <Stack.Navigator>
             <Stack.Screen
-              name="BarcodeScanner"
-              component={BarcodeScannerScreen}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
               name="Login"
-              component={BarcodeScannerScreen}
+              component={LoginScreen}
               options={{
                 headerShown: false,
               }}
@@ -88,13 +81,13 @@ export default function App({ skipLoadingScreen }) {
                 headerShown: false,
               }}
             />
-            {/*<Stack.Screen*/}
-            {/*  name="BarcodeScanner"*/}
-            {/*  component={BarcodeScannerScreen}*/}
-            {/*  options={{*/}
-            {/*    headerShown: false,*/}
-            {/*  }}*/}
-            {/*/>*/}
+            <Stack.Screen
+              name="BarcodeScanner"
+              component={BarcodeScannerScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
             {/* <Stack.Screen name="Root" component={BottomTabNavigator} /> */}
           </Stack.Navigator>
         </NavigationContainer>

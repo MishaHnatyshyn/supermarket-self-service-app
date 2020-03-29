@@ -1,30 +1,33 @@
 import {
-  StyleSheet, View, Alert, Text, Button,
+  StyleSheet, View, Alert, Text, TouchableOpacity,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import MaterialIcon from '@expo/vector-icons/MaterialCommunityIcons';
 import { Camera } from 'expo-camera';
+import { $gray } from '../constants/Colors';
 
 const FlashMode = {
   ON: 3,
   OFF: 0,
 };
 
-export default function BarcodeScannerScreen({ navigation }) {
-  const onBarCodeRead = (e) => {
-    Alert.alert(`Barcode value is${e.data}`, `Barcode type is${e.type}`);
-  };
-
-
-  const handleBarCodeScanned = ({ type, data }) => {
-    setScanned(true);
-    Alert.alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-  };
-
+export default function BarcodeScannerScreen() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [flashMode, setFlashMode] = useState(FlashMode.OFF);
+
+  const handleBarCodeScanned = ({ type, data }) => {
+    if (scanned) {
+      return;
+    }
+    setScanned(true);
+    Alert.alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    setTimeout(() => setScanned(false), 2000);
+  };
+
+  const handleFlashMode = () => {
+    setFlashMode(flashMode === FlashMode.ON ? FlashMode.OFF : FlashMode.ON);
+  };
 
   useEffect(() => {
     (async () => {
@@ -47,8 +50,14 @@ export default function BarcodeScannerScreen({ navigation }) {
         style={styles.camera}
         flashMode={flashMode}
       />
-      <Button onPress={() => setFlashMode(FlashMode.ON)} title="Turn flash on" />
-      <Button onPress={() => setFlashMode(FlashMode.OFF)} title="Turn flash off" />
+      <View style={styles.flashContainer}>
+        <TouchableOpacity onPress={() => handleFlashMode()}>
+          <MaterialIcon name={flashMode === FlashMode.ON ? 'flashlight-off' : 'flashlight'} size={30} color="black" style={styles.flashIcon} />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.productContainer}>
+        <Text style={styles.scanText}>Please scan a barcode of a product</Text>
+      </View>
     </View>
   );
 }
@@ -63,5 +72,28 @@ const styles = StyleSheet.create({
   camera: {
     height: '60%',
     width: '100%',
+  },
+  flashContainer: {
+    position: 'absolute',
+    top: '5%',
+    right: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 50,
+    height: 50,
+    borderRadius: 30,
+    backgroundColor: $gray,
+    opacity: 0.7,
+  },
+  flashIcon: {
+    transform: [{ rotate: '30deg' }],
+  },
+  productContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  scanText: {
+    fontSize: 20,
   },
 });
