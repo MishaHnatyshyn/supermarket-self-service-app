@@ -9,6 +9,7 @@ import BasketScreen from '../screens/BasketScreen';
 import AccountScreen from '../screens/AccountScreen';
 import ProductScreen from '../screens/ProductScreen';
 import HeaderBackButton from '../components/HeaderBackButton';
+import ReceiptDescriptionScreen from '../screens/ReceiptDescriptionScreen';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Search';
@@ -76,6 +77,13 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={AccountScreen}
         options={{
           title: 'My Account',
+        }}
+      />
+      <BottomTab.Screen
+        name="Receipt"
+        component={ReceiptDescriptionScreen}
+        options={{
+          title: 'Receipt',
         }}
       />
       <BottomTab.Screen

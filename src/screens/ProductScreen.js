@@ -35,6 +35,7 @@ export default function ProductScreen({
         <View style={styles.descriptionContainer}>
           <Text style={styles.description}>{description}</Text>
         </View>
+
         {displayCounter && (
           <View style={styles.basketButton}>
             <FormButton onClick={() => {}}>Add to basket</FormButton>
@@ -56,11 +57,12 @@ ProductScreen.propTypes = {
 
 const styles = StyleSheet.create({
   scrollContainer: {
-    height: '80%',
     backgroundColor: 'white',
   },
   container: {
+    height: '100%',
     alignItems: 'center',
+    paddingBottom: 50,
   },
   productInfo: {
     width,
@@ -86,7 +88,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   image: {
-    height: '100%',
+    height: 300,
     width,
     backgroundColor: 'white',
   },

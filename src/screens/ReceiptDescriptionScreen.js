@@ -1,23 +1,21 @@
 import React from 'react';
-import {
-  View, ScrollView, StyleSheet,
-} from 'react-native';
+import { ScrollView, View, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import BasketProductCard from '../components/BasketProductCard';
 import FormButton from '../components/LoginButton';
 
-export default function BasketScreen({ navigation }) {
+export default function ReceiptDescriptionScreen({ navigation }) {
   return (
     <>
       <ScrollView>
-        <BasketProductCard navigation={navigation} />
-        <BasketProductCard navigation={navigation} />
-        <BasketProductCard navigation={navigation} />
-        <BasketProductCard navigation={navigation} />
+        <BasketProductCard displayCounter={false} navigation={navigation} />
+        <BasketProductCard displayCounter={false} navigation={navigation} />
+        <BasketProductCard displayCounter={false} navigation={navigation} />
+        <BasketProductCard displayCounter={false} navigation={navigation} />
         <View style={styles.confirmButtonPlaceholder} />
       </ScrollView>
       <View style={styles.confirmButtonContainer}>
-        <FormButton onClick={() => {}}>Buy products</FormButton>
+        <FormButton onClick={() => {}}>Generate QR-code</FormButton>
       </View>
       <View />
 
@@ -25,7 +23,7 @@ export default function BasketScreen({ navigation }) {
   );
 }
 
-BasketScreen.propTypes = {
+ReceiptDescriptionScreen.propTypes = {
   navigation: PropTypes.shape.isRequired,
 };
 

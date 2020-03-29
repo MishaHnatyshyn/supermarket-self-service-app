@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
-  StyleSheet, View, Text,
+  StyleSheet, View, Text, ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import ReceiptCard from '../components/ReceiptCard';
@@ -8,39 +8,44 @@ import { $black, $creamWhite } from '../constants/Colors';
 
 
 export default function ReceiptsListScreen({ navigation }) {
+  const onOpen = useCallback(() => {
+    navigation.navigate('Receipt');
+  }, [navigation]);
   return (
-    <View style={styles.container}>
-      <View style={styles.monthDivision}>
-        <Text style={styles.monthName}>December</Text>
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.monthDivision}>
+          <Text style={styles.monthName}>December</Text>
+        </View>
+        <ReceiptCard
+          storeName="Grocee Polytekh"
+          address="Polytekhnicha 8, street"
+          time="10:36"
+          date="13.12.2019"
+          price={326.06}
+          onOpen={onOpen}
+        />
+        <ReceiptCard
+          storeName="Grocee Petrivka"
+          address="Bandery 12A, street"
+          time="10:47"
+          date="16.12.2019"
+          price={14.95}
+          onOpen={onOpen}
+        />
+        <View style={styles.monthDivision}>
+          <Text style={styles.monthName}>January</Text>
+        </View>
+        <ReceiptCard
+          storeName="Grocee Petrivka"
+          address="Bandery 12A, street"
+          time="16:10"
+          date="08.01.2020"
+          price={115}
+          onOpen={onOpen}
+        />
       </View>
-      <ReceiptCard
-        storeName="Grocee Polytekh"
-        address="Polytekhnicha 8, street"
-        time="10:36"
-        date="13.12.2019"
-        price={326.06}
-        navigation={navigation}
-      />
-      <ReceiptCard
-        storeName="Grocee Petrivka"
-        address="Bandery 12A, street"
-        time="10:47"
-        date="16.12.2019"
-        price={14.95}
-        navigation={navigation}
-      />
-      <View style={styles.monthDivision}>
-        <Text style={styles.monthName}>January</Text>
-      </View>
-      <ReceiptCard
-        storeName="Grocee Petrivka"
-        address="Bandery 12A, street"
-        time="16:10"
-        date="08.01.2020"
-        price={115}
-        navigation={navigation}
-      />
-    </View>
+    </ScrollView>
   );
 }
 
