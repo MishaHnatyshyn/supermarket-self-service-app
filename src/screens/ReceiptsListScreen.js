@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet, View, Text,
+  StyleSheet, View, Text, ScrollView,
 } from 'react-native';
 import ReceiptCard from '../components/ReceiptCard';
 import { $black, $creamWhite } from '../constants/Colors';
@@ -8,35 +8,37 @@ import { $black, $creamWhite } from '../constants/Colors';
 
 export default function ReceiptsListScreen() {
   return (
-    <View style={styles.container}>
-      <View style={styles.monthDivision}>
-        <Text style={styles.monthName}>December</Text>
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.monthDivision}>
+          <Text style={styles.monthName}>December</Text>
+        </View>
+        <ReceiptCard
+          storeName="Grocee Polytekh"
+          address="Polytekhnicha 8, street"
+          time="10:36"
+          date="13.12.2019"
+          price={326.06}
+        />
+        <ReceiptCard
+          storeName="Grocee Petrivka"
+          address="Bandery 12A, street"
+          time="10:47"
+          date="16.12.2019"
+          price={14.95}
+        />
+        <View style={styles.monthDivision}>
+          <Text style={styles.monthName}>January</Text>
+        </View>
+        <ReceiptCard
+          storeName="Grocee Petrivka"
+          address="Bandery 12A, street"
+          time="16:10"
+          date="08.01.2020"
+          price={115}
+        />
       </View>
-      <ReceiptCard
-        storeName="Grocee Polytekh"
-        address="Polytekhnicha 8, street"
-        time="10:36"
-        date="13.12.2019"
-        price={326.06}
-      />
-      <ReceiptCard
-        storeName="Grocee Petrivka"
-        address="Bandery 12A, street"
-        time="10:47"
-        date="16.12.2019"
-        price={14.95}
-      />
-      <View style={styles.monthDivision}>
-        <Text style={styles.monthName}>January</Text>
-      </View>
-      <ReceiptCard
-        storeName="Grocee Petrivka"
-        address="Bandery 12A, street"
-        time="16:10"
-        date="08.01.2020"
-        price={115}
-      />
-    </View>
+    </ScrollView>
   );
 }
 
