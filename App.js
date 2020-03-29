@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-  Platform, StatusBar, StyleSheet, View,
+  Platform, StatusBar, StyleSheet, View
 } from 'react-native';
 import { SplashScreen } from 'expo';
 import * as Font from 'expo-font';
@@ -16,6 +16,7 @@ import useLinking from './src/navigation/useLinking';
 import LoginScreen from './src/screens/LoginScreen';
 import RegistrationScreen from './src/screens/RegistrationScreen';
 import BarcodeScannerScreen from './src/screens/BarcodeScannerScreen';
+import HeaderBackButton from './src/components/HeaderBackButton';
 
 const Stack = createStackNavigator();
 
@@ -44,7 +45,7 @@ export default function App({ skipLoadingScreen }) {
         // Load fonts
         await Font.loadAsync({
           ...Ionicons.font,
-          'space-mono': import('./src/assets/fonts/SpaceMono-Regular.ttf'),
+          'space-mono': require('./src/assets/fonts/SpaceMono-Regular.ttf'),
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
@@ -67,6 +68,7 @@ export default function App({ skipLoadingScreen }) {
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
           <Stack.Navigator>
+            <Stack.Screen name="Root" component={BottomTabNavigator} />
             <Stack.Screen
               name="Login"
               component={LoginScreen}
@@ -85,10 +87,11 @@ export default function App({ skipLoadingScreen }) {
               name="BarcodeScanner"
               component={BarcodeScannerScreen}
               options={{
-                headerShown: false,
+                headerTitle: 'Barcode scanner',
+                headerTitleStyle: { fontSize: 20 },
+                headerLeft: (props) => <HeaderBackButton {...props} />,
               }}
             />
-            {/* <Stack.Screen name="Root" component={BottomTabNavigator} /> */}
           </Stack.Navigator>
         </NavigationContainer>
       </View>
@@ -96,6 +99,11 @@ export default function App({ skipLoadingScreen }) {
   );
 }
 
+App.defaultProps = {
+  skipLoadingScreen: false,
+};
+
+
 App.propTypes = {
-  skipLoadingScreen: PropTypes.bool.isRequired,
+  skipLoadingScreen: PropTypes.bool,
 };

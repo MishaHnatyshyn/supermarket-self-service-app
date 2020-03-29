@@ -1,50 +1,58 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import PropTypes from 'prop-types';
-import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import { Image } from 'react-native';
+import BottomNavigationMenu from '../components/BottomNavigationMenu';
+import HistoryScreen from '../screens/HistoryScreen';
+import SearchScreen from '../screens/SearchScreen';
+import BasketScreen from '../screens/BasketScreen';
+import AccountScreen from '../screens/AccountScreen';
 
 const BottomTab = createBottomTabNavigator();
-const INITIAL_ROUTE_NAME = 'Home';
+const INITIAL_ROUTE_NAME = 'Search';
 
-function getHeaderTitle(route) {
-  const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
-
-  switch (routeName) {
-    case 'Home':
-      return 'How to get started';
-    case 'Links':
-      return 'Links to learn more';
-    default:
-      return '';
-  }
+function LogoTitle() {
+  return (
+    <Image
+      style={{ height: 25, width: 160 }}
+      source={require('../assets/images/1.png')}
+    />
+  );
 }
 
-export default function BottomTabNavigator({ navigation, route }) {
+export default function BottomTabNavigator({ navigation }) {
   // Set the header title on the parent stack navigator depending on the
   // currently active tab. Learn more in the documentation:
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
-  navigation.setOptions({ headerTitle: getHeaderTitle(route) });
+
+  navigation.setOptions({ headerTitle: (props) => <LogoTitle {...props} /> });
 
   return (
-    <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
+    <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME} tabBar={BottomNavigationMenu}>
       <BottomTab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="Search"
+        component={SearchScreen}
+        options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+      />
+      <BottomTab.Screen
+        name="History"
+        component={HistoryScreen}
         options={{
-          title: 'Get Started',
-          // eslint-disable-next-line react/prop-types
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
+          title: 'History',
         }}
       />
       <BottomTab.Screen
-        name="Links"
-        component={LinksScreen}
+        name="Basket"
+        component={BasketScreen}
         options={{
-          title: 'Resources',
-          // eslint-disable-next-line react/prop-types
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
+          title: 'Basket',
+        }}
+      />
+      <BottomTab.Screen
+        name="Account"
+        component={AccountScreen}
+        options={{
+          title: 'My Account',
         }}
       />
     </BottomTab.Navigator>
@@ -52,8 +60,5 @@ export default function BottomTabNavigator({ navigation, route }) {
 }
 
 BottomTabNavigator.propTypes = {
-  navigation: PropTypes.shape({
-    setOptions: PropTypes.func.isRequired,
-  }).isRequired,
-  route: PropTypes.string.isRequired,
+  navigation: PropTypes.shape.isRequired,
 };

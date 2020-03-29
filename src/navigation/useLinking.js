@@ -8,9 +8,18 @@ export default function (containerRef) {
       Root: {
         path: 'root',
         screens: {
-          Home: 'home',
-          Links: 'links',
-          Settings: 'settings',
+          Search: 'search',
+          History: 'history',
+          Basket: 'basket',
+          Account: 'account',
+          BarcodeScanner: 'scanner',
+        },
+      },
+      Auth: {
+        path: 'auth',
+        screens: {
+          Login: 'login',
+          Register: 'register',
         },
       },
     },
