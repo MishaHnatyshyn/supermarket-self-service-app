@@ -7,3 +7,4 @@ export const REGISTER_START = 'auth/REGISTER_START';
 export const REGISTER_SUCCESS = 'auth/REGISTER_SUCCESS';
 export const REGISTER_ERROR = 'auth/REGISTER_ERROR';
 export const CLEAR_ERROR = 'auth/CLEAR_ERROR';
+export const LOGOUT = 'auth/LOGOUT';

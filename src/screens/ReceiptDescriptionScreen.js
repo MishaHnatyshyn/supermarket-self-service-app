@@ -18,7 +18,6 @@ export default function ReceiptDescriptionScreen({ navigation }) {
         <FormButton onClick={() => {}}>Generate QR-code</FormButton>
       </View>
       <View />
-
     </>
   );
 }

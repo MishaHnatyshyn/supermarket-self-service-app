@@ -1,10 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet,
-  View,
-  Image,
-  Text,
-  ScrollView,
+  StyleSheet, View, Image, Text, ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import Layout from '../constants/Layout';
@@ -13,9 +9,7 @@ import FormButton from '../components/LoginButton';
 
 const { width } = Layout.window;
 
-export default function ProductScreen({
-  route,
-}) {
+export default function ProductScreen({ route }) {
   const {
     image, productName, price, description, displayCounter,
   } = route.params;
@@ -23,11 +17,7 @@ export default function ProductScreen({
   return (
     <ScrollView style={styles.scrollContainer}>
       <View style={styles.container}>
-        <Image
-          style={styles.image}
-          source={{ uri: image }}
-          resizeMode="contain"
-        />
+        <Image style={styles.image} source={{ uri: image }} resizeMode="contain" />
         <View style={styles.productInfo}>
           <Text style={styles.productName}>{productName}</Text>
           <Text style={styles.price}>{price}</Text>

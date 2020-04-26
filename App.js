@@ -105,7 +105,6 @@ App.defaultProps = {
   skipLoadingScreen: false,
 };
 
-
 App.propTypes = {
   skipLoadingScreen: PropTypes.bool,
 };

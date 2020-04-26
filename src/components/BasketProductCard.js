@@ -3,9 +3,7 @@ import {
   TouchableOpacity, StyleSheet, View, Text, Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import {
-  $black, $gray, $realWhite,
-} from '../constants/Colors';
+import { $black, $gray, $realWhite } from '../constants/Colors';
 import Layout from '../constants/Layout';
 import Counter from './Counter';
 
@@ -34,10 +32,7 @@ export default function BasketProductCard({ displayCounter, navigation }) {
         </View>
         <View style={styles.descriptionContainer}>
           <Text style={styles.descriptionTitle}>Apple</Text>
-          <Text
-            style={styles.descriptionText}
-            numberOfLines={2}
-          >
+          <Text style={styles.descriptionText} numberOfLines={2}>
             Very very nice apple lorem ipsum sdf asdf asf sadf sdf sadf s f
           </Text>
         </View>

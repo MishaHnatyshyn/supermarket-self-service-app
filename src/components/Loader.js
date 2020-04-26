@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet, Text,
-} from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -10,7 +8,7 @@ import { getIsLoaderVisible } from '../store/ui/selectors';
 
 const animation = {
   0: {
-    scale: 0.90,
+    scale: 0.9,
   },
   0.5: {
     scale: 1.1,
@@ -32,9 +30,13 @@ function Loader({ isVisible }) {
         iterationCount="infinite"
         useNativeDriver
       />
-      <Text style={{
-        marginTop: -35, fontSize: 18, width: '100%', textAlign: 'center',
-      }}
+      <Text
+        style={{
+          marginTop: -35,
+          fontSize: 18,
+          width: '100%',
+          textAlign: 'center',
+        }}
       >
         Loading ...
       </Text>

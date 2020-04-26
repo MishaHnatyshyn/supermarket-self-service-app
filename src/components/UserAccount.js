@@ -4,13 +4,22 @@ import {
 } from 'react-native';
 import Icon from '@expo/vector-icons/SimpleLineIcons';
 import { Ionicons } from '@expo/vector-icons';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import {
   $gray, $green, $red, $semiDarkGray,
 } from '../constants/Colors';
+import { logout } from '../store/auth/actions';
 
-const paymentDataMock = [{ data: '1234********0422', type: 'visa' }, { data: '1234********0443', type: 'mastercard ' }];
+const paymentDataMock = [
+  { data: '1234********0422', type: 'visa' },
+  { data: '1234********0443', type: 'mastercard ' },
+];
 
-export default function UserAccount() {
+function UserAccount({ logoutUser }) {
+  const onLogout = () => {
+    logoutUser();
+  };
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
@@ -38,10 +47,15 @@ export default function UserAccount() {
             <View style={styles.paymentRecord}>
               <View style={styles.paymentRecordTitle}>
                 {item.type === 'visa' ? (
-                  <Image style={styles.paymentTypeIcon} source={require('../assets/images/visa.png')} />
+                  <Image
+                    style={styles.paymentTypeIcon}
+                    source={require('../assets/images/visa.png')}
+                  />
                 ) : (
-                  <Image style={styles.paymentTypeIcon} source={require('../assets/images/mastercard.png')} />
-
+                  <Image
+                    style={styles.paymentTypeIcon}
+                    source={require('../assets/images/mastercard.png')}
+                  />
                 )}
                 <Text>{item.data}</Text>
               </View>
@@ -54,18 +68,24 @@ export default function UserAccount() {
         />
       </View>
       <View>
-        <TouchableOpacity style={styles.signOutButton}>
-          <Text style={styles.signOutButtonText}>
-            SIGN OUT
-          </Text>
+        <TouchableOpacity style={styles.signOutButton} onPress={onLogout}>
+          <Text style={styles.signOutButtonText}>SIGN OUT</Text>
           <Ionicons name="ios-log-out" size={30} color={$gray} />
-
         </TouchableOpacity>
       </View>
-
     </View>
   );
 }
+
+UserAccount.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  logoutUser: () => dispatch(logout()),
+});
+
+export default connect(null, mapDispatchToProps)(UserAccount);
 
 const styles = StyleSheet.create({
   container: {

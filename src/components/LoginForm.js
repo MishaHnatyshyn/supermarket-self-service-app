@@ -18,11 +18,15 @@ function LoginForm({
 }) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [isEmailError, setEmailError] = React.useState(false);
+  const [isPasswordError, setPasswordError] = React.useState(false);
   const navigateToRegistration = React.useCallback(() => {
     navigation.navigate('Registration');
   }, [navigation]);
 
-  React.useEffect(() => clearErrors, []);
+  React.useEffect(() => {
+    clearErrors();
+  }, []);
 
   React.useEffect(() => {
     if (isAuthorized) {
@@ -30,7 +34,23 @@ function LoginForm({
     }
   }, [isAuthorized]);
 
+  const onEmailChange = (text) => {
+    setEmailError(false);
+    setEmail(text);
+  };
+
+  const onPasswordChange = (text) => {
+    setPasswordError(false);
+    setPassword(text);
+  };
+
   const submitForm = React.useCallback(() => {
+    if (email === '') {
+      return setEmailError(true);
+    }
+    if (password === '') {
+      return setPasswordError(true);
+    }
     startLogin(email, password);
   }, [email, password, startLogin]);
 
@@ -38,12 +58,25 @@ function LoginForm({
     <>
       <Text style={styles.title}>Sign in to continue</Text>
       <View style={styles.info}>
-
-        <Input label="Email" keyboardType="email-address" placeholder="Your email" onChange={setEmail} value={email}>
+        <Input
+          label="Email"
+          keyboardType="email-address"
+          placeholder="Your email"
+          onChange={onEmailChange}
+          value={email}
+          isError={isEmailError}
+        >
           <MaterialIcon name="email-outline" size={25} color={$gray} style={styles.inputIcon} />
         </Input>
 
-        <Input label="Password" placeholder="Your password" secureTextEntry onChange={setPassword} value={password}>
+        <Input
+          label="Password"
+          placeholder="Your password"
+          secureTextEntry
+          onChange={onPasswordChange}
+          value={password}
+          isError={isPasswordError}
+        >
           <SimpleLineIcons name="lock" size={25} color={$gray} style={styles.inputIcon} />
         </Input>
 
@@ -55,9 +88,7 @@ function LoginForm({
         </View>
       </View>
       <View style={[styles.errorBox, { opacity: isError ? 1 : 0 }]}>
-        <Text style={styles.errorText}>
-          Wrong credentials! Try again.
-        </Text>
+        <Text style={styles.errorText}>Wrong credentials! Try again.</Text>
       </View>
       <FormButton onClick={submitForm}>SIGN IN</FormButton>
     </>
@@ -70,12 +101,15 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  startLogin: (email, password) => { dispatch(login(email, password)); },
-  clearErrors: clearAuthErrors,
+  startLogin: (email, password) => {
+    dispatch(login(email, password));
+  },
+  clearErrors: () => {
+    dispatch(clearAuthErrors());
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
-
 
 LoginForm.propTypes = {
   navigation: PropTypes.shape.isRequired,

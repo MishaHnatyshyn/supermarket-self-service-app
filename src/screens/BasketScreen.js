@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  View, ScrollView, StyleSheet,
-} from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import BasketProductCard from '../components/BasketProductCard';
 import FormButton from '../components/LoginButton';
@@ -20,7 +18,6 @@ export default function BasketScreen({ navigation }) {
         <FormButton onClick={() => {}}>Buy products</FormButton>
       </View>
       <View />
-
     </>
   );
 }

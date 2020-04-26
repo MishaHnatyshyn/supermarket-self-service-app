@@ -6,6 +6,7 @@ import {
   REGISTER_ERROR,
   REGISTER_START,
   REGISTER_SUCCESS,
+  LOGOUT,
 } from './actionTypes';
 
 const initialState = {
@@ -45,6 +46,8 @@ export default function authReducer(state = initialState, action) {
         isLoading: false,
         isError: false,
       };
+    case LOGOUT:
+      return initialState;
     default:
       return state;
   }

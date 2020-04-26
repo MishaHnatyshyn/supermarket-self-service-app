@@ -45,14 +45,15 @@ export default function BarcodeScannerScreen() {
 
   return (
     <View style={styles.container}>
-      <Camera
-        onBarCodeScanned={handleBarCodeScanned}
-        style={styles.camera}
-        flashMode={flashMode}
-      />
+      <Camera onBarCodeScanned={handleBarCodeScanned} style={styles.camera} flashMode={flashMode} />
       <View style={styles.flashContainer}>
         <TouchableOpacity onPress={() => handleFlashMode()}>
-          <MaterialIcon name={flashMode === FlashMode.ON ? 'flashlight-off' : 'flashlight'} size={30} color="black" style={styles.flashIcon} />
+          <MaterialIcon
+            name={flashMode === FlashMode.ON ? 'flashlight-off' : 'flashlight'}
+            size={30}
+            color="black"
+            style={styles.flashIcon}
+          />
         </TouchableOpacity>
       </View>
       <View style={styles.productContainer}>

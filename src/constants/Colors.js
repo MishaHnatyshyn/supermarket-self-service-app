@@ -8,7 +8,6 @@ export const $black = '#000';
 export const $red = 'rgba(255,86,79,0.74)';
 export const $semiDarkGray = 'gray';
 
-
 export default {
   tintColor: $tintColor,
   tabIconDefault: '#ccc',

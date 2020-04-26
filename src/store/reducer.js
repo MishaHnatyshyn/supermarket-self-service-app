@@ -14,15 +14,11 @@ const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_E
   ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
   : compose;
 
-
 const sagaMiddleware = createSagaMiddleware();
 
 const middleware = [sagaMiddleware];
 
-const enhancer = composeEnhancers(
-  applyMiddleware(...middleware),
-);
-
+const enhancer = composeEnhancers(applyMiddleware(...middleware));
 
 const rootReducer = combineReducers({
   store: storeReducer,

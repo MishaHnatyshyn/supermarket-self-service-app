@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import ReceiptCard from '../components/ReceiptCard';
 import { $black, $creamWhite } from '../constants/Colors';
 
-
 export default function ReceiptsListScreen({ navigation }) {
   const onOpen = useCallback(() => {
     navigation.navigate('Receipt');
@@ -69,7 +68,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
-    shadowOpacity: 0.20,
+    shadowOpacity: 0.2,
     shadowRadius: 1.41,
 
     elevation: 2,
