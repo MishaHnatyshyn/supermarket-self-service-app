@@ -4,22 +4,19 @@ import {
 } from 'react-native';
 import Icon from '@expo/vector-icons/SimpleLineIcons';
 import { Ionicons } from '@expo/vector-icons';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import {
   $gray, $green, $red, $semiDarkGray,
 } from '../constants/Colors';
-import { logout } from '../store/auth/actions';
+import { logout } from '../store/auth/asyncActions';
 
 const paymentDataMock = [
   { data: '1234********0422', type: 'visa' },
   { data: '1234********0443', type: 'mastercard ' },
 ];
 
-function UserAccount({ logoutUser }) {
-  const onLogout = () => {
-    logoutUser();
-  };
+function UserAccount({ onLogout }) {
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
@@ -78,11 +75,11 @@ function UserAccount({ logoutUser }) {
 }
 
 UserAccount.propTypes = {
-  logoutUser: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  logoutUser: () => dispatch(logout()),
+  onLogout: () => { dispatch(logout()); },
 });
 
 export default connect(null, mapDispatchToProps)(UserAccount);

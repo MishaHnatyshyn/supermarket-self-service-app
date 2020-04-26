@@ -11,7 +11,8 @@ import FormButton from './LoginButton';
 import { $gray } from '../constants/Colors';
 import Input from './Input';
 import { getIsAuthError, getIsAuthLoading, getUserId } from '../store/auth/selectors';
-import { clearAuthErrors, login } from '../store/auth/actions';
+import { clearAuthErrors } from '../store/auth/actions';
+import { login } from '../store/auth/asyncActions';
 
 function LoginForm({
   navigation, isError, isAuthorized, startLogin, clearErrors,

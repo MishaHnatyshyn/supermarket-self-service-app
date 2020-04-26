@@ -1,12 +1,10 @@
 import {
   applyMiddleware, combineReducers, compose, createStore,
 } from 'redux';
-import createSagaMiddleware from 'redux-saga';
-import initialSaga from './initialSaga';
-import storeReducer from './store/reducer';
-import searchReducer from './search/reducer';
+import thunk from 'redux-thunk';
 import authReducer from './auth/reducer';
 import uiReducer from './ui/reducer';
+import { getUserDataFromStorageAndSetInStore } from './auth/asyncActions';
 
 const initialState = {};
 
@@ -14,21 +12,18 @@ const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_E
   ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
   : compose;
 
-const sagaMiddleware = createSagaMiddleware();
 
-const middleware = [sagaMiddleware];
+const middleware = [thunk];
 
 const enhancer = composeEnhancers(applyMiddleware(...middleware));
 
 const rootReducer = combineReducers({
-  store: storeReducer,
-  search: searchReducer,
   auth: authReducer,
   ui: uiReducer,
 });
 
 const store = createStore(rootReducer, initialState, enhancer);
 
-sagaMiddleware.run(initialSaga);
+store.dispatch(getUserDataFromStorageAndSetInStore());
 
 export default store;

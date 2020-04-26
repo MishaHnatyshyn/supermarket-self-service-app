@@ -1,4 +1,11 @@
-import { HIDE_LOADER, SHOW_LOADER } from './actionTypes';
+import {
+  LOGIN_ERROR,
+  LOGIN_START,
+  LOGIN_SUCCESS,
+  REGISTER_ERROR,
+  REGISTER_START,
+  REGISTER_SUCCESS,
+} from '../auth/actionTypes';
 
 const initialState = {
   showGlobalLoader: false,
@@ -6,12 +13,16 @@ const initialState = {
 
 export default function uiReducer(state = initialState, action) {
   switch (action.type) {
-    case SHOW_LOADER:
+    case LOGIN_START:
+    case REGISTER_START:
       return {
         ...state,
         showGlobalLoader: true,
       };
-    case HIDE_LOADER:
+    case LOGIN_SUCCESS:
+    case LOGIN_ERROR:
+    case REGISTER_SUCCESS:
+    case REGISTER_ERROR:
       return {
         ...state,
         showGlobalLoader: false,

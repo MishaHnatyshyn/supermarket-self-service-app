@@ -14,7 +14,8 @@ import FormButton from './LoginButton';
 import { $gray } from '../constants/Colors';
 import Input from './Input';
 import { getIsAuthError, getIsAuthLoading, getUserId } from '../store/auth/selectors';
-import { clearAuthErrors, register } from '../store/auth/actions';
+import { clearAuthErrors } from '../store/auth/actions';
+import { register } from '../store/auth/asyncActions';
 
 const emailRegExp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
