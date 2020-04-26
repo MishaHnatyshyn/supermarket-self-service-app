@@ -4,7 +4,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import * as React from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import MaterialIcon from '@expo/vector-icons/MaterialCommunityIcons';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import PropTypes from 'prop-types';
@@ -21,19 +21,19 @@ const emailRegExp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 function RegistrationForm({
   navigation, isError, isAuthorized, startRegister, clearErrors,
 }) {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [passwordRepeat, setPasswordRepeat] = React.useState('');
-  const [isEmailError, setEmailError] = React.useState(false);
-  const [isPasswordError, setPasswordError] = React.useState(false);
-  const navigateToLogin = React.useCallback(() => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordRepeat, setPasswordRepeat] = useState('');
+  const [isEmailError, setEmailError] = useState(false);
+  const [isPasswordError, setPasswordError] = useState(false);
+  const navigateToLogin = useCallback(() => {
     navigation.navigate('Login');
   }, [navigation]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     clearErrors();
   }, []);
-  React.useEffect(() => {
+  useEffect(() => {
     if (isAuthorized) {
       navigation.navigate('Account');
     }
@@ -54,7 +54,7 @@ function RegistrationForm({
     setPassword(text);
   };
 
-  const submitForm = React.useCallback(() => {
+  const submitForm = useCallback(() => {
     if (!emailRegExp.test(email)) {
       return setEmailError(true);
     }
