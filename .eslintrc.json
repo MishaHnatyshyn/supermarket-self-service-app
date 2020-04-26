@@ -1,34 +1,30 @@
 {
-    "env": {
-        "browser": true,
-        "es6": true
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": ["plugin:react/recommended", "airbnb"],
+  "globals": {
+    "require": "readonly",
+    "Atomics": "readonly",
+    "__DEV__": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "extends": [
-        "plugin:react/recommended",
-        "airbnb"
-    ],
-    "globals": {
-        "require": "readonly",
-        "Atomics": "readonly",
-        "__DEV__": "readonly",
-        "SharedArrayBuffer": "readonly"
-    },
-    "parser": "babel-eslint",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 2018,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react"
-    ],
-    "rules": {
-        "global-require": "off",
-        "react/jsx-filename-extension": 0,
-        "react/jsx-props-no-spreading": 0,
-        "no-use-before-define": 0,
-        "react/no-unescaped-entities": "off"
-    }
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": ["react"],
+  "rules": {
+    "global-require": "off",
+    "react/jsx-filename-extension": 0,
+    "react/jsx-props-no-spreading": 0,
+    "no-use-before-define": 0,
+    "react/no-unescaped-entities": "off",
+    "consistent-return": 0
+  }
 }

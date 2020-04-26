@@ -14,11 +14,15 @@ import {
 
 export const fetchNextPage = createAction(FETCH_NEXT_PAGE);
 export const fetchPrevPage = createAction(FETCH_PREV_PAGE);
-export const fetchSearchSuccess = createAction(FETCH_SEARCH_SUCCESS, ({
-  data, meta: { paging, currentFilters, filtering },
-}) => ({
-  products: data, paging, appliedFilters: currentFilters, availableFilters: filtering,
-}));
+export const fetchSearchSuccess = createAction(
+  FETCH_SEARCH_SUCCESS,
+  ({ data, meta: { paging, currentFilters, filtering } }) => ({
+    products: data,
+    paging,
+    appliedFilters: currentFilters,
+    availableFilters: filtering,
+  })
+);
 export const fetchSearchError = createAction(FETCH_SEARCH_ERROR, (error) => error);
 export const fetchSearchStart = createAction(FETCH_SEARCH_START);
 export const changeSortParam = createAction(CHANGE_SORT_PARAM, (sortParam) => sortParam);

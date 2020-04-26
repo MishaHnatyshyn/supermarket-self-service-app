@@ -8,7 +8,7 @@ import {
 
 export const fetchStoresSuccess = createAction(
   FETCH_AVAILABLE_STORES_SUCCESS,
-  (storesData) => storesData,
+  (storesData) => storesData
 );
 export const fetchStoresError = createAction(FETCH_AVAILABLE_STORES_ERROR, (error) => error);
 export const fetchStoresStart = createAction(FETCH_AVAILABLE_STORES_START);

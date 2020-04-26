@@ -4,10 +4,7 @@ import PropTypes from 'prop-types';
 
 export default function HeaderBackButton({ onPress }) {
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={styles.container}
-    >
+    <TouchableOpacity onPress={onPress} style={styles.container}>
       <Image source={require('../assets/images/back.png')} style={styles.image} />
     </TouchableOpacity>
   );

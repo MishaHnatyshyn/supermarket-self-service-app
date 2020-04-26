@@ -5,6 +5,8 @@ import createSagaMiddleware from 'redux-saga';
 import initialSaga from './initialSaga';
 import storeReducer from './store/reducer';
 import searchReducer from './search/reducer';
+import authReducer from './auth/reducer';
+import uiReducer from './ui/reducer';
 
 const initialState = {};
 
@@ -12,19 +14,17 @@ const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_E
   ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
   : compose;
 
-
 const sagaMiddleware = createSagaMiddleware();
 
 const middleware = [sagaMiddleware];
 
-const enhancer = composeEnhancers(
-  applyMiddleware(...middleware),
-);
-
+const enhancer = composeEnhancers(applyMiddleware(...middleware));
 
 const rootReducer = combineReducers({
   store: storeReducer,
   search: searchReducer,
+  auth: authReducer,
+  ui: uiReducer,
 });
 
 const store = createStore(rootReducer, initialState, enhancer);

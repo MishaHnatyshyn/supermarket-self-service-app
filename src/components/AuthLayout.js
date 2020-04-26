@@ -8,7 +8,6 @@ import Layout from '../constants/Layout';
 
 const { width } = Layout.window;
 
-
 export default function AuthLayout({ children, isRegistration }) {
   return (
     <View style={{ ...styles.container, padding: isRegistration ? '10% 3%' : '25% 3%' }}>
@@ -72,6 +71,9 @@ const styles = StyleSheet.create({
   picture: {
     width: 65,
     height: 55,
+  },
+  scrollContainer: {
+    width: '100%',
   },
   block: {
     flexDirection: 'column',

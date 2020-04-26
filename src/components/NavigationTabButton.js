@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import PropTypes from 'prop-types';
 import Layout from '../constants/Layout';
@@ -9,7 +9,7 @@ const $white = '#f9f9f7';
 export default function NavigationTabButton({
   route, navigate, children, isActive,
 }) {
-  const onNavigate = React.useCallback(() => {
+  const onNavigate = useCallback(() => {
     if (!isActive) {
       navigate(route);
     }

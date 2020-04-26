@@ -13,7 +13,9 @@ export default function UnauthorizedUserAccount({ navigation }) {
       <Text style={styles.signInText}>
         To gain the full experience of using Grocee please sign in of create an Grocee account
       </Text>
-      <LoginButton onClick={() => navigation.navigate('Login')}>Sign in to your account</LoginButton>
+      <LoginButton onClick={() => navigation.navigate('Login')}>
+        Sign in to your account
+      </LoginButton>
       <TouchableOpacity onPress={() => navigation.navigate('Registration')}>
         <Text style={styles.signUpButton}>Sign up for Grocee</Text>
       </TouchableOpacity>
@@ -42,12 +44,10 @@ const styles = StyleSheet.create({
     marginLeft: '5%',
     marginRight: '5%',
     marginBottom: 25,
-
   },
   signUpButton: {
     color: $green,
     fontSize: 20,
     marginTop: 25,
-
   },
 });

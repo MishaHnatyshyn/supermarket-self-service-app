@@ -18,9 +18,7 @@ export default function ReceiptCard({
       <View style={styles.receiptsInfo}>
         <Text style={styles.storeName}>{storeName}</Text>
         <Text style={styles.address}>{address}</Text>
-        <Text style={styles.timeInfo}>
-          {`${time}, ${date}`}
-        </Text>
+        <Text style={styles.timeInfo}>{`${time}, ${date}`}</Text>
       </View>
       <View style={styles.priceContainer}>
         <Text style={styles.price}>{price}</Text>

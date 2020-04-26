@@ -1,6 +1,4 @@
-import {
-  StyleSheet, Text, TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import Layout from '../constants/Layout';
