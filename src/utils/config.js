@@ -8,3 +8,4 @@ export const SEARCH_API_URL = '/products';
 export const STORE_LIST_API_URL = '/stores';
 export const AUTH_LOGIN_API_URL = '/auth/login';
 export const AUTH_REGISTER_API_URL = '/auth/signup';
+export const CATEGORIES_API_URL = '/categories';
