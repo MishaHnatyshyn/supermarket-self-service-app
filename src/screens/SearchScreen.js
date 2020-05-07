@@ -1,10 +1,13 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import SearchForm from '../components/SearchForm';
+import SearchResultBlock from '../components/SearchResultBlock';
 
 export default function SearchScreen() {
   return (
     <View>
-      <Text>Search</Text>
+      <SearchForm />
+      <SearchResultBlock />
     </View>
   );
 }
