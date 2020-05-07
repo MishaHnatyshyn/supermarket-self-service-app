@@ -17,13 +17,14 @@ export default function Input({
   value,
   onChange,
   isError,
+  padding,
 }) {
   return (
     <>
       {label && <Text style={styles.label}>{label}</Text>}
       <View>
         <TextInput
-          style={[styles.field, isError && styles.error]}
+          style={[styles.field, isError && styles.error, { padding }]}
           placeholder={placeholder}
           placeholderTextColor={$gray}
           keyboardType={keyboardType}
@@ -44,6 +45,7 @@ Input.defaultProps = {
   secureTextEntry: false,
   isError: false,
   value: '',
+  padding: 13,
 };
 
 Input.propTypes = {
@@ -54,6 +56,7 @@ Input.propTypes = {
   secureTextEntry: PropTypes.bool,
   isError: PropTypes.bool,
   value: PropTypes.string,
+  padding: PropTypes.number,
   onChange: PropTypes.func.isRequired,
 };
 

@@ -6,17 +6,26 @@ import { $green, $white } from '../constants/Colors';
 
 const { width } = Layout.window;
 
-export default function FormButton({ children, onClick }) {
+export default function FormButton({
+  children, onClick, buttonStyles, textStyles,
+}) {
   return (
-    <TouchableOpacity onPress={onClick} style={styles.button}>
-      <Text style={styles.buttonText}>{children}</Text>
+    <TouchableOpacity onPress={onClick} style={[styles.button, buttonStyles]}>
+      <Text style={[styles.buttonText, textStyles]}>{children}</Text>
     </TouchableOpacity>
   );
 }
 
+FormButton.defaultProps = {
+  buttonStyles: {},
+  textStyles: {},
+};
+
 FormButton.propTypes = {
   children: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
+  buttonStyles: PropTypes.shape,
+  textStyles: PropTypes.shape,
 };
 
 const styles = StyleSheet.create({

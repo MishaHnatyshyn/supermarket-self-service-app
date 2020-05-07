@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 import { SplashScreen } from 'expo';
 import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
@@ -17,7 +16,7 @@ import LoginScreen from './src/screens/LoginScreen';
 import RegistrationScreen from './src/screens/RegistrationScreen';
 import BarcodeScannerScreen from './src/screens/BarcodeScannerScreen';
 import HeaderBackButton from './src/components/HeaderBackButton';
-import Loader from './src/components/Loader';
+import GlobalLoader from './src/components/GlobalLoader';
 
 const Stack = createStackNavigator();
 
@@ -45,7 +44,6 @@ export default function App({ skipLoadingScreen }) {
 
         // Load fonts
         await Font.loadAsync({
-          ...Ionicons.font,
           'space-mono': require('./src/assets/fonts/SpaceMono-Regular.ttf'),
         });
       } catch (e) {
@@ -95,7 +93,7 @@ export default function App({ skipLoadingScreen }) {
             />
           </Stack.Navigator>
         </NavigationContainer>
-        <Loader />
+        <GlobalLoader />
       </View>
     </Provider>
   );
