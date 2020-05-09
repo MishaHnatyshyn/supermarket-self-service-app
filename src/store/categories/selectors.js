@@ -1,5 +1,5 @@
 import {
-  compose, prop, map, find,
+  compose, prop, map,
 } from 'lodash/fp';
 import { createSelector } from 'reselect';
 

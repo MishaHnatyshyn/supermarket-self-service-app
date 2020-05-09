@@ -1,13 +1,11 @@
 import React from 'react';
-import {
-  StyleSheet, View, ScrollView,
-} from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import {
   getIsLoading,
-  getProducts,
+  getProductsForDisplay,
   getWasSearchPerformed,
   isLoadMoreEnabled,
 } from '../store/search/selectors';
@@ -15,9 +13,15 @@ import SearchResultItem from './SearchResultItem';
 import Loader from './Loader';
 import EmptySearchResultsMessage from './EmptySearchResultsMessage';
 import SearchLoadMoreSection from './SearchLoadMoreSection';
+import { addToBasket, changeBasketItemQuantity } from '../store/basket/asyncActions';
 
 function SearchResultBlock({
-  products, isLoading, wasSearchPerformed, displayLoadMore,
+  products,
+  isLoading,
+  wasSearchPerformed,
+  displayLoadMore,
+  addToBasket,
+  updateQuantity,
 }) {
   const displayProducts = !isLoading;
   const displayEmptySearchMessage = !isLoading && products.length === 0;
@@ -26,7 +30,14 @@ function SearchResultBlock({
     <ScrollView style={styles.scrollContainer}>
       <View style={styles.container}>
         <Loader isVisible={isLoading} />
-        {displayProducts && products.map((product) => <SearchResultItem {...product} />)}
+        {displayProducts &&
+          products.map((product) => (
+            <SearchResultItem
+              {...product}
+              addToBasket={addToBasket}
+              updateQuantity={updateQuantity}
+            />
+          ))}
         {displayEmptySearchMessage && (
           <EmptySearchResultsMessage wasSearchPerformed={wasSearchPerformed} />
         )}
@@ -37,13 +48,31 @@ function SearchResultBlock({
 }
 
 SearchResultBlock.propTypes = {
-  products: PropTypes.arrayOf(
-    PropTypes.shape,
-  ).isRequired,
+  products: PropTypes.arrayOf(PropTypes.shape).isRequired,
   isLoading: PropTypes.bool.isRequired,
   wasSearchPerformed: PropTypes.bool.isRequired,
   displayLoadMore: PropTypes.bool.isRequired,
+  updateQuantity: PropTypes.func.isRequired,
+  addToBasket: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = createStructuredSelector({
+  products: getProductsForDisplay,
+  isLoading: getIsLoading,
+  wasSearchPerformed: getWasSearchPerformed,
+  displayLoadMore: isLoadMoreEnabled,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addToBasket: (productId) => {
+    dispatch(addToBasket(productId));
+  },
+  updateQuantity: (lineItemId, productId, quantity) => {
+    dispatch(changeBasketItemQuantity(lineItemId, productId, quantity));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchResultBlock);
 
 const styles = StyleSheet.create({
   scrollContainer: {
@@ -61,12 +90,3 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
 });
-
-const mapStateToProps = createStructuredSelector({
-  products: getProducts,
-  isLoading: getIsLoading,
-  wasSearchPerformed: getWasSearchPerformed,
-  displayLoadMore: isLoadMoreEnabled,
-});
-
-export default connect(mapStateToProps)(SearchResultBlock);
