@@ -4,6 +4,6 @@ export const CURRENCY_SYMBOLS = {
   EUR: '€',
 };
 
-export const formatPrice = (price, currency) => (
+export const formatPrice = (price, currency = 'UAH') => (
   `${price.toFixed(2)} ${CURRENCY_SYMBOLS[currency]}`
 );

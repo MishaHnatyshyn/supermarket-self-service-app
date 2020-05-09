@@ -6,19 +6,33 @@ import PropTypes from 'prop-types';
 import { $black, $gray, $realWhite } from '../constants/Colors';
 import Layout from '../constants/Layout';
 import Counter from './Counter';
+import { DEFAULT_PHOTO_URI } from '../constants/Defaults';
 
 const { width } = Layout.window;
 
-export default function BasketProductCard({ displayCounter, navigation }) {
+export default function BasketProductCard({
+  displayCounter,
+  navigation,
+  updateQuantity,
+  id,
+  product,
+  name,
+  description,
+  price,
+  quantity,
+  sum,
+  photo,
+  isLoading,
+}) {
   const onOpen = useCallback(() => {
     navigation.navigate('Product', {
-      image: 'https://i5.walmartimages.ca/images/Enlarge/094/514/6000200094514.jpg',
-      price: '18.50',
-      productName: 'Apple, kg',
-      description: 'some description about apples...',
-      displayCounter,
+      id: product,
     });
   }, [navigation]);
+
+  const updateProductQuantity = React.useCallback((newQuantity) => {
+    updateQuantity(id, product, newQuantity);
+  }, [product, updateQuantity]);
 
   return (
     <TouchableOpacity style={styles.card} onPress={onOpen}>
@@ -26,18 +40,26 @@ export default function BasketProductCard({ displayCounter, navigation }) {
         <View style={styles.imageContainer}>
           <Image
             style={styles.image}
-            source={{ uri: 'https://i5.walmartimages.ca/images/Enlarge/094/514/6000200094514.jpg' }}
+            source={{ uri: photo || DEFAULT_PHOTO_URI }}
             resizeMode="contain"
           />
         </View>
         <View style={styles.descriptionContainer}>
-          <Text style={styles.descriptionTitle}>Apple</Text>
+          <Text style={styles.descriptionTitle}>{name}</Text>
           <Text style={styles.descriptionText} numberOfLines={2}>
-            Very very nice apple lorem ipsum sdf asdf asf sadf sdf sadf s f
+            {description}
           </Text>
         </View>
       </View>
-      <Counter displayCounter={displayCounter} />
+      <Counter
+        displayCounter={displayCounter}
+        changeQuantity={updateProductQuantity}
+        displayPrices
+        price={price}
+        sum={sum}
+        quantity={quantity}
+        isLoading={isLoading}
+      />
     </TouchableOpacity>
   );
 }
@@ -49,6 +71,16 @@ BasketProductCard.defaultProps = {
 BasketProductCard.propTypes = {
   displayCounter: PropTypes.bool,
   navigation: PropTypes.shape.isRequired,
+  updateQuantity: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
+  product: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  quantity: PropTypes.number.isRequired,
+  sum: PropTypes.number.isRequired,
+  photo: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 const styles = StyleSheet.create({

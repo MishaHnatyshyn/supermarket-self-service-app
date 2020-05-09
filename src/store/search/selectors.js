@@ -1,5 +1,6 @@
 import { compose, prop } from 'lodash/fp';
 import { createSelector } from 'reselect';
+import { getBasketItems, getCurrentProcessingProductId } from '../basket/selectors';
 
 export const root = (state) => state.search;
 
@@ -8,6 +9,26 @@ export const getPaging = compose(prop('paging'), root);
 export const getSearchInputValue = compose(prop('searchInput'), root);
 
 export const getProducts = compose(prop('products'), root);
+
+export const getProductsForDisplay = createSelector(
+  getProducts,
+  getCurrentProcessingProductId,
+  getBasketItems,
+  (products, currentProcessingProductId, baksetItems) => {
+    return products.map((product) => {
+      const isLoading = product.id === currentProcessingProductId;
+      const basketLineItem = baksetItems.find((item) => item.product === product.id);
+      const basketData = basketLineItem
+        ? {
+          quantity: basketLineItem.quantity,
+          sum: basketLineItem.sum,
+          lineItemId: basketLineItem.id,
+        }
+        : null;
+      return { ...product, isLoading, basketData };
+    });
+  }
+);
 
 export const getAvailableFilters = compose(prop('availableFilters'), root);
 
@@ -30,20 +51,17 @@ export const getTotalPages = compose(prop('totalPages'), getPaging);
 export const getNextPage = createSelector(
   getCurrentPage,
   getTotalPages,
-  (currentPage, totalPages) => (currentPage === totalPages ? null : currentPage + 1),
+  (currentPage, totalPages) => (currentPage === totalPages ? null : currentPage + 1)
 );
-
 
 export const isLoadMoreEnabled = createSelector(
   getCurrentPage,
   getTotalPages,
-  (currentPage, totalPages) => currentPage < totalPages,
+  (currentPage, totalPages) => currentPage < totalPages
 );
 
-
-export const getPrevPage = createSelector(
-  getCurrentPage,
-  (currentPage) => (currentPage === 1 ? null : currentPage - 1),
+export const getPrevPage = createSelector(getCurrentPage, (currentPage) =>
+  currentPage === 1 ? null : currentPage - 1
 );
 
 export const getVisibleProducts = createSelector(
@@ -54,5 +72,5 @@ export const getVisibleProducts = createSelector(
     const start = (currentPage - 1) * size;
     const end = size - 1;
     return products.slice(start, end);
-  },
+  }
 );

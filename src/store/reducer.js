@@ -6,8 +6,10 @@ import authReducer from './auth/reducer';
 import uiReducer from './ui/reducer';
 import searchReducer from './search/reducer';
 import storeReducer from './store/reducer';
+import basketReducer from './basket/reducer';
 import { getUserDataFromStorageAndSetInStore } from './auth/asyncActions';
 import { getAvailableStores } from './store/asyncActions';
+import { getUserBasketDataFromStorage } from './basket/asyncActions';
 
 const initialState = {};
 
@@ -25,11 +27,13 @@ const rootReducer = combineReducers({
   ui: uiReducer,
   search: searchReducer,
   store: storeReducer,
+  basket: basketReducer,
 });
 
 const store = createStore(rootReducer, initialState, enhancer);
 
 store.dispatch(getUserDataFromStorageAndSetInStore());
 store.dispatch(getAvailableStores());
+store.dispatch(getUserBasketDataFromStorage());
 
 export default store;

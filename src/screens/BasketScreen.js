@@ -1,19 +1,13 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
-import BasketProductCard from '../components/BasketProductCard';
 import FormButton from '../components/LoginButton';
+import BasketItemsList from '../components/BasketItemsList';
 
 export default function BasketScreen({ navigation }) {
   return (
     <>
-      <ScrollView>
-        <BasketProductCard navigation={navigation} />
-        <BasketProductCard navigation={navigation} />
-        <BasketProductCard navigation={navigation} />
-        <BasketProductCard navigation={navigation} />
-        <View style={styles.confirmButtonPlaceholder} />
-      </ScrollView>
+      <BasketItemsList navigation={navigation} />
       <View style={styles.confirmButtonContainer}>
         <FormButton onClick={() => {}}>Buy products</FormButton>
       </View>
@@ -34,8 +28,5 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingBottom: 15,
     alignItems: 'center',
-  },
-  confirmButtonPlaceholder: {
-    height: 70,
   },
 });
