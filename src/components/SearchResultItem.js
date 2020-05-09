@@ -73,11 +73,25 @@ export default function SearchResultItem({
   );
 }
 
+SearchResultItem.defaultProps = {
+  basketData: null,
+};
+
 SearchResultItem.propTypes = {
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   currency: PropTypes.string.isRequired,
   photo: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  addToBasket: PropTypes.func.isRequired,
+  updateQuantity: PropTypes.func.isRequired,
+  basketData: PropTypes.shape({
+    lineItemId: PropTypes.number.isRequired,
+    quantity: PropTypes.number.isRequired,
+    sum: PropTypes.number,
+    price: PropTypes.number,
+  }),
 };
 
 const styles = StyleSheet.create({

@@ -6,7 +6,7 @@ import Icon from '@expo/vector-icons/SimpleLineIcons';
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { $gray } from '../constants/Colors';
-import { formatPrice } from "../utils/helpers";
+import { formatPrice } from '../utils/helpers';
 
 export default function Counter({
   displayCounter, quantity, isLoading, changeQuantity, displayPrices, price, sum,

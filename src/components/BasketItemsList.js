@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import PropTypes from 'prop-types';
 import { getBasketItems } from '../store/basket/selectors';
 import { changeBasketItemQuantity } from '../store/basket/asyncActions';
 import BasketProductCard from './BasketProductCard';
@@ -39,6 +40,13 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BasketItemsList);
+
+BasketItemsList.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  updateQuantity: PropTypes.func.isRequired,
+  navigation: PropTypes.shape().isRequired,
+  isLoading: PropTypes.bool.isRequired,
+};
 
 const styles = StyleSheet.create({
   confirmButtonPlaceholder: {

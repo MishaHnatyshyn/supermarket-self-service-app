@@ -71,6 +71,16 @@ BasketProductCard.defaultProps = {
 BasketProductCard.propTypes = {
   displayCounter: PropTypes.bool,
   navigation: PropTypes.shape.isRequired,
+  updateQuantity: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
+  product: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  quantity: PropTypes.number.isRequired,
+  sum: PropTypes.number.isRequired,
+  photo: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 const styles = StyleSheet.create({

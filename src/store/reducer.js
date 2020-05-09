@@ -9,7 +9,7 @@ import storeReducer from './store/reducer';
 import basketReducer from './basket/reducer';
 import { getUserDataFromStorageAndSetInStore } from './auth/asyncActions';
 import { getAvailableStores } from './store/asyncActions';
-import { getUserBasketDataFromStorage } from "./basket/asyncActions";
+import { getUserBasketDataFromStorage } from './basket/asyncActions';
 
 const initialState = {};
 

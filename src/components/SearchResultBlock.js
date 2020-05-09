@@ -13,7 +13,7 @@ import SearchResultItem from './SearchResultItem';
 import Loader from './Loader';
 import EmptySearchResultsMessage from './EmptySearchResultsMessage';
 import SearchLoadMoreSection from './SearchLoadMoreSection';
-import { addToBasket, changeBasketItemQuantity } from '../store/basket/asyncActions';
+import { addToBasket as addToBasketAction, changeBasketItemQuantity } from '../store/basket/asyncActions';
 
 function SearchResultBlock({
   products,
@@ -30,8 +30,8 @@ function SearchResultBlock({
     <ScrollView style={styles.scrollContainer}>
       <View style={styles.container}>
         <Loader isVisible={isLoading} />
-        {displayProducts &&
-          products.map((product) => (
+        {displayProducts
+          && products.map((product) => (
             <SearchResultItem
               {...product}
               addToBasket={addToBasket}
@@ -65,7 +65,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch) => ({
   addToBasket: (productId) => {
-    dispatch(addToBasket(productId));
+    dispatch(addToBasketAction(productId));
   },
   updateQuantity: (lineItemId, productId, quantity) => {
     dispatch(changeBasketItemQuantity(lineItemId, productId, quantity));
