@@ -1,10 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { createStructuredSelector } from 'reselect';
-import { getIsLoaderVisible } from '../store/ui/selectors';
 
 const animation = {
   0: {
@@ -18,25 +15,20 @@ const animation = {
   },
 };
 
-function Loader({ isVisible }) {
+export default function Loader({ isVisible, imageStyles, textStyles }) {
   if (!isVisible) return null;
   return (
     <Animatable.View style={styles.container} animation="fadeIn">
       <Animatable.Image
         source={require('../assets/images/logo2.png')}
-        style={styles.image}
+        style={[styles.image, imageStyles]}
         animation={animation}
         easing="ease-in-out"
         iterationCount="infinite"
         useNativeDriver
       />
       <Text
-        style={{
-          marginTop: -35,
-          fontSize: 18,
-          width: '100%',
-          textAlign: 'center',
-        }}
+        style={[styles.text, textStyles]}
       >
         Loading ...
       </Text>
@@ -44,14 +36,15 @@ function Loader({ isVisible }) {
   );
 }
 
-const mapStateToProps = createStructuredSelector({
-  isVisible: getIsLoaderVisible,
-});
-
-export default connect(mapStateToProps)(Loader);
+Loader.defaultProps = {
+  imageStyles: {},
+  textStyles: {},
+};
 
 Loader.propTypes = {
   isVisible: PropTypes.bool.isRequired,
+  imageStyles: PropTypes.shape,
+  textStyles: PropTypes.shape,
 };
 
 const styles = StyleSheet.create({
@@ -68,5 +61,11 @@ const styles = StyleSheet.create({
   image: {
     width: 130,
     height: 130,
+  },
+  text: {
+    marginTop: -35,
+    fontSize: 18,
+    width: '100%',
+    textAlign: 'center',
   },
 });
