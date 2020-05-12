@@ -24,7 +24,7 @@ const createBasketItemIdRoute = (id) => `${BASKET_ITEMS_API_URL}/${id}`;
 const createBasketIdRoute = (id) => `${BASKET_API_URL}/${id}`;
 
 export const setBasketIdToStorage = (basketId) => (
-  AsyncStorage.setItem(BASKET_ID_STORAGE_KEY, basketId)
+  AsyncStorage.setItem(BASKET_ID_STORAGE_KEY, String(basketId))
 );
 
 export const removeBasketIdFromStorage = (basketId) => (

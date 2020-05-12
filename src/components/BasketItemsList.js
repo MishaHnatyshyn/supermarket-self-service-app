@@ -3,15 +3,15 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
-import { getBasketItems } from '../store/basket/selectors';
-import { changeBasketItemQuantity } from '../store/basket/asyncActions';
+import { getBasketItemsForDisplay } from '../store/basket/selectors';
+import { changeBasketItemQuantity, removeBasketItem } from '../store/basket/asyncActions';
 import BasketProductCard from './BasketProductCard';
 import EmptyStateMessage from './EmptyStateMessage';
 
 const EMPTY_BASKET_MESSAGE = 'Your basket is empty!';
 
 function BasketItemsList({
-  items, updateQuantity, navigation, isLoading,
+  items, updateQuantity, navigation, isLoading, deleteItem,
 }) {
   const displayEmptyMessage = items.length === 0 && !isLoading;
   return (
@@ -21,6 +21,7 @@ function BasketItemsList({
         <BasketProductCard
           navigation={navigation}
           updateQuantity={updateQuantity}
+          deleteItem={deleteItem}
           {...item}
         />
       ))}
@@ -30,12 +31,15 @@ function BasketItemsList({
 }
 
 const mapStateToProps = createStructuredSelector({
-  items: getBasketItems,
+  items: getBasketItemsForDisplay,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   updateQuantity: (lineItemId, productId, quantity) => {
     dispatch(changeBasketItemQuantity(lineItemId, productId, quantity));
+  },
+  deleteItem: (lineItemId, productId) => {
+    dispatch(removeBasketItem(lineItemId, productId));
   },
 });
 
@@ -44,6 +48,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(BasketItemsList);
 BasketItemsList.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   updateQuantity: PropTypes.func.isRequired,
+  deleteItem: PropTypes.func.isRequired,
   navigation: PropTypes.shape().isRequired,
   isLoading: PropTypes.bool.isRequired,
 };

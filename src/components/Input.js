@@ -18,6 +18,8 @@ export default function Input({
   onChange,
   isError,
   padding,
+  returnKeyType,
+  onSubmitEditing,
 }) {
   return (
     <>
@@ -31,6 +33,8 @@ export default function Input({
           secureTextEntry={secureTextEntry}
           onChangeText={onChange}
           value={value}
+          returnKeyType={returnKeyType}
+          onSubmitEditing={onSubmitEditing}
         />
         {children}
       </View>
@@ -41,11 +45,13 @@ export default function Input({
 Input.defaultProps = {
   children: null,
   keyboardType: 'default',
+  returnKeyType: 'done',
   label: null,
   secureTextEntry: false,
   isError: false,
   value: '',
   padding: 13,
+  onSubmitEditing: () => {},
 };
 
 Input.propTypes = {
@@ -55,9 +61,11 @@ Input.propTypes = {
   label: PropTypes.string,
   secureTextEntry: PropTypes.bool,
   isError: PropTypes.bool,
+  returnKeyType: PropTypes.string,
   value: PropTypes.string,
   padding: PropTypes.number,
   onChange: PropTypes.func.isRequired,
+  onSubmitEditing: PropTypes.func,
 };
 
 const styles = StyleSheet.create({

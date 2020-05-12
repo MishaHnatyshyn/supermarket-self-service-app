@@ -3,6 +3,7 @@ import {
   TouchableOpacity, StyleSheet, View, Text, Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { Entypo } from '@expo/vector-icons';
 import { $black, $gray, $realWhite } from '../constants/Colors';
 import Layout from '../constants/Layout';
 import Counter from './Counter';
@@ -14,6 +15,7 @@ export default function BasketProductCard({
   displayCounter,
   navigation,
   updateQuantity,
+  deleteItem,
   id,
   product,
   name,
@@ -24,6 +26,7 @@ export default function BasketProductCard({
   photo,
   isLoading,
 }) {
+  // eslint-disable-next-line no-unused-vars
   const onOpen = useCallback(() => {
     navigation.navigate('Product', {
       id: product,
@@ -34,8 +37,15 @@ export default function BasketProductCard({
     updateQuantity(id, product, newQuantity);
   }, [product, updateQuantity]);
 
+  const onDelete = useCallback(() => {
+    deleteItem(id, product);
+  }, [id, product, deleteItem]);
+
   return (
-    <TouchableOpacity style={styles.card} onPress={onOpen}>
+    <View style={styles.card}>
+      <TouchableOpacity onPress={onDelete} style={styles.closeIcon} disabled={isLoading}>
+        <Entypo name="cross" size={30} color={$gray} />
+      </TouchableOpacity>
       <View style={styles.infoContainer}>
         <View style={styles.imageContainer}>
           <Image
@@ -60,7 +70,7 @@ export default function BasketProductCard({
         quantity={quantity}
         isLoading={isLoading}
       />
-    </TouchableOpacity>
+    </View>
   );
 }
 
@@ -72,6 +82,7 @@ BasketProductCard.propTypes = {
   displayCounter: PropTypes.bool,
   navigation: PropTypes.shape.isRequired,
   updateQuantity: PropTypes.func.isRequired,
+  deleteItem: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
   product: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
@@ -89,6 +100,7 @@ const styles = StyleSheet.create({
     margin: 7,
     padding: 10,
     justifyContent: 'space-between',
+    position: 'relative',
     backgroundColor: $realWhite,
     shadowColor: $black,
     shadowOffset: {
@@ -121,5 +133,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
     marginBottom: 5,
+    paddingRight: 30,
+  },
+  closeIcon: {
+    position: 'absolute',
+    right: 5,
+    top: 5,
+    zIndex: 1,
   },
 });
