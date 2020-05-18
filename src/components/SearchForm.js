@@ -6,13 +6,21 @@ import { Ionicons, Feather } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 import Input from './Input';
 import { getSearchInputValue } from '../store/search/selectors';
-import { updateSearch } from '../store/search/asyncActions';
-import { $gray } from '../constants/Colors';
+import { performSearch } from '../store/search/asyncActions';
+import { $gray, $realWhite } from '../constants/Colors';
+import { changeSearchInput } from '../store/search/actions';
 
-function SearchForm({ searchInput, updateSearchInput, navigation }) {
+function SearchForm({ searchInput, updateSearchInput, search, navigation }) {
   return (
     <View style={styles.container}>
-      <Input onChange={updateSearchInput} placeholder="Search..." value={searchInput} padding={7}>
+      <Input
+        onChange={updateSearchInput}
+        placeholder="Search..."
+        value={searchInput}
+        padding={7}
+        returnKeyType="search"
+        onSubmitEditing={search}
+      >
         <Ionicons name="ios-search" size={30} color={$gray} style={styles.inputIcon} />
       </Input>
       <TouchableOpacity style={styles.filterButton} onPress={() => navigation.navigate('Categories')}>
@@ -26,6 +34,7 @@ SearchForm.propTypes = {
   navigation: PropTypes.shape.isRequired,
   searchInput: PropTypes.string.isRequired,
   updateSearchInput: PropTypes.func.isRequired,
+  search: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({
@@ -34,7 +43,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: 'white',
+    backgroundColor: $realWhite,
   },
   inputIcon: {
     position: 'absolute',
@@ -52,7 +61,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  updateSearchInput: (value) => dispatch(updateSearch(value)),
+  search: () => dispatch(performSearch()),
+  updateSearchInput: (value) => dispatch(changeSearchInput(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchForm);

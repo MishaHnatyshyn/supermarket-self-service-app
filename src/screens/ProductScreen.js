@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import Layout from '../constants/Layout';
-import { $green } from '../constants/Colors';
+import { $green, $realWhite } from '../constants/Colors';
 import FormButton from '../components/LoginButton';
 
 const { width } = Layout.window;
@@ -47,7 +47,7 @@ ProductScreen.propTypes = {
 
 const styles = StyleSheet.create({
   scrollContainer: {
-    backgroundColor: 'white',
+    backgroundColor: $realWhite,
   },
   container: {
     height: '100%',
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   image: {
     height: 300,
     width,
-    backgroundColor: 'white',
+    backgroundColor: $realWhite,
   },
   basketButton: {
     marginTop: 35,

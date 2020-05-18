@@ -3,12 +3,13 @@ import {
   View, Image, Text, StyleSheet,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { $green } from '../constants/Colors';
+import { $green, $realWhite } from '../constants/Colors';
 import Layout from '../constants/Layout';
 import FormButton from './LoginButton';
 import { formatPrice } from '../utils/helpers';
 import Counter from './Counter';
 import { DEFAULT_PHOTO_URI } from '../constants/Defaults';
+import SmallLoader from './SmallLoader';
 
 const { width } = Layout.window;
 
@@ -48,7 +49,7 @@ export default function SearchResultItem({
           <Text style={styles.price}>{formatPrice(price, currency)}</Text>
         </View>
         <View style={styles.basketButtonContainer}>
-          {isLoading && !basketData && <Text>Loading ...</Text>}
+          {isLoading && !basketData && <SmallLoader isVisible />}
           {!isLoading && !basketData && (
             <FormButton
               buttonStyles={styles.basketButton}
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     padding: 8,
-    backgroundColor: 'white',
+    backgroundColor: $realWhite,
   },
   productInfo: {
     marginTop: 10,
@@ -129,13 +130,14 @@ const styles = StyleSheet.create({
   image: {
     height: width / 2.5,
     width: '80%',
-    backgroundColor: 'white',
+    backgroundColor: $realWhite,
   },
   basketButtonContainer: {
     height: 44,
     marginTop: 10,
     width: '100%',
     alignItems: 'center',
+    position: 'relative',
   },
   basketButton: {
     width: '100%',
