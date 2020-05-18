@@ -1,20 +1,26 @@
 import React from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity,
+  View, Text, StyleSheet, TouchableOpacity, Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {
   $creamWhite, $lightGray,
 } from '../constants/Colors';
 
+const mainCategoriesIcon = {
+  2: require('../assets/images/food-and-restaurant.png'),
+  3: require('../assets/images/detergent.png'),
+  4: require('../assets/images/education.png'),
+};
 
 export default function CategoryCard({
-  children, id, name, isSelected, onClick,
+  id, name, isSelected, onClick,
 }) {
   return (
     <TouchableOpacity onPress={() => onClick(id)}>
       <View style={[styles.container, isSelected ? styles.selectedContainer : '']}>
-        {children}
+        <Image source={mainCategoriesIcon[id]} style={styles.icon} />
+
         <Text style={styles.categoryName}>{name}</Text>
       </View>
     </TouchableOpacity>
@@ -27,7 +33,6 @@ CategoryCard.defaultProps = {
 };
 
 CategoryCard.propTypes = {
-  children: PropTypes.node.isRequired,
   isSelected: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
@@ -60,5 +65,10 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
 
     elevation: 5,
+  },
+  icon: {
+    width: 38,
+    height: 38,
+    marginBottom: 5,
   },
 });

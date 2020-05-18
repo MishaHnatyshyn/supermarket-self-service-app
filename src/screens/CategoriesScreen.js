@@ -1,15 +1,14 @@
 import React from 'react';
 import {
-  ScrollView, View, StyleSheet, Text, TouchableOpacity,
+  ScrollView, View, StyleSheet,
 } from 'react-native';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import Layout from '../constants/Layout';
 import CategoryCard from '../components/CategoryCard';
 import {
-  $creamWhite, $lightGray, $semiDarkGray,
+  $creamWhite, $lightGray,
 } from '../constants/Colors';
 import {
   getMainCategories,
@@ -17,11 +16,12 @@ import {
   getSelectedMainCategorySubcategories,
 } from '../store/categories/selectors';
 import { setMainCategory } from '../store/categories/actions';
+import SubcategoryCard from '../components/SubcategoryCard';
 
 const { width, height } = Layout.window;
 
 function CategoriesScreen({
-  navigation, mainCategories, subcategories, selectMainCategory, currentCategory,
+  mainCategories, subcategories, selectMainCategory, currentCategory, navigation,
 }) {
   return (
     <View style={styles.container}>
@@ -34,40 +34,38 @@ function CategoriesScreen({
                 onClick={selectMainCategory}
                 name={category.name}
                 id={category.id}
-              >
-                <MaterialCommunityIcons
-                  name={category.icon}
-                  size={35}
-                  color={$semiDarkGray}
-                  style={styles.searchIcon}
-                />
-              </CategoryCard>
+                icon={category.icon}
+              />
             ))
           }
         </ScrollView>
 
       </View>
+
       <View style={styles.rightBlock}>
-        {subcategories && subcategories.map((subcategory) => (
-
-          <TouchableOpacity onPress={() => {}}>
-            <View style={styles.subcategory}>
-              <Text>{subcategory.name}</Text>
-            </View>
-          </TouchableOpacity>
-
-        ))}
+        <ScrollView style={styles.rightScroll}>
+          {subcategories && subcategories.map((subcategory) => (
+            <SubcategoryCard
+              name={subcategory.name}
+              id={subcategory.id}
+              key={subcategory.id}
+              navigation={navigation}
+            />
+          ))}
+        </ScrollView>
       </View>
+
+
     </View>
   );
 }
 
 CategoriesScreen.propTypes = {
-  navigation: PropTypes.shape.isRequired,
   mainCategories: PropTypes.arrayOf(PropTypes.shape).isRequired,
   subcategories: PropTypes.arrayOf(PropTypes.shape).isRequired,
   selectMainCategory: PropTypes.func.isRequired,
   currentCategory: PropTypes.shape.isRequired,
+  navigation: PropTypes.shape.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -93,13 +91,14 @@ const styles = StyleSheet.create({
     backgroundColor: $lightGray,
   },
   rightBlock: {
-    height,
     width: width * 0.75,
     backgroundColor: $creamWhite,
   },
-  subcategory: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: $lightGray,
+  categoryIcon: {
+    width: 25,
+    height: 25,
+  },
+  rightScroll: {
+    marginBottom: 120,
   },
 });

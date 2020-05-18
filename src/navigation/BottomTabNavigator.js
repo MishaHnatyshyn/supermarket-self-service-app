@@ -10,7 +10,7 @@ import AccountScreen from '../screens/AccountScreen';
 import ProductScreen from '../screens/ProductScreen';
 import HeaderBackButton from '../components/HeaderBackButton';
 import ReceiptDescriptionScreen from '../screens/ReceiptDescriptionScreen';
-import CategoriesScreen from "../screens/CategoriesScreen";
+import CategoriesScreen from '../screens/CategoriesScreen';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Search';

@@ -9,13 +9,13 @@ import { getSearchInputValue } from '../store/search/selectors';
 import { updateSearch } from '../store/search/asyncActions';
 import { $gray } from '../constants/Colors';
 
-function SearchForm({ searchInput, updateSearchInput }) {
+function SearchForm({ searchInput, updateSearchInput, navigation }) {
   return (
     <View style={styles.container}>
       <Input onChange={updateSearchInput} placeholder="Search..." value={searchInput} padding={7}>
         <Ionicons name="ios-search" size={30} color={$gray} style={styles.inputIcon} />
       </Input>
-      <TouchableOpacity style={styles.filterButton}>
+      <TouchableOpacity style={styles.filterButton} onPress={() => navigation.navigate('Categories')}>
         <Feather name="filter" size={24} color={$gray} />
       </TouchableOpacity>
     </View>
@@ -23,6 +23,7 @@ function SearchForm({ searchInput, updateSearchInput }) {
 }
 
 SearchForm.propTypes = {
+  navigation: PropTypes.shape.isRequired,
   searchInput: PropTypes.string.isRequired,
   updateSearchInput: PropTypes.func.isRequired,
 };

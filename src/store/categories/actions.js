@@ -10,7 +10,7 @@ import {
 export const fetchCategoriesError = createAction(CATEGORIES_FETCH_ERROR);
 export const fetchCategoriesSuccess = createAction(
   CATEGORIES_FETCH_SUCCESS,
-  (categories) => categories
+  (categories) => categories,
 );
 export const fetchCategoriesStart = createAction(CATEGORIES_FETCH_START);
 export const setMainCategory = createAction(SET_MAIN_CATEGORY, (id) => id);
