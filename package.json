@@ -61,7 +61,8 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "husky": "^4.2.5",
     "jest-expo": "~36.0.1",
-    "react-test-renderer": "^16.13.1"
+    "react-test-renderer": "^16.13.1",
+    "shortid": "^2.2.15"
   },
   "private": true,
   "husky": {
