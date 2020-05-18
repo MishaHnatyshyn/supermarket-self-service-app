@@ -10,6 +10,8 @@ import basketReducer from './basket/reducer';
 import { getUserDataFromStorageAndSetInStore } from './auth/asyncActions';
 import { getAvailableStores } from './store/asyncActions';
 import { getUserBasketDataFromStorage } from './basket/asyncActions';
+import { fetchCategories } from './categories/asyncActions';
+import categoriesReducer from './categories/reducer';
 
 const initialState = {};
 
@@ -25,6 +27,7 @@ const enhancer = composeEnhancers(applyMiddleware(...middleware));
 const rootReducer = combineReducers({
   auth: authReducer,
   ui: uiReducer,
+  categories: categoriesReducer,
   search: searchReducer,
   store: storeReducer,
   basket: basketReducer,
@@ -35,5 +38,6 @@ const store = createStore(rootReducer, initialState, enhancer);
 store.dispatch(getUserDataFromStorageAndSetInStore());
 store.dispatch(getAvailableStores());
 store.dispatch(getUserBasketDataFromStorage());
+store.dispatch(fetchCategories());
 
 export default store;

@@ -3,26 +3,26 @@ import {
 } from 'lodash/fp';
 import { createSelector } from 'reselect';
 
-const root = (state) => state.auth;
+const root = (state) => state.categories;
 
-const getSelectedMainCategoryId = compose(prop('mainCategoryId'), root);
+export const getSelectedMainCategoryId = compose(prop('mainCategoryId'), root);
 
 const getCategories = compose(prop('categories'), root);
 
-const getMainCategories = compose(
+export const getMainCategories = compose(
   map(({ id, name, icon }) => ({ id, name, icon })),
   getCategories,
 );
 
 const getSelectedMainCategory = createSelector(
-  getMainCategories,
+  getCategories,
   getSelectedMainCategoryId,
   (categories, selectedCategoryId) => (
     categories.find((category) => category.id === selectedCategoryId)
   ),
 );
 
-const getSelectedMainCategorySubcategories = compose(
+export const getSelectedMainCategorySubcategories = compose(
   prop('subcategories'),
   getSelectedMainCategory,
 );

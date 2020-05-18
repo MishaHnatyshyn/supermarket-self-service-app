@@ -6,7 +6,7 @@ import {
 } from './actionTypes';
 
 const initialState = {
-  categories: null,
+  categories: [],
   mainCategoryId: null,
   mainCategorySubcategoryId: null,
   isLoading: false,

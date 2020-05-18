@@ -10,7 +10,7 @@ import { performSearch } from '../store/search/asyncActions';
 import { $gray, $realWhite } from '../constants/Colors';
 import { changeSearchInput } from '../store/search/actions';
 
-function SearchForm({ searchInput, updateSearchInput, search }) {
+function SearchForm({ searchInput, updateSearchInput, search, navigation }) {
   return (
     <View style={styles.container}>
       <Input
@@ -23,7 +23,7 @@ function SearchForm({ searchInput, updateSearchInput, search }) {
       >
         <Ionicons name="ios-search" size={30} color={$gray} style={styles.inputIcon} />
       </Input>
-      <TouchableOpacity style={styles.filterButton}>
+      <TouchableOpacity style={styles.filterButton} onPress={() => navigation.navigate('Categories')}>
         <Feather name="filter" size={24} color={$gray} />
       </TouchableOpacity>
     </View>
@@ -31,6 +31,7 @@ function SearchForm({ searchInput, updateSearchInput, search }) {
 }
 
 SearchForm.propTypes = {
+  navigation: PropTypes.shape.isRequired,
   searchInput: PropTypes.string.isRequired,
   updateSearchInput: PropTypes.func.isRequired,
   search: PropTypes.func.isRequired,
