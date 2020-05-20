@@ -9,6 +9,7 @@ import {
   registerStart,
   registerSuccess,
 } from './actions';
+import { fetchUserData } from '../user/asyncActions';
 
 const USER_TOKEN_STORAGE_KEY = 'USER_TOKEN';
 
@@ -29,6 +30,7 @@ export const login = (email, password) => async (dispatch) => {
   try {
     const { data: userAuthData } = await post(AUTH_LOGIN_API_URL, { email, password });
     dispatch(loginSuccess(userAuthData));
+    dispatch(fetchUserData());
     setUserDataInStorage(userAuthData);
   } catch (e) {
     dispatch(loginError());
@@ -40,6 +42,7 @@ export const register = (email, password) => async (dispatch) => {
   try {
     const { data: userAuthData } = await post(AUTH_REGISTER_API_URL, { email, password });
     dispatch(registerSuccess(userAuthData));
+    dispatch(fetchUserData());
     setUserDataInStorage(userAuthData);
   } catch (e) {
     dispatch(registerError());
@@ -50,8 +53,9 @@ export const getUserDataFromStorageAndSetInStore = () => async (dispatch) => {
   dispatch(loginStart());
   const data = await getUserDataFromStorage();
   if (!data) return dispatch(loginError());
-  const parsedData = JSON.stringify(data);
+  const parsedData = JSON.parse(data);
   dispatch(loginSuccess(parsedData));
+  dispatch(fetchUserData());
 };
 
 export const logout = () => (dispatch) => {
