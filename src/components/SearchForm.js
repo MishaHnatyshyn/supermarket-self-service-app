@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
+import { useNavigation } from '@react-navigation/native';
 import Input from './Input';
 import { getSearchInputValue } from '../store/search/selectors';
 import { performSearch } from '../store/search/asyncActions';
@@ -11,8 +12,10 @@ import { $gray, $realWhite } from '../constants/Colors';
 import { changeSearchInput } from '../store/search/actions';
 
 function SearchForm({
-  searchInput, updateSearchInput, search, navigation,
+  searchInput, updateSearchInput, search,
 }) {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <Input
@@ -33,7 +36,6 @@ function SearchForm({
 }
 
 SearchForm.propTypes = {
-  navigation: PropTypes.shape.isRequired,
   searchInput: PropTypes.string.isRequired,
   updateSearchInput: PropTypes.func.isRequired,
   search: PropTypes.func.isRequired,

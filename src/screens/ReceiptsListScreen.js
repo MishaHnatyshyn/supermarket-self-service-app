@@ -1,15 +1,11 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import {
   StyleSheet, View, Text, ScrollView,
 } from 'react-native';
-import PropTypes from 'prop-types';
 import ReceiptCard from '../components/ReceiptCard';
 import { $black, $creamWhite } from '../constants/Colors';
 
-export default function ReceiptsListScreen({ navigation }) {
-  const onOpen = useCallback(() => {
-    navigation.navigate('Receipt');
-  }, [navigation]);
+export default function ReceiptsListScreen() {
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -22,7 +18,6 @@ export default function ReceiptsListScreen({ navigation }) {
           time="10:36"
           date="13.12.2019"
           price={326.06}
-          onOpen={onOpen}
         />
         <ReceiptCard
           storeName="Grocee Petrivka"
@@ -30,7 +25,6 @@ export default function ReceiptsListScreen({ navigation }) {
           time="10:47"
           date="16.12.2019"
           price={14.95}
-          onOpen={onOpen}
         />
         <View style={styles.monthDivision}>
           <Text style={styles.monthName}>January</Text>
@@ -41,16 +35,11 @@ export default function ReceiptsListScreen({ navigation }) {
           time="16:10"
           date="08.01.2020"
           price={115}
-          onOpen={onOpen}
         />
       </View>
     </ScrollView>
   );
 }
-
-ReceiptsListScreen.propTypes = {
-  navigation: PropTypes.shape.isRequired,
-};
 
 const styles = StyleSheet.create({
   monthDivision: {

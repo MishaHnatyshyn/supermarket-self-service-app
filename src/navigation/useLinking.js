@@ -14,6 +14,7 @@ export default function (containerRef) {
           Account: 'account',
           BarcodeScanner: 'scanner',
           Receipt: 'receipt',
+          Product: 'product',
         },
       },
       Auth: {

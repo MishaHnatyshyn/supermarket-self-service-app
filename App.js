@@ -17,6 +17,9 @@ import RegistrationScreen from './src/screens/RegistrationScreen';
 import BarcodeScannerScreen from './src/screens/BarcodeScannerScreen';
 import HeaderBackButton from './src/components/HeaderBackButton';
 import GlobalLoader from './src/components/GlobalLoader';
+import ReceiptDescriptionScreen from './src/screens/ReceiptDescriptionScreen';
+import CategoriesScreen from './src/screens/CategoriesScreen';
+import ProductScreen from './src/screens/ProductScreen';
 
 const Stack = createStackNavigator();
 
@@ -61,6 +64,7 @@ export default function App({ skipLoadingScreen }) {
   if (!isLoadingComplete && !skipLoadingScreen) {
     return null;
   }
+
   return (
     <Provider store={store}>
       <View style={styles.container}>
@@ -87,6 +91,33 @@ export default function App({ skipLoadingScreen }) {
               component={BarcodeScannerScreen}
               options={{
                 headerTitle: 'Barcode scanner',
+                headerTitleStyle: { fontSize: 20 },
+                headerLeft: (props) => <HeaderBackButton {...props} />,
+              }}
+            />
+            <Stack.Screen
+              name="Receipt"
+              component={ReceiptDescriptionScreen}
+              options={{
+                title: 'Receipt',
+                headerTitleStyle: { fontSize: 20 },
+                headerLeft: (props) => <HeaderBackButton {...props} />,
+              }}
+            />
+            <Stack.Screen
+              name="Categories"
+              component={CategoriesScreen}
+              options={{
+                title: 'Categories',
+                headerTitleStyle: { fontSize: 20 },
+                headerLeft: (props) => <HeaderBackButton {...props} />,
+              }}
+            />
+            <Stack.Screen
+              name="Product"
+              component={ProductScreen}
+              options={{
+                title: 'Product',
                 headerTitleStyle: { fontSize: 20 },
                 headerLeft: (props) => <HeaderBackButton {...props} />,
               }}

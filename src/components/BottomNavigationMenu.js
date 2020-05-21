@@ -59,7 +59,9 @@ BottomNavigationMenu.propTypes = {
   state: PropTypes.shape({
     index: PropTypes.number,
   }).isRequired,
-  navigation: PropTypes.shape.isRequired,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
 };
 
 const style = StyleSheet.create({

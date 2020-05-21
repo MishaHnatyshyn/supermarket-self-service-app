@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { Ionicons } from '@expo/vector-icons';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 import { $black } from '../constants/Colors';
 import {
   getSelectedMainCategorySubcategories,
@@ -34,9 +35,11 @@ const categoriesIcon = {
 const { width } = Layout.window;
 
 function SubcategoryCard({
-  id, name, subcategories, navigation, setSearch,
+  id, name, subcategories, setSearch,
 }) {
   const [isSelected, setSelected] = useState(false);
+  const navigation = useNavigation();
+
   const handleSubcategoryClick = (text) => {
     navigation.navigate('Search');
     setSearch(text);
@@ -78,10 +81,9 @@ function SubcategoryCard({
 }
 
 SubcategoryCard.propTypes = {
-  subcategories: PropTypes.shape.isRequired,
+  subcategories: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-  navigation: PropTypes.shape.isRequired,
   setSearch: PropTypes.func.isRequired,
 };
 

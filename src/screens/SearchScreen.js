@@ -1,18 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
-import PropTypes from 'prop-types';
 import SearchForm from '../components/SearchForm';
 import SearchResultBlock from '../components/SearchResultBlock';
 
-export default function SearchScreen({ navigation }) {
+export default function SearchScreen() {
   return (
     <View>
-      <SearchForm navigation={navigation} />
+      <SearchForm />
       <SearchResultBlock />
     </View>
   );
 }
-
-SearchScreen.propTypes = {
-  navigation: PropTypes.shape.isRequired,
-};

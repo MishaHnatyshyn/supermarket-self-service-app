@@ -23,7 +23,7 @@ SmallLoader.defaultProps = {
 
 SmallLoader.propTypes = {
   isVisible: PropTypes.bool.isRequired,
-  imageStyles: PropTypes.shape(),
+  imageStyles: PropTypes.shape({}),
 };
 
 const styles = StyleSheet.create({

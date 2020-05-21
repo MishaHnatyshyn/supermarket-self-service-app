@@ -7,10 +7,10 @@ import UnauthorizedUserAccount from '../components/UnauthorizedUserAccount';
 import { isAuthorized as isAuthorizedSelector } from '../store/auth/selectors';
 import UserAccount from '../components/UserAccount';
 
-function AccountScreen({ navigation, isAuthorized }) {
+function AccountScreen({ isAuthorized }) {
   return (
     <View>
-      {isAuthorized ? <UserAccount /> : <UnauthorizedUserAccount navigation={navigation} />}
+      {isAuthorized ? <UserAccount /> : <UnauthorizedUserAccount />}
     </View>
   );
 }
@@ -22,6 +22,5 @@ const mapStateToProps = createStructuredSelector({
 export default connect(mapStateToProps)(AccountScreen);
 
 AccountScreen.propTypes = {
-  navigation: PropTypes.shape.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
 };

@@ -24,8 +24,8 @@ FormButton.defaultProps = {
 FormButton.propTypes = {
   children: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  buttonStyles: PropTypes.shape(),
-  textStyles: PropTypes.shape(),
+  buttonStyles: PropTypes.shape({}),
+  textStyles: PropTypes.shape({}),
 };
 
 const styles = StyleSheet.create({

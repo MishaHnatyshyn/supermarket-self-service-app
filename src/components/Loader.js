@@ -43,8 +43,8 @@ Loader.defaultProps = {
 
 Loader.propTypes = {
   isVisible: PropTypes.bool.isRequired,
-  imageStyles: PropTypes.shape,
-  textStyles: PropTypes.shape,
+  imageStyles: PropTypes.shape({}),
+  textStyles: PropTypes.shape({}),
 };
 
 const styles = StyleSheet.create({
