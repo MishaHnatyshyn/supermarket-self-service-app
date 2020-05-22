@@ -10,13 +10,15 @@ import {
   $gray, $green, $red, $semiDarkGray,
 } from '../constants/Colors';
 import { logout } from '../store/auth/asyncActions';
+import { getUserData } from '../store/user/selectors';
 
-const paymentDataMock = [
-  { data: '1234********0422', type: 'visa' },
-  { data: '1234********0443', type: 'mastercard ' },
-];
-
-function UserAccount({ onLogout }) {
+function UserAccount({
+  onLogout,
+  email,
+  paymentMethods,
+  isLoading,
+}) {
+  if (isLoading) return null;
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
@@ -27,7 +29,7 @@ function UserAccount({ onLogout }) {
           <Text style={styles.sectionTitleText}>Email</Text>
         </View>
         <View>
-          <Text style={styles.sectionText}>vladagmyrka@gmail.com</Text>
+          <Text style={styles.sectionText}>{email}</Text>
         </View>
       </View>
 
@@ -39,11 +41,11 @@ function UserAccount({ onLogout }) {
           </TouchableOpacity>
         </View>
         <FlatList
-          data={paymentDataMock}
+          data={paymentMethods}
           renderItem={({ item }) => (
             <View style={styles.paymentRecord}>
               <View style={styles.paymentRecordTitle}>
-                {item.type === 'visa' ? (
+                {item.card_type === 'visa' ? (
                   <Image
                     style={styles.paymentTypeIcon}
                     source={require('../assets/images/visa.png')}
@@ -54,7 +56,7 @@ function UserAccount({ onLogout }) {
                     source={require('../assets/images/mastercard.png')}
                   />
                 )}
-                <Text>{item.data}</Text>
+                <Text>{item.card_number}</Text>
               </View>
               <TouchableOpacity>
                 <Ionicons name="ios-remove-circle-outline" size={30} color={$red} />
@@ -76,13 +78,18 @@ function UserAccount({ onLogout }) {
 
 UserAccount.propTypes = {
   onLogout: PropTypes.func.isRequired,
+  email: PropTypes.string.isRequired,
+  paymentMethods: PropTypes.arrayOf().isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
+
+const mapStateToProps = (state) => getUserData(state);
 
 const mapDispatchToProps = (dispatch) => ({
   onLogout: () => { dispatch(logout()); },
 });
 
-export default connect(null, mapDispatchToProps)(UserAccount);
+export default connect(mapStateToProps, mapDispatchToProps)(UserAccount);
 
 const styles = StyleSheet.create({
   container: {

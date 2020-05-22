@@ -13,6 +13,8 @@ import { getUserBasketDataFromStorage } from './basket/asyncActions';
 import { fetchCategories } from './categories/asyncActions';
 import categoriesReducer from './categories/reducer';
 import barcodeReducer from './barcode/reducer';
+import userReducer from './user/reducer';
+import productReducer from './product/reducer';
 
 const initialState = {};
 
@@ -32,6 +34,8 @@ const rootReducer = combineReducers({
   search: searchReducer,
   store: storeReducer,
   basket: basketReducer,
+  user: userReducer,
+  product: productReducer,
   barcode: barcodeReducer,
 });
 

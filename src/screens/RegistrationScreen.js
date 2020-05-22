@@ -1,16 +1,11 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import AuthLayout from '../components/AuthLayout';
 import RegistrationForm from '../components/RegistrationForm';
 
-export default function RegistrationScreen({ navigation }) {
+export default function RegistrationScreen() {
   return (
     <AuthLayout isRegistration>
-      <RegistrationForm navigation={navigation} />
+      <RegistrationForm />
     </AuthLayout>
   );
 }
-
-RegistrationScreen.propTypes = {
-  navigation: PropTypes.shape.isRequired,
-};

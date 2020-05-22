@@ -1,19 +1,14 @@
 import React from 'react';
 import { View } from 'react-native';
-import PropTypes from 'prop-types';
 import BasketItemsList from '../components/BasketItemsList';
 import BasketSummarySection from '../components/BasketSummarySection';
 
-export default function BasketScreen({ navigation }) {
+export default function BasketScreen() {
   return (
     <>
-      <BasketItemsList navigation={navigation} />
+      <BasketItemsList />
       <BasketSummarySection />
       <View />
     </>
   );
 }
-
-BasketScreen.propTypes = {
-  navigation: PropTypes.shape.isRequired,
-};

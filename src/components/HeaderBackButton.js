@@ -1,18 +1,18 @@
 import { Image, TouchableOpacity, StyleSheet } from 'react-native';
 import * as React from 'react';
-import PropTypes from 'prop-types';
+import { useNavigation } from '@react-navigation/native';
 
-export default function HeaderBackButton({ onPress }) {
+export default function HeaderBackButton() {
+  const navigation = useNavigation();
+  const handleBack = () => {
+    navigation.goBack();
+  };
   return (
-    <TouchableOpacity onPress={onPress} style={styles.container}>
+    <TouchableOpacity onPress={handleBack} style={styles.container}>
       <Image source={require('../assets/images/back.png')} style={styles.image} />
     </TouchableOpacity>
   );
 }
-
-HeaderBackButton.propTypes = {
-  onPress: PropTypes.func.isRequired,
-};
 
 const styles = StyleSheet.create({
   container: {

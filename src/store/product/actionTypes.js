@@ -1,0 +1,4 @@
+export const FETCH_PRODUCT_START = 'product/FETCH_PRODUCT_START';
+export const FETCH_PRODUCT_SUCCESS = 'product/FETCH_PRODUCT_SUCCESS';
+export const FETCH_PRODUCT_ERROR = 'product/FETCH_PRODUCT_ERROR';
+export const CLEAR_PRODUCT_DATA = 'product/CLEAR_PRODUCT_DATA';

@@ -7,6 +7,7 @@ import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 import FormButton from './LoginButton';
 import { $gray } from '../constants/Colors';
 import Input from './Input';
@@ -15,12 +16,14 @@ import { clearAuthErrors } from '../store/auth/actions';
 import { login } from '../store/auth/asyncActions';
 
 function LoginForm({
-  navigation, isError, isAuthorized, startLogin, clearErrors,
+  isError, isAuthorized, startLogin, clearErrors,
 }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isEmailError, setEmailError] = useState(false);
   const [isPasswordError, setPasswordError] = useState(false);
+  const navigation = useNavigation();
+
   const navigateToRegistration = useCallback(() => {
     navigation.navigate('Registration');
   }, [navigation]);
@@ -113,7 +116,6 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
 
 LoginForm.propTypes = {
-  navigation: PropTypes.shape.isRequired,
   isError: PropTypes.bool.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   startLogin: PropTypes.func.isRequired,

@@ -12,3 +12,6 @@ export const CATEGORIES_API_URL = '/categories';
 export const BASKET_API_URL = '/basket';
 export const BASKET_ITEMS_API_URL = '/basket-items';
 export const BARCODE_SCAN_API_URL = '/products/barcode';
+export const USER_DATA_API_URL = '/user';
+export const PAYMENT_METHODS_API_URL = '/payment';
+export const PRODUCT_API_URL = '/products';

@@ -10,7 +10,14 @@ import { formatPrice } from '../utils/helpers';
 import SmallLoader from './SmallLoader';
 
 export default function Counter({
-  displayCounter, quantity, isLoading, changeQuantity, displayPrices, price, sum,
+  displayCounter,
+  quantity,
+  isLoading,
+  changeQuantity,
+  displayPrices,
+  price,
+  sum,
+  counterStyles,
 }) {
   const [localQuantity, setLocalQuantity] = useState('1');
 
@@ -33,16 +40,19 @@ export default function Counter({
     changeQuantity(parsedQuantity);
   }, [changeQuantity, localQuantity]);
 
-  const updateLocalQuantity = useCallback((newQuantity) => {
-    const parsedQuantity = +newQuantity;
-    if (isNaN(parsedQuantity)) {
-      return;
-    }
-    setLocalQuantity(String(newQuantity));
-  }, [setLocalQuantity]);
+  const updateLocalQuantity = useCallback(
+    (newQuantity) => {
+      const parsedQuantity = +newQuantity;
+      if (isNaN(parsedQuantity)) {
+        return;
+      }
+      setLocalQuantity(String(newQuantity));
+    },
+    [setLocalQuantity],
+  );
 
   return (
-    <View style={styles.amountContainer}>
+    <View style={[styles.amountContainer, counterStyles]}>
       {displayPrices && <Text style={styles.priceText}>{formatPrice(price)}</Text>}
       {!displayCounter ? (
         <Text style={styles.priceText}>{quantity}</Text>
@@ -53,17 +63,15 @@ export default function Counter({
           </TouchableOpacity>
           <View style={styles.counterContainer}>
             <SmallLoader isVisible={isLoading} />
-            {
-              !isLoading && (
-                <TextInput
-                  keyboardType="decimal-pad"
-                  value={localQuantity}
-                  onChangeText={updateLocalQuantity}
-                  onEndEditing={customQuantityChange}
-                  style={styles.counterInput}
-                />
-              )
-            }
+            {!isLoading && (
+              <TextInput
+                keyboardType="decimal-pad"
+                value={localQuantity}
+                onChangeText={updateLocalQuantity}
+                onEndEditing={customQuantityChange}
+                style={styles.counterInput}
+              />
+            )}
           </View>
 
           <TouchableOpacity onPress={increment} disabled={isLoading}>
@@ -80,17 +88,19 @@ export default function Counter({
 Counter.defaultProps = {
   changeQuantity: () => {},
   price: null,
+  counterStyles: {},
   sum: null,
 };
 
 Counter.propTypes = {
   displayCounter: PropTypes.bool.isRequired,
-  quantity: PropTypes.bool.isRequired,
+  quantity: PropTypes.number.isRequired,
   isLoading: PropTypes.bool.isRequired,
   changeQuantity: PropTypes.func,
   displayPrices: PropTypes.bool.isRequired,
   price: PropTypes.number,
   sum: PropTypes.number,
+  counterStyles: PropTypes.shape({}),
 };
 
 const styles = StyleSheet.create({
