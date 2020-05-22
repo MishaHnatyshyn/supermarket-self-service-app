@@ -8,9 +8,11 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { $gray } from '../constants/Colors';
-import { getScannedProduct } from '../store/barcode/selectors';
+import { getIsLoading, getScannedProduct } from '../store/barcode/selectors';
 import { removeScannedProduct } from '../store/barcode/actions';
 import { fetchScannedProduct } from '../store/barcode/asyncActions';
+import ScannedProductCard from '../components/ScannedProductCard';
+import Loader from '../components/Loader';
 
 
 const FlashMode = {
@@ -18,7 +20,7 @@ const FlashMode = {
   OFF: 0,
 };
 
-function BarcodeScannerScreen({ fetchProduct, removeProduct, scannedProduct }) {
+function BarcodeScannerScreen({ fetchProduct, scannedProduct, isLoading }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [flashMode, setFlashMode] = useState(FlashMode.OFF);
@@ -30,7 +32,7 @@ function BarcodeScannerScreen({ fetchProduct, removeProduct, scannedProduct }) {
     setScanned(true);
     fetchProduct(data);
     // Alert.alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-    setTimeout(() => setScanned(false), 2000);
+    setTimeout(() => setScanned(false), 3000);
   };
 
   const handleFlashMode = () => {
@@ -65,9 +67,10 @@ function BarcodeScannerScreen({ fetchProduct, removeProduct, scannedProduct }) {
         </TouchableOpacity>
       </View>
       <View style={styles.productContainer}>
-        {!scannedProduct
-          ? <Text style={styles.scanText}>Please scan a barcode of a product</Text>
-          : <Text>{scannedProduct.name}</Text>}
+        {isLoading && <Loader isVisible />}
+        {!scannedProduct && !isLoading
+        && <Text style={styles.scanText}>Please scan a barcode of a product</Text> }
+        {scannedProduct && !isLoading && <ScannedProductCard />}
       </View>
     </View>
   );
@@ -76,11 +79,12 @@ function BarcodeScannerScreen({ fetchProduct, removeProduct, scannedProduct }) {
 BarcodeScannerScreen.propTypes = {
   scannedProduct: PropTypes.shape.isRequired,
   fetchProduct: PropTypes.func.isRequired,
-  removeProduct: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   scannedProduct: getScannedProduct,
+  isLoading: getIsLoading,
 });
 
 const mapDispatchToProps = (dispatch) => ({
