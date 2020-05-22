@@ -1,27 +1,35 @@
 import {
-  StyleSheet, View, Alert, Text, TouchableOpacity,
+  StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import MaterialIcon from '@expo/vector-icons/MaterialCommunityIcons';
 import { Camera } from 'expo-camera';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { $gray } from '../constants/Colors';
+import { getScannedProduct } from '../store/barcode/selectors';
+import { removeScannedProduct } from '../store/barcode/actions';
+import { fetchScannedProduct } from '../store/barcode/asyncActions';
+
 
 const FlashMode = {
   ON: 3,
   OFF: 0,
 };
 
-export default function BarcodeScannerScreen() {
+function BarcodeScannerScreen({ fetchProduct, removeProduct, scannedProduct }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [flashMode, setFlashMode] = useState(FlashMode.OFF);
 
-  const handleBarCodeScanned = ({ type, data }) => {
+  const handleBarCodeScanned = ({ data }) => {
     if (scanned) {
       return;
     }
     setScanned(true);
-    Alert.alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    fetchProduct(data);
+    // Alert.alert(`Bar code with type ${type} and data ${data} has been scanned!`);
     setTimeout(() => setScanned(false), 2000);
   };
 
@@ -57,13 +65,34 @@ export default function BarcodeScannerScreen() {
         </TouchableOpacity>
       </View>
       <View style={styles.productContainer}>
-        <Text style={styles.scanText}>Please scan a barcode of a product</Text>
+        {!scannedProduct
+          ? <Text style={styles.scanText}>Please scan a barcode of a product</Text>
+          : <Text>{scannedProduct.name}</Text>}
       </View>
     </View>
   );
 }
 
-BarcodeScannerScreen.propTypes = {};
+BarcodeScannerScreen.propTypes = {
+  scannedProduct: PropTypes.shape.isRequired,
+  fetchProduct: PropTypes.func.isRequired,
+  removeProduct: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = createStructuredSelector({
+  scannedProduct: getScannedProduct,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchProduct: (barcode) => {
+    dispatch(fetchScannedProduct(barcode));
+  },
+  removeProduct: (productId) => {
+    dispatch(removeScannedProduct(productId));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(BarcodeScannerScreen);
 
 const styles = StyleSheet.create({
   container: {

@@ -12,6 +12,7 @@ import { getAvailableStores } from './store/asyncActions';
 import { getUserBasketDataFromStorage } from './basket/asyncActions';
 import { fetchCategories } from './categories/asyncActions';
 import categoriesReducer from './categories/reducer';
+import barcodeReducer from './barcode/reducer';
 
 const initialState = {};
 
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   search: searchReducer,
   store: storeReducer,
   basket: basketReducer,
+  barcode: barcodeReducer,
 });
 
 const store = createStore(rootReducer, initialState, enhancer);

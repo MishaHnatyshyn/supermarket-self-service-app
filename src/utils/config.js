@@ -11,3 +11,4 @@ export const AUTH_REGISTER_API_URL = '/auth/signup';
 export const CATEGORIES_API_URL = '/categories';
 export const BASKET_API_URL = '/basket';
 export const BASKET_ITEMS_API_URL = '/basket-items';
+export const BARCODE_SCAN_API_URL = '/products/barcode';

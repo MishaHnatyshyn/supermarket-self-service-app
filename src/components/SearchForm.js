@@ -10,7 +10,9 @@ import { performSearch } from '../store/search/asyncActions';
 import { $gray, $realWhite } from '../constants/Colors';
 import { changeSearchInput } from '../store/search/actions';
 
-function SearchForm({ searchInput, updateSearchInput, search, navigation }) {
+function SearchForm({
+  searchInput, updateSearchInput, search, navigation,
+}) {
   return (
     <View style={styles.container}>
       <Input
