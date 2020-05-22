@@ -2,11 +2,13 @@ import React from 'react';
 import {
   StyleSheet, Text, View, TouchableOpacity,
 } from 'react-native';
-import PropTypes from 'prop-types';
+import { useNavigation } from '@react-navigation/native';
 import LoginButton from './LoginButton';
 import { $green } from '../constants/Colors';
 
-export default function UnauthorizedUserAccount({ navigation }) {
+export default function UnauthorizedUserAccount() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <Text style={styles.profileText}>Your profile</Text>
@@ -22,10 +24,6 @@ export default function UnauthorizedUserAccount({ navigation }) {
     </View>
   );
 }
-
-UnauthorizedUserAccount.propTypes = {
-  navigation: PropTypes.shape.isRequired,
-};
 
 const styles = StyleSheet.create({
   container: {

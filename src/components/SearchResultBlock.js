@@ -33,6 +33,7 @@ function SearchResultBlock({
         {displayProducts
           && products.map((product) => (
             <SearchResultItem
+              key={product.id}
               {...product}
               addToBasket={addToBasket}
               updateQuantity={updateQuantity}
@@ -48,7 +49,7 @@ function SearchResultBlock({
 }
 
 SearchResultBlock.propTypes = {
-  products: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  products: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   isLoading: PropTypes.bool.isRequired,
   wasSearchPerformed: PropTypes.bool.isRequired,
   displayLoadMore: PropTypes.bool.isRequired,

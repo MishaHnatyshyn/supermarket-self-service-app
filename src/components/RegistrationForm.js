@@ -10,6 +10,7 @@ import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 import FormButton from './LoginButton';
 import { $gray } from '../constants/Colors';
 import Input from './Input';
@@ -20,13 +21,15 @@ import { register } from '../store/auth/asyncActions';
 const emailRegExp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
 function RegistrationForm({
-  navigation, isError, isAuthorized, startRegister, clearErrors,
+  isError, isAuthorized, startRegister, clearErrors,
 }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordRepeat, setPasswordRepeat] = useState('');
   const [isEmailError, setEmailError] = useState(false);
   const [isPasswordError, setPasswordError] = useState(false);
+  const navigation = useNavigation();
+
   const navigateToLogin = useCallback(() => {
     navigation.navigate('Login');
   }, [navigation]);
@@ -133,7 +136,6 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(RegistrationForm);
 
 RegistrationForm.propTypes = {
-  navigation: PropTypes.shape.isRequired,
   isError: PropTypes.bool.isRequired,
   isAuthorized: PropTypes.bool.isRequired,
   startRegister: PropTypes.func.isRequired,

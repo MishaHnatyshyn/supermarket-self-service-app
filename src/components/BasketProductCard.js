@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { Entypo } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { $black, $gray, $realWhite } from '../constants/Colors';
 import Layout from '../constants/Layout';
 import Counter from './Counter';
@@ -13,7 +14,6 @@ const { width } = Layout.window;
 
 export default function BasketProductCard({
   displayCounter,
-  navigation,
   updateQuantity,
   deleteItem,
   id,
@@ -26,7 +26,8 @@ export default function BasketProductCard({
   photo,
   isLoading,
 }) {
-  // eslint-disable-next-line no-unused-vars
+  const navigation = useNavigation();
+
   const onOpen = useCallback(() => {
     navigation.navigate('Product', {
       id: product,
@@ -46,7 +47,7 @@ export default function BasketProductCard({
       <TouchableOpacity onPress={onDelete} style={styles.closeIcon} disabled={isLoading}>
         <Entypo name="cross" size={30} color={$gray} />
       </TouchableOpacity>
-      <View style={styles.infoContainer}>
+      <TouchableOpacity style={styles.infoContainer} onPress={onOpen}>
         <View style={styles.imageContainer}>
           <Image
             style={styles.image}
@@ -60,7 +61,7 @@ export default function BasketProductCard({
             {description}
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
       <Counter
         displayCounter={displayCounter}
         changeQuantity={updateProductQuantity}
@@ -80,7 +81,6 @@ BasketProductCard.defaultProps = {
 
 BasketProductCard.propTypes = {
   displayCounter: PropTypes.bool,
-  navigation: PropTypes.shape.isRequired,
   updateQuantity: PropTypes.func.isRequired,
   deleteItem: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
-
     elevation: 3,
   },
   infoContainer: {

@@ -11,6 +11,11 @@ import {
   FETCH_USER_DATA_START,
   FETCH_USER_DATA_SUCCESS,
 } from '../user/actionTypes';
+import {
+  FETCH_PRODUCT_ERROR,
+  FETCH_PRODUCT_START,
+  FETCH_PRODUCT_SUCCESS,
+} from '../product/actionTypes';
 
 const initialState = {
   showGlobalLoader: false,
@@ -21,6 +26,7 @@ export default function uiReducer(state = initialState, action) {
     case LOGIN_START:
     case REGISTER_START:
     case FETCH_USER_DATA_START:
+    case FETCH_PRODUCT_START:
       return {
         ...state,
         showGlobalLoader: true,
@@ -31,6 +37,8 @@ export default function uiReducer(state = initialState, action) {
     case LOGIN_ERROR:
     case REGISTER_SUCCESS:
     case REGISTER_ERROR:
+    case FETCH_PRODUCT_SUCCESS:
+    case FETCH_PRODUCT_ERROR:
       return {
         ...state,
         showGlobalLoader: false,

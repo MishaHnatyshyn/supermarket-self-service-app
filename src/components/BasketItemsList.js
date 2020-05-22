@@ -11,7 +11,7 @@ import EmptyStateMessage from './EmptyStateMessage';
 const EMPTY_BASKET_MESSAGE = 'Your basket is empty!';
 
 function BasketItemsList({
-  items, updateQuantity, navigation, isLoading, deleteItem,
+  items, updateQuantity, isLoading, deleteItem,
 }) {
   const displayEmptyMessage = items.length === 0 && !isLoading;
   return (
@@ -19,7 +19,7 @@ function BasketItemsList({
       {displayEmptyMessage && <EmptyStateMessage message={EMPTY_BASKET_MESSAGE} />}
       {items.map((item) => (
         <BasketProductCard
-          navigation={navigation}
+          key={item.id}
           updateQuantity={updateQuantity}
           deleteItem={deleteItem}
           {...item}
@@ -46,10 +46,9 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(BasketItemsList);
 
 BasketItemsList.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  items: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   updateQuantity: PropTypes.func.isRequired,
   deleteItem: PropTypes.func.isRequired,
-  navigation: PropTypes.shape().isRequired,
   isLoading: PropTypes.bool.isRequired,
 };
 

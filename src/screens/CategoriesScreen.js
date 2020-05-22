@@ -21,7 +21,7 @@ import SubcategoryCard from '../components/SubcategoryCard';
 const { width, height } = Layout.window;
 
 function CategoriesScreen({
-  mainCategories, subcategories, selectMainCategory, currentCategory, navigation,
+  mainCategories, subcategories, selectMainCategory, currentCategory,
 }) {
   return (
     <View style={styles.container}>
@@ -49,7 +49,6 @@ function CategoriesScreen({
               name={subcategory.name}
               id={subcategory.id}
               key={subcategory.id}
-              navigation={navigation}
             />
           ))}
         </ScrollView>
@@ -61,11 +60,10 @@ function CategoriesScreen({
 }
 
 CategoriesScreen.propTypes = {
-  mainCategories: PropTypes.arrayOf(PropTypes.shape).isRequired,
-  subcategories: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  mainCategories: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  subcategories: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   selectMainCategory: PropTypes.func.isRequired,
-  currentCategory: PropTypes.shape.isRequired,
-  navigation: PropTypes.shape.isRequired,
+  currentCategory: PropTypes.shape({}).isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({

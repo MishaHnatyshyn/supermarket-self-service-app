@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
-  View, Image, Text, StyleSheet,
+  View, Image, Text, StyleSheet, TouchableOpacity,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { useNavigation } from '@react-navigation/native';
 import { $green, $realWhite } from '../constants/Colors';
 import Layout from '../constants/Layout';
 import FormButton from './LoginButton';
@@ -24,30 +25,41 @@ export default function SearchResultItem({
   addToBasket,
   updateQuantity,
 }) {
-  const addProductToBasket = React.useCallback(() => {
+  const addProductToBasket = useCallback(() => {
     addToBasket(id);
   }, [id, addToBasket]);
 
-  const updateProductQuantity = React.useCallback(
+  const updateProductQuantity = useCallback(
     (quantity) => {
       updateQuantity(basketData.lineItemId, id, quantity);
     },
     [id, updateQuantity, basketData],
   );
+
+  const navigation = useNavigation();
+
+  const openProduct = useCallback(() => {
+    navigation.navigate('Product', {
+      id,
+    });
+  }, [navigation]);
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <Image
-          source={{ uri: photo || DEFAULT_PHOTO_URI }}
-          style={styles.image}
-          resizeMode="contain"
-        />
-        <View style={styles.productInfo}>
-          <Text numberOfLines={1} style={styles.productName}>
-            {name}
-          </Text>
-          <Text style={styles.price}>{formatPrice(price, currency)}</Text>
-        </View>
+        <TouchableOpacity onPress={openProduct} style={styles.infoContainer}>
+          <Image
+            source={{ uri: photo || DEFAULT_PHOTO_URI }}
+            style={styles.image}
+            resizeMode="contain"
+          />
+          <View style={styles.productInfo}>
+            <Text numberOfLines={1} style={styles.productName}>
+              {name}
+            </Text>
+            <Text style={styles.price}>{formatPrice(price, currency)}</Text>
+          </View>
+        </TouchableOpacity>
         <View style={styles.basketButtonContainer}>
           {isLoading && !basketData && <SmallLoader isVisible />}
           {!isLoading && !basketData && (
@@ -76,13 +88,14 @@ export default function SearchResultItem({
 
 SearchResultItem.defaultProps = {
   basketData: null,
+  photo: null,
 };
 
 SearchResultItem.propTypes = {
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   currency: PropTypes.string.isRequired,
-  photo: PropTypes.string.isRequired,
+  photo: PropTypes.string,
   id: PropTypes.number.isRequired,
   isLoading: PropTypes.bool.isRequired,
   addToBasket: PropTypes.func.isRequired,
@@ -144,5 +157,9 @@ const styles = StyleSheet.create({
   },
   basketButtonText: {
     fontSize: 16,
+  },
+  infoContainer: {
+    width: '100%',
+    alignItems: 'center',
   },
 });

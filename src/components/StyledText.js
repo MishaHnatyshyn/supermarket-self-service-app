@@ -8,5 +8,5 @@ export default function MonoText(props) {
 }
 
 MonoText.propTypes = {
-  style: PropTypes.shape.isRequired,
+  style: PropTypes.shape({}).isRequired,
 };

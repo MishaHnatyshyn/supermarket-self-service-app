@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   View, StyleSheet, Text, TouchableOpacity,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { useNavigation } from '@react-navigation/native';
 import {
   $black, $creamWhite, $gray, $green,
 } from '../constants/Colors';
@@ -11,8 +12,16 @@ import Layout from '../constants/Layout';
 const { width } = Layout.window;
 
 export default function ReceiptCard({
-  storeName, address, time, date, price, onOpen,
+  storeName, address, time, date, price, id,
 }) {
+  const navigation = useNavigation();
+
+  const onOpen = useCallback(() => {
+    navigation.navigate('Receipt', {
+      id,
+    });
+  }, [navigation, id]);
+
   return (
     <TouchableOpacity style={styles.container} onPress={onOpen}>
       <View style={styles.receiptsInfo}>
@@ -33,7 +42,7 @@ ReceiptCard.propTypes = {
   time: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  onOpen: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 const styles = StyleSheet.create({
