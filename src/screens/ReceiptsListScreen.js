@@ -1,45 +1,42 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   StyleSheet, View, Text, ScrollView,
 } from 'react-native';
+import PropTypes from 'prop-types';
 import ReceiptCard from '../components/ReceiptCard';
 import { $black, $creamWhite } from '../constants/Colors';
 
-export default function ReceiptsListScreen() {
+
+const data = [{
+  id: 1,
+  status: 'paid',
+  timestamp: '2020-05-20T06:35:26.808Z',
+  sum: 27,
+  store: 'store1',
+  street: 'проспект Перемоги',
+  building: '26',
+}];
+
+export default function ReceiptsListScreen({ receipts = data }) {
+  const onOpen = () => {};
   return (
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.monthDivision}>
           <Text style={styles.monthName}>December</Text>
         </View>
-        <ReceiptCard
-          storeName="Grocee Polytekh"
-          address="Polytekhnicha 8, street"
-          time="10:36"
-          date="13.12.2019"
-          price={326.06}
-        />
-        <ReceiptCard
-          storeName="Grocee Petrivka"
-          address="Bandery 12A, street"
-          time="10:47"
-          date="16.12.2019"
-          price={14.95}
-        />
+        {receipts.map((receipt) => <ReceiptCard {...receipt} onOpen={onOpen} />)}
         <View style={styles.monthDivision}>
           <Text style={styles.monthName}>January</Text>
         </View>
-        <ReceiptCard
-          storeName="Grocee Petrivka"
-          address="Bandery 12A, street"
-          time="16:10"
-          date="08.01.2020"
-          price={115}
-        />
       </View>
     </ScrollView>
   );
 }
+
+ReceiptsListScreen.propTypes = {
+  navigation: PropTypes.shape.isRequired,
+};
 
 const styles = StyleSheet.create({
   monthDivision: {

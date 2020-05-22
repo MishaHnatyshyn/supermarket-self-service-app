@@ -14,4 +14,5 @@ export const BASKET_ITEMS_API_URL = '/basket-items';
 export const BARCODE_SCAN_API_URL = '/products/barcode';
 export const USER_DATA_API_URL = '/user';
 export const PAYMENT_METHODS_API_URL = '/payment';
+export const ORDER_API_URL = '/order';
 export const PRODUCT_API_URL = '/products';
