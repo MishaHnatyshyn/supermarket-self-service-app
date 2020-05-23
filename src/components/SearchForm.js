@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -15,6 +15,9 @@ function SearchForm({
   searchInput, updateSearchInput, search,
 }) {
   const navigation = useNavigation();
+  useEffect(() => {
+    search();
+  }, []);
 
   return (
     <View style={styles.container}>

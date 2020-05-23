@@ -2,15 +2,19 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import Layout from '../constants/Layout';
-import { $green, $white } from '../constants/Colors';
+import { $gray, $green, $white } from '../constants/Colors';
 
 const { width } = Layout.window;
 
 export default function FormButton({
-  children, onClick, buttonStyles, textStyles,
+  children, onClick, buttonStyles, textStyles, disabled,
 }) {
   return (
-    <TouchableOpacity onPress={onClick} style={[styles.button, buttonStyles]}>
+    <TouchableOpacity
+      onPress={onClick}
+      style={[styles.button, buttonStyles, disabled ? styles.disabled : {}]}
+      disabled={disabled}
+    >
       <Text style={[styles.buttonText, textStyles]}>{children}</Text>
     </TouchableOpacity>
   );
@@ -19,6 +23,7 @@ export default function FormButton({
 FormButton.defaultProps = {
   buttonStyles: {},
   textStyles: {},
+  disabled: false,
 };
 
 FormButton.propTypes = {
@@ -26,6 +31,7 @@ FormButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   buttonStyles: PropTypes.shape({}),
   textStyles: PropTypes.shape({}),
+  disabled: PropTypes.bool,
 };
 
 const styles = StyleSheet.create({
@@ -40,5 +46,8 @@ const styles = StyleSheet.create({
     color: $white,
     textTransform: 'uppercase',
     fontSize: 20,
+  },
+  disabled: {
+    backgroundColor: $gray,
   },
 });

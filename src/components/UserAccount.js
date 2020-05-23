@@ -6,18 +6,30 @@ import Icon from '@expo/vector-icons/SimpleLineIcons';
 import { Ionicons } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 import {
   $gray, $green, $red, $semiDarkGray,
 } from '../constants/Colors';
 import { logout } from '../store/auth/asyncActions';
 import { getUserData } from '../store/user/selectors';
+import { deletePaymentMethod } from '../store/user/asyncActions';
+import { refreshPaymentState } from '../store/user/actions';
 
 function UserAccount({
   onLogout,
   email,
   paymentMethods,
   isLoading,
+  deletePayment,
+  refreshAddingNewPaymentState,
 }) {
+  const navigation = useNavigation();
+
+  const openNewPaymentMethodForm = () => {
+    navigation.navigate('PaymentMethod');
+    refreshAddingNewPaymentState();
+  };
+
   if (isLoading) return null;
   return (
     <View style={styles.container}>
@@ -36,7 +48,7 @@ function UserAccount({
       <View style={styles.section}>
         <View style={styles.sectionTitleContainer}>
           <Text style={styles.sectionTitleText}>Payment cards</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={openNewPaymentMethodForm}>
             <Icon name="plus" color={$green} size={25} />
           </TouchableOpacity>
         </View>
@@ -56,17 +68,17 @@ function UserAccount({
                     source={require('../assets/images/mastercard.png')}
                   />
                 )}
-                <Text>{item.card_number}</Text>
+                <Text style={styles.cardNumberText}>{item.card_number}</Text>
               </View>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => deletePayment(item.id)}>
                 <Ionicons name="ios-remove-circle-outline" size={30} color={$red} />
               </TouchableOpacity>
             </View>
           )}
-          keyExtractor={(item) => item.data + new Date()}
+          keyExtractor={(item) => item.id}
         />
       </View>
-      <View>
+      <View style={styles.signOutBlock}>
         <TouchableOpacity style={styles.signOutButton} onPress={onLogout}>
           <Text style={styles.signOutButtonText}>SIGN OUT</Text>
           <Ionicons name="ios-log-out" size={30} color={$gray} />
@@ -81,12 +93,16 @@ UserAccount.propTypes = {
   email: PropTypes.string.isRequired,
   paymentMethods: PropTypes.arrayOf().isRequired,
   isLoading: PropTypes.bool.isRequired,
+  deletePayment: PropTypes.func.isRequired,
+  refreshAddingNewPaymentState: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => getUserData(state);
 
 const mapDispatchToProps = (dispatch) => ({
   onLogout: () => { dispatch(logout()); },
+  deletePayment: (id) => dispatch(deletePaymentMethod(id)),
+  refreshAddingNewPaymentState: () => dispatch(refreshPaymentState()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserAccount);
@@ -115,7 +131,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   sectionTitleText: {
-    fontSize: 16,
+    fontSize: 19,
     fontWeight: 'bold',
     color: $semiDarkGray,
     marginBottom: 5,
@@ -130,8 +146,8 @@ const styles = StyleSheet.create({
     width: 20,
   },
   paymentTypeIcon: {
-    width: 30,
-    height: 20,
+    width: 35,
+    height: 22,
     marginRight: 10,
   },
   paymentRecord: {
@@ -143,9 +159,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   paymentRecordTitle: {
+    alignItems: 'center',
     flexDirection: 'row',
   },
   sectionText: {
+    fontSize: 18,
     paddingLeft: 5,
   },
   signOutButton: {
@@ -158,6 +176,12 @@ const styles = StyleSheet.create({
   signOutButtonText: {
     fontWeight: 'bold',
     color: $semiDarkGray,
-    fontSize: 16,
+    fontSize: 19,
+  },
+  signOutBlock: {
+    marginTop: 30,
+  },
+  cardNumberText: {
+    fontSize: 18,
   },
 });
