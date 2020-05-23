@@ -20,6 +20,8 @@ import GlobalLoader from './src/components/GlobalLoader';
 import ReceiptDescriptionScreen from './src/screens/ReceiptDescriptionScreen';
 import CategoriesScreen from './src/screens/CategoriesScreen';
 import ProductScreen from './src/screens/ProductScreen';
+import PaymentScreen from './src/screens/PaymentScreen';
+import AddingPaymentMethodScreen from './src/screens/AddingPaymentMethodScreen';
 
 const Stack = createStackNavigator();
 
@@ -118,6 +120,24 @@ export default function App({ skipLoadingScreen }) {
               component={ProductScreen}
               options={{
                 title: 'Product',
+                headerTitleStyle: { fontSize: 20 },
+                headerLeft: (props) => <HeaderBackButton {...props} />,
+              }}
+            />
+            <Stack.Screen
+              name="Payment"
+              component={PaymentScreen}
+              options={{
+                title: 'Payment',
+                headerTitleStyle: { fontSize: 20 },
+                headerLeft: (props) => <HeaderBackButton {...props} />,
+              }}
+            />
+            <Stack.Screen
+              name="PaymentMethod"
+              component={AddingPaymentMethodScreen}
+              options={{
+                title: 'New payment method',
                 headerTitleStyle: { fontSize: 20 },
                 headerLeft: (props) => <HeaderBackButton {...props} />,
               }}

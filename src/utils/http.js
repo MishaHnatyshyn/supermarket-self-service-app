@@ -5,6 +5,10 @@ const axiosInstance = axios.create({
   baseURL: API_URL,
 });
 
+export const createAuthorizationHeader = (token) => ({
+  Authorization: `Bearer ${token}`,
+});
+
 export const { get } = axiosInstance;
 export const { put } = axiosInstance;
 export const { post } = axiosInstance;

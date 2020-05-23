@@ -4,7 +4,7 @@ import {
   FETCH_USER_DATA_SUCCESS,
   ADD_PAYMENT_METHOD_ERROR,
   ADD_PAYMENT_METHOD_START,
-  ADD_PAYMENT_METHOD_SUCCESS,
+  ADD_PAYMENT_METHOD_SUCCESS, REMOVE_PAYMENT_METHOD, REFRESH_PAYMENT_STATE,
 } from './actionTypes';
 import { LOGOUT } from '../auth/actionTypes';
 
@@ -17,6 +17,7 @@ const initialState = {
   isLoading: false,
   isPaymentMethodLoading: false,
   isPaymentMethodError: false,
+  isPaymentMethodAdded: false,
 };
 
 export default function userReducer(state = initialState, action) {
@@ -26,6 +27,7 @@ export default function userReducer(state = initialState, action) {
         ...state,
         isPaymentMethodError: true,
         isPaymentMethodLoading: false,
+        isPaymentMethodAdded: true,
         paymentMethods: [...state.paymentMethods, action.payload],
       };
     case FETCH_USER_DATA_SUCCESS:
@@ -58,6 +60,17 @@ export default function userReducer(state = initialState, action) {
         ...state,
         isPaymentMethodError: true,
         isPaymentMethodLoading: false,
+      };
+    case REMOVE_PAYMENT_METHOD:
+      return {
+        ...state,
+        paymentMethods: state.paymentMethods.filter((payment) => payment.id !== action.payload),
+      };
+
+    case REFRESH_PAYMENT_STATE:
+      return {
+        ...state,
+        isPaymentMethodAdded: false,
       };
     case LOGOUT:
       return initialState;
