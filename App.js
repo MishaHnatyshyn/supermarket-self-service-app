@@ -22,6 +22,7 @@ import CategoriesScreen from './src/screens/CategoriesScreen';
 import ProductScreen from './src/screens/ProductScreen';
 import PaymentScreen from './src/screens/PaymentScreen';
 import AddingPaymentMethodScreen from './src/screens/AddingPaymentMethodScreen';
+import ToastNotification from './src/components/ToastNotification';
 
 const Stack = createStackNavigator();
 
@@ -145,6 +146,7 @@ export default function App({ skipLoadingScreen }) {
           </Stack.Navigator>
         </NavigationContainer>
         <GlobalLoader />
+        <ToastNotification />
       </View>
     </Provider>
   );

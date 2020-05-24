@@ -27,8 +27,8 @@ export const setBasketIdToStorage = (basketId) => (
   AsyncStorage.setItem(BASKET_ID_STORAGE_KEY, String(basketId))
 );
 
-export const removeBasketIdFromStorage = (basketId) => (
-  AsyncStorage.removeItem(BASKET_ID_STORAGE_KEY, basketId)
+export const removeBasketIdFromStorage = () => (
+  AsyncStorage.removeItem(BASKET_ID_STORAGE_KEY)
 );
 
 export const getBasketIdFromStorage = () => (
