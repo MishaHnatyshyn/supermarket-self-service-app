@@ -1,4 +1,5 @@
 import { FETCH_RECEIPTS_ERROR, FETCH_RECEIPTS_START, FETCH_RECEIPTS_SUCCESS } from './actionTypes';
+import { LOGIN_SUCCESS, LOGOUT, REGISTER_SUCCESS } from '../auth/actionTypes';
 
 const initialState = {
   receipts: [],
@@ -27,6 +28,10 @@ export default function receiptsReducer(state = initialState, action) {
         isLoading: false,
         isError: true,
       };
+    case REGISTER_SUCCESS:
+    case LOGIN_SUCCESS:
+    case LOGOUT:
+      return initialState;
     default:
       return state;
   }

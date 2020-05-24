@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native';
 
-const ORDERS_STORAGE_KEY = 'ORDERS';
+const ORDERS_STORAGE_KEY = 'SAVED_ORDERS';
 
 export const getOrdersFromStorage = async () => {
   const orders = await AsyncStorage.getItem(ORDERS_STORAGE_KEY);
@@ -44,7 +44,7 @@ export const getOrderDetailsFromStorage = async (id, userId = 'common') => {
 
 export const getSavedReceipts = async (userId) => {
   const orders = await getOrdersFromStorage();
-  return orders[userId] ? Object.keys(orders[userId]) : [];
+  return orders[userId] ? Object.keys(orders[userId]).map((id) => parseInt(id, 10)) : [];
 };
 
 export const addOrderToStorage = (userId = 'common') => async (order) => {
@@ -52,7 +52,8 @@ export const addOrderToStorage = (userId = 'common') => async (order) => {
   if (!orders[userId]) {
     orders[userId] = {};
   }
-  orders[orders[userId]][order.id] = orders;
+  console.log('orders', order);
+  orders[userId][order.id] = order;
   return setOrdersToStorage(orders);
 };
 
@@ -63,7 +64,7 @@ export const removeOrderIdFromStorage = async (orderIdToDelete, userId = 'common
 };
 
 export const removeAllOrdersFromStorage = async (userId) => {
-  const orders = await getOrderDetailsFromStorage();
+  const orders = await getOrdersFromStorage();
   orders[userId] = null;
   return setOrdersToStorage(orders);
 };

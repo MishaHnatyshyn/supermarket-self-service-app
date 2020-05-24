@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, Fragment } from 'react';
 import {
   StyleSheet, View, Text, ScrollView, RefreshControl,
 } from 'react-native';
@@ -11,6 +11,7 @@ import { getMonthNameByIndex } from '../utils/helpers';
 import { areReceiptsLoading, getReceipts } from '../store/receipts/selectors';
 import { fetchReceipts } from '../store/receipts/asyncActions';
 import EmptyStateMessage from '../components/EmptyStateMessage';
+import { getUserId } from '../store/auth/selectors';
 
 function MonthDivider({ month }) {
   return (
@@ -24,10 +25,12 @@ const EMPTY_RECEIPTS_LIST_MESSAGE = 'You have no orders yet :(';
 
 const getMonth = (timestamp) => new Date(timestamp).getMonth();
 
-function ReceiptsListScreen({ receipts, fetchReceiptsData, isLoading }) {
-  React.useEffect(() => {
+function ReceiptsListScreen({
+  receipts, fetchReceiptsData, isLoading, userId,
+}) {
+  useEffect(() => {
     if (receipts.length === 0) fetchReceiptsData();
-  }, []);
+  }, [userId]);
   return (
     <ScrollView
       refreshControl={<RefreshControl refreshing={isLoading} onRefresh={fetchReceiptsData} />}
@@ -41,12 +44,12 @@ function ReceiptsListScreen({ receipts, fetchReceiptsData, isLoading }) {
           const prevMonth = index > 0 ? getMonth(receipts[index - 1].timestamp) : -1;
           const shouldRenderMonthDivider = prevMonth !== currentMonth;
           return (
-            <>
+            <Fragment key={receipt.id}>
               {shouldRenderMonthDivider && (
                 <MonthDivider month={getMonthNameByIndex(currentMonth)} />
               )}
               <ReceiptCard {...receipt} />
-            </>
+            </Fragment>
           );
         })}
       </View>
@@ -57,6 +60,7 @@ function ReceiptsListScreen({ receipts, fetchReceiptsData, isLoading }) {
 const mapStateToProps = createStructuredSelector({
   isLoading: areReceiptsLoading,
   receipts: getReceipts,
+  userId: getUserId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -73,6 +77,7 @@ ReceiptsListScreen.propTypes = {
   })).isRequired,
   fetchReceiptsData: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  userId: PropTypes.number.isRequired,
 };
 
 MonthDivider.propTypes = {
