@@ -15,6 +15,8 @@ import categoriesReducer from './categories/reducer';
 import barcodeReducer from './barcode/reducer';
 import userReducer from './user/reducer';
 import productReducer from './product/reducer';
+import receiptsReducer from './receipts/reducer';
+import receiptDetailsReducer from './receiptDetails/reducer';
 
 const initialState = {};
 
@@ -36,6 +38,8 @@ const rootReducer = combineReducers({
   basket: basketReducer,
   user: userReducer,
   product: productReducer,
+  receipts: receiptsReducer,
+  receiptDetails: receiptDetailsReducer,
   barcode: barcodeReducer,
 });
 

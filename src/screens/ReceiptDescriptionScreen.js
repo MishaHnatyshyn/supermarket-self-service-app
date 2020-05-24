@@ -1,36 +1,61 @@
-import React from 'react';
-import { ScrollView, View, StyleSheet } from 'react-native';
-import BasketProductCard from '../components/BasketProductCard';
-import FormButton from '../components/LoginButton';
+import React, { useCallback, useEffect } from 'react';
+import { StyleSheet, ScrollView, RefreshControl } from 'react-native';
+import PropTypes from 'prop-types';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import ReceiptMainInfo from '../components/ReceiptMainInfo';
+import ReceiptProductList from '../components/ReceiptProductList';
+import ReceiptQRCodeSection from '../components/ReceiptQRCodeSection';
+import {
+  isReceiptLoading,
+} from '../store/receiptDetails/selectors';
+import { fetchReceiptData } from '../store/receiptDetails/asyncActions';
 
-export default function ReceiptDescriptionScreen() {
+function ReceiptDescriptionScreen({ route, fetchReceipt, isLoading }) {
+  const {
+    id,
+  } = route.params;
+  const parsedId = parseInt(id, 10);
+  const fetchReceiptDetails = useCallback(() => {
+    fetchReceipt(parsedId);
+  }, [parsedId]);
+  useEffect(() => fetchReceiptDetails(), []);
   return (
-    <>
-      <ScrollView>
-        <BasketProductCard displayCounter={false} />
-        <BasketProductCard displayCounter={false} />
-        <BasketProductCard displayCounter={false} />
-        <BasketProductCard displayCounter={false} />
-        <View style={styles.confirmButtonPlaceholder} />
-      </ScrollView>
-      <View style={styles.confirmButtonContainer}>
-        <FormButton onClick={() => {}}>Generate QR-code</FormButton>
-      </View>
-      <View />
-    </>
+    <ScrollView
+      style={styles.container}
+      refreshControl={
+        <RefreshControl refreshing={isLoading} onRefresh={fetchReceiptDetails} />
+      }
+    >
+      <ReceiptMainInfo />
+      <ReceiptProductList />
+      <ReceiptQRCodeSection />
+    </ScrollView>
   );
 }
 
+const mapStateToProps = createStructuredSelector({
+  isLoading: isReceiptLoading,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchReceipt: (id) => dispatch(fetchReceiptData(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReceiptDescriptionScreen);
+
+ReceiptDescriptionScreen.propTypes = {
+  route: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }).isRequired,
+  fetchReceipt: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+};
+
 const styles = StyleSheet.create({
-  confirmButtonContainer: {
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
-    paddingTop: 15,
-    paddingBottom: 15,
-    alignItems: 'center',
-  },
-  confirmButtonPlaceholder: {
-    height: 70,
+  container: {
+    flex: 1,
   },
 });
