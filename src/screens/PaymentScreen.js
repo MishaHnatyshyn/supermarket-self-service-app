@@ -104,7 +104,7 @@ function PaymentScreen({
         </Text>
       </View>
 
-      {!isAuthorized && (
+      {!isUserAuthorized && (
         <PaymentMethodForm
           cardNumber={cardNumber}
           setCardNumber={setCardNumber}

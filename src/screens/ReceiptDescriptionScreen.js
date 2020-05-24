@@ -7,12 +7,13 @@ import ReceiptMainInfo from '../components/ReceiptMainInfo';
 import ReceiptProductList from '../components/ReceiptProductList';
 import ReceiptQRCodeSection from '../components/ReceiptQRCodeSection';
 import {
+  getOrderId,
   isReceiptLoading,
 } from '../store/receiptDetails/selectors';
 import { fetchReceiptData } from '../store/receiptDetails/asyncActions';
 
 function ReceiptDescriptionScreen({
-  route, fetchReceipt, isLoading,
+  route, fetchReceipt, isLoading, currentOrderId,
 }) {
   const {
     id,
@@ -22,6 +23,7 @@ function ReceiptDescriptionScreen({
     fetchReceipt(parsedId);
   }, [parsedId]);
   useEffect(() => fetchReceiptDetails(), []);
+  if (parsedId !== currentOrderId) return null;
   return (
     <ScrollView
       style={styles.container}
@@ -38,6 +40,7 @@ function ReceiptDescriptionScreen({
 
 const mapStateToProps = createStructuredSelector({
   isLoading: isReceiptLoading,
+  currentOrderId: getOrderId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -54,6 +57,7 @@ ReceiptDescriptionScreen.propTypes = {
   }).isRequired,
   fetchReceipt: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  currentOrderId: PropTypes.number.isRequired,
 };
 
 const styles = StyleSheet.create({
