@@ -19,7 +19,7 @@ export default function PaymentRecord({ number, type }) {
             source={require('../assets/images/mastercard.png')}
           />
         )}
-        <Text>{number}</Text>
+        <Text style={styles.cardNumberText}>{number}</Text>
       </View>
     </View>
   );
@@ -32,8 +32,8 @@ PaymentRecord.propTypes = {
 
 const styles = StyleSheet.create({
   paymentTypeIcon: {
-    width: 30,
-    height: 20,
+    width: 35,
+    height: 22,
     marginRight: 10,
   },
   paymentRecord: {
@@ -45,6 +45,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   paymentRecordTitle: {
+    alignItems: 'center',
     flexDirection: 'row',
+  },
+  cardNumberText: {
+    fontSize: 18,
   },
 });

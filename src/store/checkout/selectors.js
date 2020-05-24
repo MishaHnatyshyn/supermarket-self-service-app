@@ -10,6 +10,8 @@ export const getCheckoutBasketId = compose(
   root,
 );
 
+export const getIsLoading = compose(prop('isLoading'), root);
+
 export const getCheckoutTotalSum = compose(
   prop('totalSum'),
   root,

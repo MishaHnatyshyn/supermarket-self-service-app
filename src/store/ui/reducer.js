@@ -30,6 +30,7 @@ import { FETCH_RECEIPT_ERROR } from '../receiptDetails/actionTypes';
 import { CATEGORIES_FETCH_ERROR } from '../categories/actionTypes';
 import { FETCH_AVAILABLE_STORES_ERROR } from '../store/actionTypes';
 import { FETCH_RECEIPTS_ERROR } from '../receipts/actionTypes';
+import { CREATE_ORDER_ERROR } from '../checkout/actionTypes';
 
 const initialState = {
   showGlobalLoader: false,
@@ -80,6 +81,7 @@ export default function uiReducer(state = initialState, action) {
     case ADD_TO_BASKET_REQUEST_ERROR:
     case ADD_PAYMENT_METHOD_ERROR:
     case FETCH_RECEIPTS_ERROR:
+    case CREATE_ORDER_ERROR:
       return {
         ...state,
         showToastNotification: true,

@@ -3,12 +3,20 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { StyleSheet, View, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import FormButton from './LoginButton';
 import { getTotalBasketProducts, getTotalBasketSum } from '../store/basket/selectors';
 import { formatPrice } from '../utils/helpers';
 
-function BasketSummarySection({ sum, itemsCount, buyProducts }) {
+function BasketSummarySection({ sum, itemsCount }) {
   if (itemsCount === 0) return null;
+
+  const navigation = useNavigation();
+
+  const buyProducts = () => {
+    navigation.navigate('Payment');
+  };
+
   return (
     <View style={styles.confirmButtonContainer}>
       <View>
@@ -27,7 +35,6 @@ function BasketSummarySection({ sum, itemsCount, buyProducts }) {
 BasketSummarySection.propTypes = {
   sum: PropTypes.number.isRequired,
   itemsCount: PropTypes.number.isRequired,
-  buyProducts: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -35,11 +42,7 @@ const mapStateToProps = createStructuredSelector({
   itemsCount: getTotalBasketProducts,
 });
 
-const mapDispatchToProps = () => ({
-  buyProducts: () => {},
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(BasketSummarySection);
+export default connect(mapStateToProps)(BasketSummarySection);
 
 const styles = StyleSheet.create({
   confirmButtonContainer: {
