@@ -5,44 +5,48 @@ import {
 import PropTypes from 'prop-types';
 import { useNavigation } from '@react-navigation/native';
 import {
-  $black, $creamWhite, $gray, $green,
+  $black, $creamWhite, $gray, $green, $red, $yellow,
 } from '../constants/Colors';
 import Layout from '../constants/Layout';
+import { formatPrice, getFormattedTime, getOrderStatusName } from '../utils/helpers';
 
 const { width } = Layout.window;
 
+
 export default function ReceiptCard({
-  storeName, address, time, date, price, id,
+  id, status, timestamp, sum, store, street, building,
 }) {
+  const statusDisplayName = getOrderStatusName(status);
   const navigation = useNavigation();
 
   const onOpen = useCallback(() => {
     navigation.navigate('Receipt', {
       id,
     });
-  }, [navigation, id]);
-
+  }, [navigation]);
   return (
     <TouchableOpacity style={styles.container} onPress={onOpen}>
       <View style={styles.receiptsInfo}>
-        <Text style={styles.storeName}>{storeName}</Text>
-        <Text style={styles.address}>{address}</Text>
-        <Text style={styles.timeInfo}>{`${time}, ${date}`}</Text>
+        <Text style={styles.storeName}>{store}</Text>
+        <Text style={styles.address}>{`${street}, ${building}`}</Text>
+        <Text style={styles.timeInfo}>{getFormattedTime(timestamp)}</Text>
       </View>
       <View style={styles.priceContainer}>
-        <Text style={styles.price}>{price}</Text>
+        <Text style={styles.price}>{formatPrice(sum)}</Text>
+        <Text style={styles[`order-status-${statusDisplayName}`]}>{statusDisplayName}</Text>
       </View>
     </TouchableOpacity>
   );
 }
 
 ReceiptCard.propTypes = {
-  storeName: PropTypes.string.isRequired,
-  address: PropTypes.string.isRequired,
-  time: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
   id: PropTypes.number.isRequired,
+  status: PropTypes.string.isRequired,
+  timestamp: PropTypes.string.isRequired,
+  sum: PropTypes.number.isRequired,
+  store: PropTypes.string.isRequired,
+  street: PropTypes.string.isRequired,
+  building: PropTypes.string.isRequired,
 };
 
 const styles = StyleSheet.create({
@@ -72,7 +76,7 @@ const styles = StyleSheet.create({
   },
   price: {
     color: $green,
-    fontSize: 35,
+    fontSize: 22,
   },
   storeName: {
     fontSize: 23,
@@ -83,5 +87,17 @@ const styles = StyleSheet.create({
   },
   timeInfo: {
     fontSize: 18,
+  },
+  'order-status-Paid': {
+    color: $green,
+    fontSize: 22,
+  },
+  'order-status-Progress': {
+    color: $yellow,
+    fontSize: 22,
+  },
+  'order-status-Error': {
+    color: $red,
+    fontSize: 22,
   },
 });
