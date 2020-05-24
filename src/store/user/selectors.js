@@ -7,3 +7,4 @@ export const getUserData = root;
 
 export const getIsPaymentMethodLoading = compose(prop('isPaymentMethodLoading'), root);
 export const getIsPaymentMethodAdded = compose(prop('isPaymentMethodAdded'), root);
+export const getPaymentMethods = compose(prop('paymentMethods'), root);
