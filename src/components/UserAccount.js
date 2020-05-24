@@ -137,19 +137,6 @@ const styles = StyleSheet.create({
     color: $green,
     width: 20,
   },
-  paymentTypeIcon: {
-    width: 35,
-    height: 22,
-    marginRight: 10,
-  },
-  paymentRecord: {
-    flexDirection: 'row',
-    paddingLeft: 5,
-    paddingTop: 5,
-    paddingBottom: 5,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
   paymentRecordTitle: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -172,8 +159,5 @@ const styles = StyleSheet.create({
   },
   signOutBlock: {
     marginTop: 30,
-  },
-  cardNumberText: {
-    fontSize: 18,
   },
 });

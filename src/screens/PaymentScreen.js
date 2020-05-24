@@ -1,22 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   View,
   Text,
-  Switch,
+  Switch, TouchableOpacity, FlatList,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+import { FontAwesome, AntDesign } from '@expo/vector-icons';
+
 import PaymentMethodForm from '../components/PaymentMethodForm';
 import FormButton from '../components/LoginButton';
 import { getTotalBasketSum } from '../store/basket/selectors';
 import { formatPrice } from '../utils/helpers';
 import {
-  $gray, $green, $lightGray, $semiDarkGray,
+  $green, $lightGray, $semiDarkGray,
 } from '../constants/Colors';
 import { isAuthorized } from '../store/auth/selectors';
 import { getPaymentMethods } from '../store/user/selectors';
+import PaymentRecord from '../components/PaymentRecord';
 
 function PaymentScreen({ totalSum, isUserAuthorized, paymentMethods }) {
   const [cardNumber, setCardNumber] = useState('');
@@ -25,19 +28,39 @@ function PaymentScreen({ totalSum, isUserAuthorized, paymentMethods }) {
   const [cvv, setCvv] = useState('');
   const [isSavingCard, setSavingCard] = useState(false);
   const [fillNewCard, setFillNewCard] = useState(false);
+  const [savedSelectedId, setSavedSelectedId] = useState('');
+  const [isFormValid, setFormValid] = useState(false);
 
-  const PaymentForm = () => (
-    <PaymentMethodForm
-      cardNumber={cardNumber}
-      setCardNumber={setCardNumber}
-      expirationDateMonth={expirationDateMonth}
-      setExpirationDateMonth={setExpirationDateMonth}
-      expirationDateYear={expirationDateYear}
-      setExpirationDateYear={setExpirationDateYear}
-      cvv={cvv}
-      setCvv={setCvv}
-    />
-  );
+  const handleFillingNewCard = () => {
+    setFillNewCard(true);
+    setSavedSelectedId('');
+  };
+
+  useEffect(() => {
+    if (paymentMethods.length === 0 || fillNewCard === true) {
+      if (cardNumber.length !== 16) {
+        return setFormValid(false);
+      }
+      if (expirationDateMonth.length !== 2 || expirationDateMonth < 1 || expirationDateMonth > 12) {
+        return setFormValid(false);
+      }
+
+      if (expirationDateYear.length !== 2 || (expirationDateYear < 20)) {
+        return setFormValid(false);
+      }
+
+      if (cvv.length !== 3) {
+        return setFormValid(false);
+      }
+
+      return setFormValid(true);
+    }
+    if (isUserAuthorized && fillNewCard === false && savedSelectedId) {
+      return setFormValid(true);
+    }
+
+    return setFormValid(false);
+  }, [cardNumber, expirationDateMonth, expirationDateYear, cvv, savedSelectedId, fillNewCard]);
 
   return (
     <View style={styles.container}>
@@ -52,21 +75,54 @@ function PaymentScreen({ totalSum, isUserAuthorized, paymentMethods }) {
       </View>
 
       {!isAuthorized && (
-      <PaymentMethodForm
-        cardNumber={cardNumber}
-        setCardNumber={setCardNumber}
-        expirationDateMonth={expirationDateMonth}
-        setExpirationDateMonth={setExpirationDateMonth}
-        expirationDateYear={expirationDateYear}
-        setExpirationDateYear={setExpirationDateYear}
-        cvv={cvv}
-        setCvv={setCvv}
-      />
+        <PaymentMethodForm
+          cardNumber={cardNumber}
+          setCardNumber={setCardNumber}
+          expirationDateMonth={expirationDateMonth}
+          setExpirationDateMonth={setExpirationDateMonth}
+          expirationDateYear={expirationDateYear}
+          setExpirationDateYear={setExpirationDateYear}
+          cvv={cvv}
+          setCvv={setCvv}
+        />
+      )}
+
+      {isUserAuthorized && paymentMethods.length !== 0 && (
+      <View style={styles.cardButtons}>
+        <TouchableOpacity onPress={() => setFillNewCard(false)} style={styles.cardButton}>
+          <AntDesign name="user" size={22} color={fillNewCard === true ? $semiDarkGray : 'black'} style={styles.cardButtonIcon} />
+          <Text style={[styles.cardButtonsText, fillNewCard === true
+            ? styles.unselectedCardButton
+            : {}]}
+          >
+            Saved
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleFillingNewCard} style={styles.cardButton}>
+          <FontAwesome name="credit-card" size={22} color={fillNewCard === false ? $semiDarkGray : 'black'} style={styles.cardButtonIcon} />
+          <Text style={[styles.cardButtonsText, fillNewCard === false
+            ? styles.unselectedCardButton
+            : {}]}
+          >
+            New card
+          </Text>
+        </TouchableOpacity>
+      </View>
       )}
 
       {isUserAuthorized && (paymentMethods.length === 0 || fillNewCard === true) && (
         <View style={styles.cardBlock}>
-          <PaymentForm />
+          <PaymentMethodForm
+            cardNumber={cardNumber}
+            setCardNumber={setCardNumber}
+            expirationDateMonth={expirationDateMonth}
+            setExpirationDateMonth={setExpirationDateMonth}
+            expirationDateYear={expirationDateYear}
+            setExpirationDateYear={setExpirationDateYear}
+            cvv={cvv}
+            setCvv={setCvv}
+          />
           <View style={styles.switchSavingCard}>
             <Text style={styles.saveCardText}>Save card</Text>
             <Switch
@@ -76,18 +132,35 @@ function PaymentScreen({ totalSum, isUserAuthorized, paymentMethods }) {
               onValueChange={setSavingCard}
               value={isSavingCard}
             />
-
           </View>
-
         </View>
       )}
 
       {
         isUserAuthorized && paymentMethods.length > 0 && fillNewCard === false && (
-          <View />
+          <View style={styles.savedCardSection}>
+            <FlatList
+              data={paymentMethods}
+              renderItem={({ item }) => (
+                <View style={styles.paymentItem}>
+                  <TouchableOpacity
+                    style={styles.paymentItemBlock}
+                    onPress={() => setSavedSelectedId(item.id)}
+                  >
+                    <PaymentRecord number={item.card_number} type={item.card_type} />
+                    <View style={styles.radioButton}>
+                      <View style={savedSelectedId === item.id ? styles.selectedRadioButton : {}} />
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              )}
+              keyExtractor={(item) => item.id}
+            />
+          </View>
+
         )
       }
-      <FormButton onClick={() => {}}>Buy</FormButton>
+      <FormButton onClick={() => {}} disabled={!isFormValid}>Buy</FormButton>
     </View>
   );
 }
@@ -143,5 +216,57 @@ const styles = StyleSheet.create({
     marginRight: 5,
     fontSize: 17,
     color: $semiDarkGray,
+  },
+  paymentItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 7,
+  },
+  savedCardSection: {
+    width: '90%',
+    height: 230,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 70,
+  },
+  cardButtons: {
+    flexDirection: 'row',
+    width: '90%',
+    justifyContent: 'space-around',
+    marginBottom: 20,
+  },
+  cardButtonsText: {
+    fontSize: 18,
+  },
+  cardButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  unselectedCardButton: {
+    color: $semiDarkGray,
+  },
+  cardButtonIcon: {
+    marginRight: 5,
+  },
+  radioButton: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: $green,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  selectedRadioButton: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    backgroundColor: $green,
+  },
+  paymentItemBlock: {
+    width: '95%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
