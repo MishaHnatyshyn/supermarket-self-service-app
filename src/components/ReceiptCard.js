@@ -1,25 +1,29 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   View, StyleSheet, Text, TouchableOpacity,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { useNavigation } from '@react-navigation/native';
 import {
-  $black, $creamWhite, $gray, $green,
+  $black, $creamWhite, $gray, $green, $red, $yellow,
 } from '../constants/Colors';
 import Layout from '../constants/Layout';
-import { formatPrice } from '../utils/helpers';
+import { formatPrice, getFormattedTime, getOrderStatusName } from '../utils/helpers';
 
 const { width } = Layout.window;
 
-const getFormattedTime = (timestamp) => new Date(timestamp)
-  .toLocaleString()
-  .split(', ')
-  .reverse()
-  .join(', ');
 
 export default function ReceiptCard({
-  id, status, timestamp, sum, store, street, building, onOpen,
+  id, status, timestamp, sum, store, street, building,
 }) {
+  const statusDisplayName = getOrderStatusName(status);
+  const navigation = useNavigation();
+
+  const onOpen = useCallback(() => {
+    navigation.navigate('Receipt', {
+      id,
+    });
+  }, [navigation]);
   return (
     <TouchableOpacity style={styles.container} onPress={onOpen}>
       <View style={styles.receiptsInfo}>
@@ -29,6 +33,7 @@ export default function ReceiptCard({
       </View>
       <View style={styles.priceContainer}>
         <Text style={styles.price}>{formatPrice(sum)}</Text>
+        <Text style={styles[`order-status-${statusDisplayName}`]}>{statusDisplayName}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -42,7 +47,6 @@ ReceiptCard.propTypes = {
   store: PropTypes.string.isRequired,
   street: PropTypes.string.isRequired,
   building: PropTypes.string.isRequired,
-  onOpen: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({
@@ -72,7 +76,7 @@ const styles = StyleSheet.create({
   },
   price: {
     color: $green,
-    fontSize: 35,
+    fontSize: 22,
   },
   storeName: {
     fontSize: 23,
@@ -83,5 +87,17 @@ const styles = StyleSheet.create({
   },
   timeInfo: {
     fontSize: 18,
+  },
+  'order-status-Paid': {
+    color: $green,
+    fontSize: 22,
+  },
+  'order-status-Progress': {
+    color: $yellow,
+    fontSize: 22,
+  },
+  'order-status-Error': {
+    color: $red,
+    fontSize: 22,
   },
 });

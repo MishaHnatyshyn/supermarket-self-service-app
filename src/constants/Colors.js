@@ -8,6 +8,8 @@ export const $black = '#000';
 export const $red = 'rgba(255,86,79,0.74)';
 export const $semiDarkGray = 'gray';
 export const $lightGray = '#e0e0e0';
+export const $yellow = '#e2e209';
+
 
 export default {
   tintColor: $tintColor,

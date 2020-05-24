@@ -1,27 +1,27 @@
-import { FETCH_RECEIPTS_ERROR, FETCH_RECEIPTS_START, FETCH_RECEIPTS_SUCCESS } from './actionTypes';
+import { FETCH_RECEIPT_ERROR, FETCH_RECEIPT_START, FETCH_RECEIPT_SUCCESS } from './actionTypes';
 
 const initialState = {
-  receipts: [],
+  receipt: {},
   isLoading: false,
   isError: false,
 };
 
-export default function receiptsReducer(state = initialState, action) {
+export default function receiptDetailsReducer(state = initialState, action) {
   switch (action.type) {
-    case FETCH_RECEIPTS_SUCCESS:
+    case FETCH_RECEIPT_SUCCESS:
       return {
         ...state,
-        receipts: action.payload,
+        receipt: action.payload,
         isLoading: false,
         isError: false,
       };
-    case FETCH_RECEIPTS_START:
+    case FETCH_RECEIPT_START:
       return {
         ...state,
         isLoading: true,
         isError: false,
       };
-    case FETCH_RECEIPTS_ERROR:
+    case FETCH_RECEIPT_ERROR:
       return {
         ...state,
         isLoading: false,

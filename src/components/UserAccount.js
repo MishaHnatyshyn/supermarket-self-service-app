@@ -14,6 +14,7 @@ import { logout } from '../store/auth/asyncActions';
 import { getUserData } from '../store/user/selectors';
 import { deletePaymentMethod } from '../store/user/asyncActions';
 import { refreshPaymentState } from '../store/user/actions';
+import PaymentRecord from './PaymentRecord';
 
 function UserAccount({
   onLogout,
@@ -55,21 +56,8 @@ function UserAccount({
         <FlatList
           data={paymentMethods}
           renderItem={({ item }) => (
-            <View style={styles.paymentRecord}>
-              <View style={styles.paymentRecordTitle}>
-                {item.card_type === 'visa' ? (
-                  <Image
-                    style={styles.paymentTypeIcon}
-                    source={require('../assets/images/visa.png')}
-                  />
-                ) : (
-                  <Image
-                    style={styles.paymentTypeIcon}
-                    source={require('../assets/images/mastercard.png')}
-                  />
-                )}
-                <Text style={styles.cardNumberText}>{item.card_number}</Text>
-              </View>
+            <View style={styles.paymentItem}>
+              <PaymentRecord number={item.card_number} type={item.card_type} />
               <TouchableOpacity onPress={() => deletePayment(item.id)}>
                 <Ionicons name="ios-remove-circle-outline" size={30} color={$red} />
               </TouchableOpacity>
@@ -108,6 +96,10 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(UserAccount);
 
 const styles = StyleSheet.create({
+  paymentItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   container: {
     width: '100%',
     paddingLeft: 10,

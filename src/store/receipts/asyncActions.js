@@ -5,15 +5,15 @@ import { ORDER_API_URL } from '../../utils/config';
 
 export const getOrderIdsFromStorage = () => [1];
 
-export const fetchReceipts = () => (dispatch, getState) => {
+export const fetchReceipts = () => async (dispatch, getState) => {
   const accessToken = getAccessToken(getState());
   const headers = accessToken ? createAuthorizationHeader(accessToken) : {};
   const ordersIdsFromStorage = getOrderIdsFromStorage();
   const params = { orders: ordersIdsFromStorage };
   if (!accessToken && ordersIdsFromStorage.length === 0) return;
-  dispatch(fetchReceiptsStart);
+  dispatch(fetchReceiptsStart());
   try {
-    const { data: { data } } = get(ORDER_API_URL, { headers, params });
+    const { data: { data } } = await get(ORDER_API_URL, { headers, params });
     dispatch(fetchReceiptsSuccess(data));
   } catch (e) {
     dispatch(fetchReceiptsError(e));

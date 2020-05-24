@@ -1,41 +1,82 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import {
-  StyleSheet, View, Text, ScrollView,
+  StyleSheet, View, Text, ScrollView, RefreshControl,
 } from 'react-native';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import ReceiptCard from '../components/ReceiptCard';
 import { $black, $creamWhite } from '../constants/Colors';
+import { getMonthNameByIndex } from '../utils/helpers';
+import { areReceiptsLoading, getReceipts } from '../store/receipts/selectors';
+import { fetchReceipts } from '../store/receipts/asyncActions';
+import EmptyStateMessage from '../components/EmptyStateMessage';
 
-
-const data = [{
-  id: 1,
-  status: 'paid',
-  timestamp: '2020-05-20T06:35:26.808Z',
-  sum: 27,
-  store: 'store1',
-  street: 'проспект Перемоги',
-  building: '26',
-}];
-
-export default function ReceiptsListScreen({ receipts = data }) {
-  const onOpen = () => {};
+function MonthDivider({ month }) {
   return (
-    <ScrollView>
+    <View style={styles.monthDivision}>
+      <Text style={styles.monthName}>{month}</Text>
+    </View>
+  );
+}
+
+const EMPTY_RECEIPTS_LIST_MESSAGE = 'You have no orders yet :(';
+
+const getMonth = (timestamp) => new Date(timestamp).getMonth();
+
+function ReceiptsListScreen({ receipts, fetchReceiptsData, isLoading }) {
+  React.useEffect(() => {
+    if (receipts.length === 0) fetchReceiptsData();
+  }, []);
+  return (
+    <ScrollView
+      refreshControl={<RefreshControl refreshing={isLoading} onRefresh={fetchReceiptsData} />}
+    >
       <View style={styles.container}>
-        <View style={styles.monthDivision}>
-          <Text style={styles.monthName}>December</Text>
-        </View>
-        {receipts.map((receipt) => <ReceiptCard {...receipt} onOpen={onOpen} />)}
-        <View style={styles.monthDivision}>
-          <Text style={styles.monthName}>January</Text>
-        </View>
+        {receipts.length === 0 && !isLoading && (
+          <EmptyStateMessage message={EMPTY_RECEIPTS_LIST_MESSAGE} />
+        )}
+        {receipts.map((receipt, index) => {
+          const currentMonth = getMonth(receipt.timestamp);
+          const prevMonth = index > 0 ? getMonth(receipts[index - 1].timestamp) : -1;
+          const shouldRenderMonthDivider = prevMonth !== currentMonth;
+          return (
+            <>
+              {shouldRenderMonthDivider && (
+                <MonthDivider month={getMonthNameByIndex(currentMonth)} />
+              )}
+              <ReceiptCard {...receipt} />
+            </>
+          );
+        })}
       </View>
     </ScrollView>
   );
 }
 
+const mapStateToProps = createStructuredSelector({
+  isLoading: areReceiptsLoading,
+  receipts: getReceipts,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchReceiptsData: () => {
+    dispatch(fetchReceipts());
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReceiptsListScreen);
+
 ReceiptsListScreen.propTypes = {
-  navigation: PropTypes.shape.isRequired,
+  receipts: PropTypes.arrayOf(PropTypes.shape({
+    timestamp: PropTypes.string,
+  })).isRequired,
+  fetchReceiptsData: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+};
+
+MonthDivider.propTypes = {
+  month: PropTypes.string.isRequired,
 };
 
 const styles = StyleSheet.create({
