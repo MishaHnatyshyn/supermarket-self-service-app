@@ -40,7 +40,6 @@ export const addNewPaymentMethod = (cardNumber, expirationDateMonth, expirationD
     Alert.alert('Card was successfully added', 'Now you can use this payment method in your future checkouts', [{ text: 'OK', onPress: onSuccess }]);
   } catch (e) {
     dispatch(addPaymentMethodError());
-    alert('Something went wrong. Try again');
   }
 };
 
@@ -52,6 +51,6 @@ export const deletePaymentMethod = (id) => async (dispatch, getState) => {
     await del(`${PAYMENT_METHODS_API_URL}/${id}`, { headers });
     dispatch(removePaymentMethod(id));
   } catch (e) {
-    alert('Something went wrong. Try again');
+    dispatch(addPaymentMethodError());
   }
 };
