@@ -11,7 +11,9 @@ import {
 } from '../store/receiptDetails/selectors';
 import { fetchReceiptData } from '../store/receiptDetails/asyncActions';
 
-function ReceiptDescriptionScreen({ route, fetchReceipt, isLoading }) {
+function ReceiptDescriptionScreen({
+  route, fetchReceipt, isLoading,
+}) {
   const {
     id,
   } = route.params;

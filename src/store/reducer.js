@@ -17,6 +17,7 @@ import userReducer from './user/reducer';
 import productReducer from './product/reducer';
 import receiptsReducer from './receipts/reducer';
 import receiptDetailsReducer from './receiptDetails/reducer';
+import checkoutReducer from './checkout/reducer';
 
 const initialState = {};
 
@@ -41,6 +42,7 @@ const rootReducer = combineReducers({
   receipts: receiptsReducer,
   receiptDetails: receiptDetailsReducer,
   barcode: barcodeReducer,
+  checkout: checkoutReducer,
 });
 
 const store = createStore(rootReducer, initialState, enhancer);

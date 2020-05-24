@@ -12,6 +12,8 @@ export const getCheckoutBasketId = compose(
 
 export const getIsLoading = compose(prop('isLoading'), root);
 
+export const getNewOrder = compose(prop('newOrder'), root);
+
 export const getCheckoutTotalSum = compose(
   prop('totalSum'),
   root,
