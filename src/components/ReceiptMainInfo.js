@@ -43,24 +43,24 @@ function ReceiptMainInfo({
         </View>
         <View style={styles.paymentDetailsContainer}>
           <View style={styles.paymentDetailsRow}>
-            <Text>Total sum:</Text>
-            <Text>{formatPrice(sum)}</Text>
+            <Text style={styles.infoText}>Total sum:</Text>
+            <Text style={styles.infoText}>{formatPrice(sum)}</Text>
           </View>
           <View style={styles.paymentDetailsRow}>
-            <Text>Transaction ID:</Text>
-            <Text>{transaction_id}</Text>
+            <Text style={styles.infoText}>Transaction ID:</Text>
+            <Text style={styles.infoText}>{transaction_id}</Text>
           </View>
           <View style={styles.paymentDetailsRow}>
-            <Text>Payment method:</Text>
-            <Text>{paymentMethod}</Text>
+            <Text style={styles.infoText}>Payment method:</Text>
+            <Text style={styles.infoText}>{paymentMethod}</Text>
           </View>
           <View style={styles.paymentDetailsRow}>
-            <Text>Card number:</Text>
+            <Text style={styles.infoText}>Card number:</Text>
             <PaymentRecord number={card_number} type={card_type} />
           </View>
           <View style={styles.paymentDetailsRow}>
-            <Text>Transaction time:</Text>
-            <Text>{getFormattedTime(transactionTime)}</Text>
+            <Text style={styles.infoText}>Transaction time:</Text>
+            <Text style={styles.infoText}>{getFormattedTime(transactionTime)}</Text>
           </View>
         </View>
       </View>
@@ -163,5 +163,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    height: 25,
+  },
+  infoText: {
+    fontSize: 17,
   },
 });

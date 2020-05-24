@@ -86,14 +86,19 @@ const styles = StyleSheet.create({
   },
   productName: {
     width: '60%',
+    fontSize: 16,
   },
   productQuantity: {
     width: '20%',
     textAlign: 'center',
+    fontSize: 16,
+
   },
   productSum: {
     width: '20%',
     textAlign: 'right',
+    fontSize: 16,
+
   },
   list: {
     borderRadius: 1,
@@ -107,5 +112,6 @@ const styles = StyleSheet.create({
   },
   totalsRowText: {
     fontWeight: '500',
+    fontSize: 16,
   },
 });

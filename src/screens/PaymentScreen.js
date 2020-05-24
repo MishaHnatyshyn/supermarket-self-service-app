@@ -238,7 +238,8 @@ const styles = StyleSheet.create({
   },
   totalSumContainer: {
     flexDirection: 'row',
-    marginBottom: 60,
+    marginBottom: 40,
+    marginTop: -55,
   },
   cardBlock: {
     width: '100%',
