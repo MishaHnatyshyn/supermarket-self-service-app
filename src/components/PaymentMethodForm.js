@@ -15,8 +15,6 @@ export default function PaymentMethodForm({
   cvv,
   setCvv,
 }) {
-  useEffect(() => console.log('MOUNTED'), []);
-
   return (
     <View style={styles.container}>
       <View style={styles.cardPhotos}>

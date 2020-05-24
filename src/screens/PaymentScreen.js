@@ -20,8 +20,13 @@ import {
 import { isAuthorized } from '../store/auth/selectors';
 import { getPaymentMethods } from '../store/user/selectors';
 import PaymentRecord from '../components/PaymentRecord';
+import { createOrder } from '../store/checkout/asyncActions';
+import SmallLoader from '../components/SmallLoader';
+import { getIsLoading } from '../store/checkout/selectors';
 
-function PaymentScreen({ totalSum, isUserAuthorized, paymentMethods }) {
+function PaymentScreen({
+  totalSum, isUserAuthorized, paymentMethods, buyProducts, isLoading,
+}) {
   const [cardNumber, setCardNumber] = useState('');
   const [expirationDateYear, setExpirationDateYear] = useState('');
   const [expirationDateMonth, setExpirationDateMonth] = useState('');
@@ -34,6 +39,18 @@ function PaymentScreen({ totalSum, isUserAuthorized, paymentMethods }) {
   const handleFillingNewCard = () => {
     setFillNewCard(true);
     setSavedSelectedId('');
+  };
+
+  const submitForm = () => {
+    buyProducts({
+      paymentMethodId: savedSelectedId,
+      newPaymentData: {
+        cardNumber,
+        dueDate: `${expirationDateMonth}/${expirationDateYear}`,
+        cvvCode: cvv,
+      },
+      savePaymentMethod: isSavingCard,
+    });
   };
 
   useEffect(() => {
@@ -160,7 +177,10 @@ function PaymentScreen({ totalSum, isUserAuthorized, paymentMethods }) {
 
         )
       }
-      <FormButton onClick={() => {}} disabled={!isFormValid}>Buy</FormButton>
+      <View style={styles.buttonBlock}>
+        {isLoading && <SmallLoader isVisible />}
+        {!isLoading && <FormButton onClick={submitForm} disabled={!isFormValid}>Buy</FormButton>}
+      </View>
     </View>
   );
 }
@@ -169,16 +189,22 @@ PaymentScreen.propTypes = {
   totalSum: PropTypes.string.isRequired,
   isUserAuthorized: PropTypes.bool.isRequired,
   paymentMethods: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  buyProducts: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   totalSum: getTotalBasketSum,
   isUserAuthorized: isAuthorized,
   paymentMethods: getPaymentMethods,
+  isLoading: getIsLoading,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  buyProducts: (data) => dispatch(createOrder(data)),
+});
 
-export default connect(mapStateToProps)(PaymentScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(PaymentScreen);
 
 const styles = StyleSheet.create({
   container: {
