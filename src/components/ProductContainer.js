@@ -37,7 +37,14 @@ function ProductScreen({
   return (
     <ScrollView style={styles.scrollContainer}>
       <View style={styles.container}>
-        <Image style={styles.image} source={{ uri: photos[0]?.url || DEFAULT_PHOTO_URI }} resizeMode="contain" />
+        <Image
+          style={styles.image}
+          source={{
+            uri: photos[0]?.url || DEFAULT_PHOTO_URI,
+            cache: 'force-cache',
+          }}
+          resizeMode="contain"
+        />
         <View style={styles.productInfo}>
           <Text style={styles.productName}>{name}</Text>
           <Text style={styles.price}>{formatPrice(price)}</Text>

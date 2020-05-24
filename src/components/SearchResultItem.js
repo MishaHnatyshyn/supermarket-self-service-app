@@ -49,7 +49,10 @@ export default function SearchResultItem({
       <View style={styles.card}>
         <TouchableOpacity onPress={openProduct} style={styles.infoContainer}>
           <Image
-            source={{ uri: photo || DEFAULT_PHOTO_URI }}
+            source={{
+              uri: photo || DEFAULT_PHOTO_URI,
+              cache: 'force-cache',
+            }}
             style={styles.image}
             resizeMode="contain"
           />
