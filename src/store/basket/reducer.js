@@ -12,6 +12,7 @@ import {
   FETCH_BASKET_SUCCESS,
   FETCH_BASKET_START, FETCH_BASKET_ERROR,
 } from './actionTypes';
+import { CREATE_ORDER_SUCCESS } from '../checkout/actionTypes';
 
 const initialState = {
   basketId: null,
@@ -96,6 +97,8 @@ export default function basketReducer(state = initialState, action) {
         ...state,
         basketId: action.payload,
       };
+    case CREATE_ORDER_SUCCESS:
+      return initialState;
     default:
       return state;
   }
