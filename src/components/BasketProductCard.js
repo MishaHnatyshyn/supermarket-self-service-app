@@ -51,7 +51,10 @@ export default function BasketProductCard({
         <View style={styles.imageContainer}>
           <Image
             style={styles.image}
-            source={{ uri: photo || DEFAULT_PHOTO_URI }}
+            source={{
+              uri: photo || DEFAULT_PHOTO_URI,
+              cache: 'force-cache',
+            }}
             resizeMode="contain"
           />
         </View>

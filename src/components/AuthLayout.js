@@ -11,7 +11,13 @@ const { width } = Layout.window;
 export default function AuthLayout({ children, isRegistration }) {
   return (
     <View style={{ ...styles.container, padding: isRegistration ? '10% 3%' : '25% 3%' }}>
-      <Image source={{ uri: 'https://i.pinimg.com/564x/f5/d0/51/f5d051306fcdce6da21ece1d903e49a1.jpg' }} style={styles.background} />
+      <Image
+        source={{
+          uri: 'https://i.pinimg.com/564x/f5/d0/51/f5d051306fcdce6da21ece1d903e49a1.jpg',
+          cache: 'force-cache',
+        }}
+        style={styles.background}
+      />
       <View style={styles.block}>
         <View style={styles.logo}>
           <Image source={require('../assets/images/logo.png')} style={styles.picture} />

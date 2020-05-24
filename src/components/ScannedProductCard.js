@@ -46,7 +46,10 @@ function ScannedProductCard({
         <FontAwesome name="remove" size={26} color={$gray} />
       </TouchableOpacity>
       <Image
-        source={{ uri: scannedProduct.photo || DEFAULT_PHOTO_URI }}
+        source={{
+          uri: scannedProduct.photo || DEFAULT_PHOTO_URI,
+          cache: 'force-cache',
+        }}
         style={styles.image}
         resizeMode="contain"
       />
