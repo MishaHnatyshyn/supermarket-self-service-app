@@ -10,6 +10,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 
+import { useNavigation } from '@react-navigation/native';
 import PaymentMethodForm from '../components/PaymentMethodForm';
 import FormButton from '../components/LoginButton';
 import { getTotalBasketSum } from '../store/basket/selectors';
@@ -22,10 +23,10 @@ import { getPaymentMethods } from '../store/user/selectors';
 import PaymentRecord from '../components/PaymentRecord';
 import { createOrder } from '../store/checkout/asyncActions';
 import SmallLoader from '../components/SmallLoader';
-import { getIsLoading } from '../store/checkout/selectors';
+import { getIsLoading, getNewOrder } from '../store/checkout/selectors';
 
 function PaymentScreen({
-  totalSum, isUserAuthorized, paymentMethods, buyProducts, isLoading,
+  totalSum, isUserAuthorized, paymentMethods, buyProducts, isLoading, newOrder,
 }) {
   const [cardNumber, setCardNumber] = useState('');
   const [expirationDateYear, setExpirationDateYear] = useState('');
@@ -35,6 +36,8 @@ function PaymentScreen({
   const [fillNewCard, setFillNewCard] = useState(false);
   const [savedSelectedId, setSavedSelectedId] = useState('');
   const [isFormValid, setFormValid] = useState(false);
+
+  const navigation = useNavigation();
 
   const handleFillingNewCard = () => {
     setFillNewCard(true);
@@ -52,6 +55,16 @@ function PaymentScreen({
       savePaymentMethod: isSavingCard,
     });
   };
+
+
+  useEffect(() => {
+    if (newOrder.id) {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'PaymentSuccess' }],
+      });
+    }
+  }, [newOrder]);
 
   useEffect(() => {
     if (paymentMethods.length === 0 || fillNewCard === true) {
@@ -191,6 +204,7 @@ PaymentScreen.propTypes = {
   paymentMethods: PropTypes.arrayOf(PropTypes.shape).isRequired,
   buyProducts: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  newOrder: PropTypes.shape.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -198,6 +212,7 @@ const mapStateToProps = createStructuredSelector({
   isUserAuthorized: isAuthorized,
   paymentMethods: getPaymentMethods,
   isLoading: getIsLoading,
+  newOrder: getNewOrder,
 });
 
 const mapDispatchToProps = (dispatch) => ({

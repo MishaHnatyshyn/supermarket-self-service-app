@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
-  Platform, StatusBar, StyleSheet, View
+  Platform, StatusBar, StyleSheet, View,
 } from 'react-native';
 import { SplashScreen } from 'expo';
 import * as Font from 'expo-font';
@@ -23,6 +23,7 @@ import ProductScreen from './src/screens/ProductScreen';
 import PaymentScreen from './src/screens/PaymentScreen';
 import AddingPaymentMethodScreen from './src/screens/AddingPaymentMethodScreen';
 import ToastNotification from './src/components/ToastNotification';
+import PaymentSuccessScreen from './src/screens/PaymentSuccessScreen';
 
 const Stack = createStackNavigator();
 
@@ -141,6 +142,17 @@ export default function App({ skipLoadingScreen }) {
                 title: 'New payment method',
                 headerTitleStyle: { fontSize: 20 },
                 headerLeft: (props) => <HeaderBackButton {...props} />,
+              }}
+            />
+            <Stack.Screen
+              name="PaymentSuccess"
+              component={PaymentSuccessScreen}
+              options={{
+                title: 'Payment success',
+                headerTitleStyle: { fontSize: 20 },
+                headerLeft: null,
+                gesturesEnabled: false,
+                swipeEnabled: false,
               }}
             />
           </Stack.Navigator>
