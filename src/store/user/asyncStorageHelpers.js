@@ -1,29 +1,24 @@
 import { AsyncStorage } from 'react-native';
 
-const ORDERS_STORAGE_KEY = 'ORDERS';
+const SAVE_RECEIPTS_STORAGE_KEY = 'SAVE_RECEIPTS';
 
-export const getOrdersFromStorage = async () => {
-  const orders = await AsyncStorage.getItem(ORDERS_STORAGE_KEY);
-  if (!orders) return [];
-  return JSON.parse(orders);
+const getInfoForAllUsers = async () => {
+  const data = await AsyncStorage.getItem(SAVE_RECEIPTS_STORAGE_KEY);
+  return data ? JSON.parse(data) : {};
 };
 
-export const setOrdersToStorage = (orders) => (
-  AsyncStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders))
+const setValueInStorage = (value) => (
+  AsyncStorage.setItem(SAVE_RECEIPTS_STORAGE_KEY, JSON.stringify(value))
 );
 
-export const addOrderIdToStorage = async (orderId) => {
-  const orders = await getOrdersFromStorage();
-  const newOrders = [...orders, orderId];
-  return setOrdersToStorage(newOrders);
+export const getReceiptSavingValue = async (id) => {
+  const data = await getInfoForAllUsers();
+  const value = data[id];
+  return value ?? true;
 };
 
-export const removeOrderIdFromStorage = async (orderIdToDelete) => {
-  const orders = await getOrdersFromStorage();
-  const newOrders = orders.filter((orderId) => orderId !== orderIdToDelete);
-  return setOrdersToStorage(newOrders);
+export const setReceiptSavingValue = async (id, value) => {
+  const data = await getInfoForAllUsers();
+  data[id] = value;
+  setValueInStorage(data);
 };
-
-export const removeAllOrdersFromStorage = () => (
-  AsyncStorage.removeItem(ORDERS_STORAGE_KEY)
-);

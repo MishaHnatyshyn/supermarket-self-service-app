@@ -13,6 +13,7 @@ const initialState = {
   name: '',
   email: '',
   paymentMethods: [],
+  saveReceiptsLocally: true,
   isError: false,
   isLoading: false,
   isPaymentMethodLoading: false,

@@ -1,13 +1,14 @@
 import { getBasketId, getTotalBasketSum } from '../basket/selectors';
-import { getAccessToken, isAuthorized } from '../auth/selectors';
+import { getAccessToken, getUserId, isAuthorized } from '../auth/selectors';
 import {
   createOrderError, createOrderStart, createOrderSuccess, setCheckoutData,
 } from './actions';
 import { createAuthorizationHeader, post } from '../../utils/http';
 import { ORDER_API_URL } from '../../utils/config';
 import { removeBasketIdFromStorage } from '../basket/asyncActions';
-import { addOrderIdToStorage } from './asyncStorageHelpers';
+import { addOrderToStorage } from './asyncStorageHelpers';
 import { addPaymentMethodSuccess } from '../user/actions';
+import { fetchReceiptData } from '../receiptDetails/asyncActions';
 
 
 export const initCheckout = () => (dispatch, getState) => {
@@ -28,6 +29,7 @@ export const createOrder = ({
   const basketId = getBasketId(state);
   const totalOrderSum = getTotalBasketSum(state);
   const isAuthorizedCheckout = isAuthorized(state);
+  const userId = getUserId(state);
 
   const body = {
     basketId,
@@ -47,7 +49,7 @@ export const createOrder = ({
     const { data } = await post(ORDER_API_URL, body, { headers });
     dispatch(createOrderSuccess(data));
     removeBasketIdFromStorage();
-    await addOrderIdToStorage(data.id);
+    dispatch(fetchReceiptData(data.id, addOrderToStorage(userId), false));
     if (isAuthorizedCheckout && savePaymentMethod) {
       dispatch(addPaymentMethodSuccess(data.paymentMethodData));
     }

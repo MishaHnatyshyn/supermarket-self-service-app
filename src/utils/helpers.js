@@ -1,3 +1,5 @@
+import { Alert } from 'react-native';
+
 export const CURRENCY_SYMBOLS = {
   UAH: '₴',
   USD: '$',
@@ -38,3 +40,18 @@ export const getFormattedTime = (timestamp) => new Date(timestamp)
 export const getMonthNameByIndex = (index) => MONTHS[index];
 
 export const getOrderStatusName = (status) => ORDER_STATUS[status];
+
+export const openConfirmationAlert = (text, onContinue) => Alert.alert(
+  'Caution!',
+  text,
+  [
+    {
+      text: 'Cancel',
+    },
+    {
+      text: 'Continue',
+      onPress: onContinue,
+    },
+
+  ],
+);
