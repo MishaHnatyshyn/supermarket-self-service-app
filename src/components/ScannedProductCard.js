@@ -1,5 +1,5 @@
 import {
-  StyleSheet, View, Text, TouchableOpacity, Image,
+  StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native';
 import React, { useCallback, useEffect } from 'react';
 import { createStructuredSelector } from 'reselect';
@@ -13,7 +13,6 @@ import { removeScannedProduct } from '../store/barcode/actions';
 import {
   $gray, $green, $realWhite,
 } from '../constants/Colors';
-import { DEFAULT_PHOTO_URI } from '../constants/Defaults';
 import { formatPrice } from '../utils/helpers';
 import SmallLoader from './SmallLoader';
 import FormButton from './LoginButton';
@@ -21,6 +20,7 @@ import Counter from './Counter';
 import { addToBasket as addToBasketAction, changeBasketItemQuantity } from '../store/basket/asyncActions';
 
 import Layout from '../constants/Layout';
+import CachableImage from './CachableImage';
 
 const { width } = Layout.window;
 
@@ -45,11 +45,8 @@ function ScannedProductCard({
       <TouchableOpacity onPress={() => removeProduct(scannedProduct.id)} style={styles.removeIcon}>
         <FontAwesome name="remove" size={26} color={$gray} />
       </TouchableOpacity>
-      <Image
-        source={{
-          uri: scannedProduct.photo || DEFAULT_PHOTO_URI,
-          cache: 'force-cache',
-        }}
+      <CachableImage
+        source={scannedProduct.photo}
         style={styles.image}
         resizeMode="contain"
       />
