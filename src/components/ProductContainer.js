@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {
-  StyleSheet, View, Image, Text, ScrollView,
+  StyleSheet, View, Text, ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -13,6 +13,7 @@ import { getProductData, getProductLoadingStatus } from '../store/product/select
 import { formatPrice } from '../utils/helpers';
 import { clearProductData } from '../store/product/actions';
 import ProductCharacteristicsTable from './ProductCharacteristicsTable';
+import CachableImage from './CachableImage';
 
 const { width } = Layout.window;
 
@@ -37,12 +38,9 @@ function ProductScreen({
   return (
     <ScrollView style={styles.scrollContainer}>
       <View style={styles.container}>
-        <Image
+        <CachableImage
           style={styles.image}
-          source={{
-            uri: photos[0]?.url || DEFAULT_PHOTO_URI,
-            cache: 'force-cache',
-          }}
+          source={photos[0]?.url || DEFAULT_PHOTO_URI}
           resizeMode="contain"
         />
         <View style={styles.productInfo}>

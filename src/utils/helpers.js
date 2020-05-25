@@ -1,4 +1,6 @@
 import { Alert } from 'react-native';
+import * as axios from 'axios';
+import { API_URL, ORDER_API_URL } from './config';
 
 export const CURRENCY_SYMBOLS = {
   UAH: '₴',
@@ -55,3 +57,9 @@ export const openConfirmationAlert = (text, onContinue) => Alert.alert(
 
   ],
 );
+
+export const createOrderQrLink = (id) => `${API_URL}${ORDER_API_URL}/${id}`;
+
+export const getFullImage = (url) => axios.get(url, {
+  responseType: 'arraybuffer',
+});

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import {
-  View, Image, Text, StyleSheet, TouchableOpacity,
+  View, Text, StyleSheet, TouchableOpacity,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { useNavigation } from '@react-navigation/native';
@@ -9,8 +9,8 @@ import Layout from '../constants/Layout';
 import FormButton from './LoginButton';
 import { formatPrice } from '../utils/helpers';
 import Counter from './Counter';
-import { DEFAULT_PHOTO_URI } from '../constants/Defaults';
 import SmallLoader from './SmallLoader';
+import CachableImage from './CachableImage';
 
 const { width } = Layout.window;
 
@@ -48,11 +48,8 @@ export default function SearchResultItem({
     <View style={styles.container}>
       <View style={styles.card}>
         <TouchableOpacity onPress={openProduct} style={styles.infoContainer}>
-          <Image
-            source={{
-              uri: photo || DEFAULT_PHOTO_URI,
-              cache: 'force-cache',
-            }}
+          <CachableImage
+            source={photo}
             style={styles.image}
             resizeMode="contain"
           />

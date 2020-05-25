@@ -10,14 +10,16 @@ import { getSearchInputValue } from '../store/search/selectors';
 import { performSearch } from '../store/search/asyncActions';
 import { $gray, $realWhite } from '../constants/Colors';
 import { changeSearchInput } from '../store/search/actions';
+import { getAccessToken } from '../store/auth/selectors';
 
 function SearchForm({
-  searchInput, updateSearchInput, search,
+  searchInput, updateSearchInput, search, userId,
 }) {
   const navigation = useNavigation();
   useEffect(() => {
+    updateSearchInput('');
     search();
-  }, []);
+  }, [userId]);
 
   return (
     <View style={styles.container}>
@@ -42,6 +44,7 @@ SearchForm.propTypes = {
   searchInput: PropTypes.string.isRequired,
   updateSearchInput: PropTypes.func.isRequired,
   search: PropTypes.func.isRequired,
+  userId: PropTypes.number.isRequired,
 };
 
 const styles = StyleSheet.create({
@@ -65,6 +68,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = createStructuredSelector({
   searchInput: getSearchInputValue,
+  userId: getAccessToken,
 });
 
 const mapDispatchToProps = (dispatch) => ({
