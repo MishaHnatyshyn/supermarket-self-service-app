@@ -5,22 +5,22 @@ import {
 import PropTypes from 'prop-types';
 import { $white } from '../constants/Colors';
 import Layout from '../constants/Layout';
+import CachableImage from './CachableImage';
 
 const { width } = Layout.window;
+
+const logo = require('../assets/images/logo.png');
 
 export default function AuthLayout({ children, isRegistration }) {
   return (
     <View style={{ ...styles.container, padding: isRegistration ? '10% 3%' : '25% 3%' }}>
-      <Image
-        source={{
-          uri: 'https://i.pinimg.com/564x/f5/d0/51/f5d051306fcdce6da21ece1d903e49a1.jpg',
-          cache: 'force-cache',
-        }}
+      <CachableImage
+        source="https://i.pinimg.com/564x/f5/d0/51/f5d051306fcdce6da21ece1d903e49a1.jpg"
         style={styles.background}
       />
       <View style={styles.block}>
         <View style={styles.logo}>
-          <Image source={require('../assets/images/logo.png')} style={styles.picture} />
+          <Image source={logo} style={styles.picture} />
         </View>
         <View style={styles.form}>
           {children}
