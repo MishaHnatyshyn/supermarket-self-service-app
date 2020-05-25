@@ -5,8 +5,8 @@ import {
   fetchSearchSuccess,
   changeSearchInput,
   updateProducts,
-  amendProducts, clearSearchResult, fetchMoreProductsStart
-} from "./actions";
+  amendProducts, clearSearchResult, fetchMoreProductsStart,
+} from './actions';
 import {
   getAppliedFilters,
   getCurrentPage,
@@ -19,6 +19,7 @@ import {
 import { get } from '../../utils/http';
 import { SEARCH_API_URL, SEARCH_DEBOUNCE_TIME_IN_MS } from '../../utils/config';
 import { getSelectedStoreId } from '../store/selectors';
+import { createCacheWithTtl, getFromCacheWithTtl } from '../../utils/cache';
 
 let searchDebounceTimeout = null;
 
@@ -70,8 +71,17 @@ export const doSearch = (
   const state = getState();
   const params = formSearchRequestParams(page, state);
   dispatch(fetchStartAction());
+  const cacheKey = SEARCH_API_URL + JSON.stringify(params);
   try {
-    const { data: searchResponse } = await get(SEARCH_API_URL, { params });
+    let searchResponse = {};
+    const cachedItem = await getFromCacheWithTtl(cacheKey);
+    if (cachedItem) {
+      searchResponse = cachedItem;
+    } else {
+      const { data } = await get(SEARCH_API_URL, { params });
+      searchResponse = data;
+      createCacheWithTtl(cacheKey, data);
+    }
     dispatch(fetchSearchSuccess(searchResponse));
     dispatch(productUpdateAction(searchResponse.data));
   } catch (e) {
