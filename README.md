@@ -21,3 +21,5 @@
 Додаток може використовуватись будь-яким відвідувачем магазину.
 
 REST API repo link: https://github.com/MishaHnatyshyn/supermarket-self-service-app-API
+
+Invision interactive beta prototype: https://self-service-app.invisionapp.com/prototype/ck8ec6gu900aozw01i2tr1tkd/play
